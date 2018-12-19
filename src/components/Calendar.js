@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Scheduler, WeekView, Appointments } from '@devexpress/dx-react-scheduler-material-ui';
+import { ViewState, EditingState } from '@devexpress/dx-react-scheduler';
+import { 
+Scheduler, 
+WeekView, 
+Appointments, 
+AppointmentTooltip, 
+AppointmentForm 
+} from '@devexpress/dx-react-scheduler-material-ui';
 
 
 class Calendar extends Component {
@@ -13,13 +20,17 @@ class Calendar extends Component {
         return (
             <div>
                 <Scheduler
-                    data={[]}
+                    data={[
+                        { startDate: '2018-12-20 10:00', endDate: '2018-12-20 11:00', title: 'Meeting' },
+                        { startDate: '2018-12-21 18:00', endDate: '2018-12-21 19:30', title: 'Go to a gym' },
+                    ]}
                 >
                     <WeekView 
                     startDayHour={4}
                     />
-                    <Appointments 
+                    <Appointments
                     />
+                    <AppointmentForm />
                 </Scheduler>
             </div>
         )
