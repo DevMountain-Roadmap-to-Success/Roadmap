@@ -7,6 +7,8 @@ import Button from './functional/Button'
 import Nav from './functional/Nav'
 import Login from './functional/Login'
 import axios from 'axios';
+import {connect} from 'react-redux'
+import {getUser} from '../ducks/reducer'
 
 const Container = styled.div `
     background-image: url(${brickwall});
@@ -71,7 +73,7 @@ class Home extends Component {
     login = () => {
      const {email, password} = this.state
       axios.post('/auth/login', { email, password })
-      .then((res) => { this.props.userInfo(res.data)})
+      .then((res) => { this.props.getUser(res.data)})
       .catch((err => console.log(err, 'login failure')))
     }
     handleInput = (event) => {
@@ -98,5 +100,10 @@ class Home extends Component {
     )
   }
 }
+const mapStateToProps = state => {
+  const {user} = state
+    return { user }
+}
+const bindActionCreators = { getUser }
 
-export default Home
+export default connect(mapStateToProps, bindActionCreators)(Home)

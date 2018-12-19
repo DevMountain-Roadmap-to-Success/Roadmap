@@ -18,6 +18,7 @@ unique(task_id)
 
 create table date_table (
 date_id serial primary key,
+task_id refers  to tasks(task_id)
 numeric_format text,
 day_name text,
 calendar_day integer,
@@ -36,7 +37,7 @@ minute_id serial primary key,
 minute integer
 );
 
-create table join (
+create table task_connection (
 id serial primary key,
 user_id integer references student(user_id),
 task_id integer references tasks(task_id),

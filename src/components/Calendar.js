@@ -6,7 +6,7 @@ import { Scheduler, WeekView, Appointments } from '@devexpress/dx-react-schedule
 class Calendar extends Component {
     constructor() {
         super();
-        this.state = {}
+        this.state = { }
     };
 
     render() {
