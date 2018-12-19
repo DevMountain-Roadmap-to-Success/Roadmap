@@ -1,0 +1,246 @@
+{
+	"info": {
+		"name": "Enpoint Testing",
+		"_postman_id": "19cc9f3c-5c32-bb75-dcf4-389952be47f0",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET - All users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:4000/api/user",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"user"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "GET - user By user_id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:4000/api/user/1",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"user",
+						"9"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+    },
+    {
+      "name": "GET - User By Email",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {},
+        "url": {
+          "raw": "localhost:4000/api/students?email=gdee@clickbank.net",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "api",
+            "user"
+          ],
+          "query": [
+            {
+              "key": "email",
+              "value": "test@test.com",
+              "equals": true
+            }
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    },
+		{
+			"name": "GET - User By Name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:4000/api/user?name=Test",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"students"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Test",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "GET - Calendar By user_id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:4000/api/calendar?user_id=1",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"calendar"
+					],
+					"query": [
+						{
+							"key": "user_id",
+							"value": "1",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "GET - Task By task_id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:4000/api/tasks?task_id=1",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"tasks"
+					],
+					"query": [
+						{
+							"key": "task_id",
+							"value": "1",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "PUT - Update Tasks",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"current_task\": \"A-\"\n}"
+				},
+				"url": {
+					"raw": "localhost:4000/api/tasks/1",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"tasks",
+						"1"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "POST - Add User",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user\": \"Test McTester\",\n    \"test@test.com\",\n}"
+				},
+				"url": {
+					"raw": "localhost:4000/api/user",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"user"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE - Remove Task",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:4000/api/tasks/1",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"tasks",
+						"1"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

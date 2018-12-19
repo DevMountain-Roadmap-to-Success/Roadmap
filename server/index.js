@@ -4,6 +4,8 @@ const app = express()
 const massive = require('massive')
 const session = require('express-session')
 const bodyParser = require('body-parser')
+const ctrl = require('./controller')
+const bcrypt = require('bcryptjs')
 const {CONNECTION_STRING, SERVER_PORT} = process.env
 
 
@@ -12,13 +14,7 @@ massive(CONNECTION_STRING).then(dbInstance => {
     console.log('database connected')
   }).catch(err => console.log(err, 'connection error'))
   
-  const user = {
-    "firstname":"kim",
-    "lastname":"guyton",
-    "email":"kim@mail.com",
-    "password":"kim"
-  }
-  
+
   app.use(bodyParser.json())
   
   
@@ -28,14 +24,50 @@ massive(CONNECTION_STRING).then(dbInstance => {
     saveUninitialized: false
   }))
 
-app.post('/auth/login', (req, res) => {
+
+
+
+  app.post('/auth/signup', async (req, res) => {
+    const dbInstance = req.app.get('db')
+    const { first_name, last_name, email, password } = req.body
+    console.log(first_name, last_name, email, password)
+
+    let user = await dbInstance.check_user(email)
+    if (user[0]) {
+      return res.status(401).send('Email already in use')
+    } else {
+      let salt = bcrypt.genSaltSync(10)
+      let hash = bcrypt.hashSync(password, salt)
+      let newUser = await dbInstance.create_user(first_name, last_name, email, hash )
   
+      req.session.user = newUser[0]
+      console.log(req.session)
+      res.status(200).send(req.session.user)
+     }
 })
   
   
-app.get('/api/user', (req, res) => {
-  res.status(200).send(user)
-})
+  
+  app.post('/auth/login', async (req, res) => {
+    const dbInstance = req.app.get('db')
+    const { email, password } = req.body
+    console.log(email, password)
+  
+    let user = await dbInstance.check_user(email)
+    if(user){
+    let result = await bcrypt.compareSync(password, user[0].password);
+    console.log(result)
+    if (result) {
+      req.session.user = user[0]
+        console.log(req.session.user)
+        res.status(200).send(req.session.user)
+      }
+    } 
+ })
+  
+  
+
+
 
 
 
