@@ -18,6 +18,7 @@ unique(task_id)
 
 create table date_table (
 date_id serial primary key,
+task_id refers  to tasks(task_id)
 numeric_format text,
 day_name text,
 calendar_day integer,

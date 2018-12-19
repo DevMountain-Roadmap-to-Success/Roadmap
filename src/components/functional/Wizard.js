@@ -3,12 +3,21 @@ import styled from 'styled-components'
 import Modal from './Modal'
 
 
-const Wizard = (props) => {
+
+class Wizard extends React.Component {
+    state = {
+        
+    }
+    render(){
     return (
         <div>
-            <Modal></Modal>
+            <Modal>
+                <input />
+                <input />
+            </Modal>
         </div>
     )
+    }
 }
 
 
