@@ -7,7 +7,7 @@ const Container = styled.section`
   width: auto;
   height: 100vh;
   position: relative;
-  background-color: rgba(10, 10, 10, 0.733);
+  background-color: rgba(22, 22, 22, 0.63);
   z-index: 1000;
   display: flex;
   justify-content: center;

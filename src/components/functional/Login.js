@@ -37,7 +37,7 @@ const Login = (props) => {
           </header>
           <input placeholder="Email" type="email" value={props.email} onChange={props.onChange}/>
           <input placeholder="Password" type="password" value={props.value}  onChange={props.onChange}/>
-          <Button name="Login" />
+          <Button name="Login" onClick={props.onClick}/>
         </LoginModal>
     );
 

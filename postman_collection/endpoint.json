@@ -56,7 +56,7 @@
         "header": [],
         "body": {},
         "url": {
-          "raw": "localhost:4000/api/students?email=gdee@clickbank.net",
+          "raw": "localhost:4000/api/user?email=gdee@clickbank.net",
           "host": [
             "localhost"
           ],

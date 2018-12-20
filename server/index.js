@@ -44,10 +44,7 @@ massive(CONNECTION_STRING).then(dbInstance => {
       console.log(req.session)
       res.status(200).send(req.session.user)
      }
-})
-  
-  
-  
+}) 
   app.post('/auth/login', async (req, res) => {
     const dbInstance = req.app.get('db')
     const { email, password } = req.body
@@ -63,9 +60,8 @@ massive(CONNECTION_STRING).then(dbInstance => {
         res.status(200).send(req.session.user)
       }
     } 
- })
-  
-  
+ }) 
+  app.get('/api/logout', ctrl.logout) 
 
 
 
