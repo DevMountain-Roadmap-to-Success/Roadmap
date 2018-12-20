@@ -11,6 +11,10 @@ import Login from "./functional/Login";
 import axios from "axios";
 import { connect } from "react-redux";
 import { getUser } from "../ducks/reducer";
+import {Redirect} from 'react-router'
+
+
+
 
 const Container = styled.div`
   background-image: url(${outside});
@@ -85,16 +89,16 @@ class Home extends Component {
   };
 
   login = () => {
-    const {getUser} = this.props
     const { email, password } = this.state;
     console.log(email, password);
     axios
       .post("/auth/login", { email, password })
       .then(res => {
-         getUser(res.data);
-      })
-      .catch(err => console.log(err, "login failure"));
-    this.toggleModal();
+         if(res.status === 200){
+            this.props.history.push('/dashboard')
+         }
+        })
+        this.toggleModal();
   };
 
   handleInput = event => {
@@ -132,8 +136,9 @@ class Home extends Component {
   }
 }
 const mapStateToProps = state => {
-  const { user } = state;
-  return { user };
+  return {
+    user: state.user
+  }
 };
 const actionCreators = { getUser };
 
