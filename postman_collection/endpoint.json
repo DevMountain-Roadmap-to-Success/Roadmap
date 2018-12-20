@@ -7,26 +7,35 @@
 	},
 	"item": [
 		{
-			"name": "GET - All users",
+			"name": "POST - Add User",
 			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user\": \"Test McTester\",\n    \"test@test.com\",\n}"
+				},
 				"url": {
-					"raw": "localhost:4000/api/user",
+					"raw": "localhost:4000/auth/signup",
 					"host": [
 						"localhost"
 					],
 					"port": "4000",
 					"path": [
-						"api",
-						"user"
+						"auth",
+						"signup"
 					]
 				},
 				"description": ""
 			},
 			"response": []
 		},
+		
 		{
 			"name": "GET - user By user_id",
 			"request": {
@@ -42,7 +51,7 @@
 					"path": [
 						"api",
 						"user",
-						"9"
+						"1"
 					]
 				},
 				"description": ""
@@ -50,20 +59,20 @@
 			"response": []
     },
     {
-      "name": "GET - User By Email",
+      "name": "POST - User By Email",
       "request": {
         "method": "GET",
         "header": [],
         "body": {},
         "url": {
-          "raw": "localhost:4000/api/user?email=gdee@clickbank.net",
+          "raw": "localhost:4000/auth/login?email=test@test.com",
           "host": [
             "localhost"
           ],
           "port": "4000",
           "path": [
-            "api",
-            "user"
+            "auth",
+            "login"
           ],
           "query": [
             {
@@ -78,25 +87,25 @@
       "response": []
     },
 		{
-			"name": "GET - User By Name",
+			"name": "PUT - update user email",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "localhost:4000/api/user?name=Test",
+					"raw": "localhost:4000/api/user",
 					"host": [
 						"localhost"
 					],
 					"port": "4000",
 					"path": [
 						"api",
-						"students"
+						"user"
 					],
 					"query": [
 						{
-							"key": "name",
-							"value": "Test",
+							"key": "email",
+							"value": "test@mail.com",
 							"equals": true
 						}
 					]
@@ -106,20 +115,20 @@
 			"response": []
 		},
 		{
-			"name": "GET - Calendar By user_id",
+			"name": "GET - Tasks By user_id",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "localhost:4000/api/calendar?user_id=1",
+					"raw": "localhost:4000/api/tasks?user_id=1",
 					"host": [
 						"localhost"
 					],
 					"port": "4000",
 					"path": [
 						"api",
-						"calendar"
+						"tasks"
 					],
 					"query": [
 						{
@@ -162,7 +171,7 @@
 			"response": []
 		},
 		{
-			"name": "PUT - Update Tasks",
+			"name": "PUT - Update Tasks by user_id",
 			"request": {
 				"method": "PUT",
 				"header": [
@@ -173,7 +182,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"current_task\": \"A-\"\n}"
+					"raw": "localhost:4000/api/tasks?task_id=1"
 				},
 				"url": {
 					"raw": "localhost:4000/api/tasks/1",
@@ -191,35 +200,7 @@
 			},
 			"response": []
 		},
-		{
-			"name": "POST - Add User",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"user\": \"Test McTester\",\n    \"test@test.com\",\n}"
-				},
-				"url": {
-					"raw": "localhost:4000/api/user",
-					"host": [
-						"localhost"
-					],
-					"port": "4000",
-					"path": [
-						"api",
-						"user"
-					]
-				},
-				"description": ""
-			},
-			"response": []
-		},
+		
 		{
 			"name": "DELETE - Remove Task",
 			"request": {
@@ -236,6 +217,27 @@
 						"api",
 						"tasks",
 						"1"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "POST - Create task by user_id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:4000/api/tasks",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"tasks"
 					]
 				},
 				"description": ""

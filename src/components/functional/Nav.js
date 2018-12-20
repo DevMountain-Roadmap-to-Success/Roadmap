@@ -22,6 +22,9 @@ const NavLinks = styled.nav`
     @media (max-width: 1100px) {
         display: none;
     }
+    span {
+        color: white;
+    }
   
   
 `
@@ -31,10 +34,10 @@ const Nav = (props) => {
     return (
   
     <>
-    <NavLinks {...props }>
+    <NavLinks {...props}>
     {props.name}
     {props.children}
-    {props.render}
+    {props.render.props.children}
     </NavLinks>
     </>
 

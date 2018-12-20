@@ -42,12 +42,10 @@ const Header = props => {
   console.log(props)
   return (
     <StyledHeader {...props}>
-      <Link to="/">
-        {" "}
-        <img src={logo} alt="logo" className="logo" />{" "}
-      </Link>
-       
-       { props.children }
+      <Link to={ !props.home ? "/" : '/home'}>
+        <img src={logo} alt="logo" className="logo" />
+      </Link> 
+      {props.children}     
       <img src={menu} alt="icon" className="menu-icon" onClick={props.onClick}/>
     </StyledHeader>
   );

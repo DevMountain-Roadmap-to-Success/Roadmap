@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-import { HashRouter, Route, Switch } from "react-router-dom";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./components/Home";
 import Resources from "./components/Resources";
 import JobPrep from "./components/JobPrep";
@@ -11,18 +11,18 @@ import LandingPage from "./components/LandingPage";
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <HashRouter>
+
+        <Router>
           <Switch>
             <Route exact path="/"component={LandingPage} />
-            <Route path='/home' component={Home} />
+            <Route exact path='/home' component={Home} />    
+            <Route exact path="/dashboard" component={Dashboard} />
             <Route path="/calendar" component={Calendar} />
-            <Route path="/dashboard" component={Dashboard} />
             <Route path="/jobprep" component={JobPrep} />
             <Route path="/resources" component={Resources} />
           </Switch>
-        </HashRouter>
-      </div>
+        </Router>
+
     );
   }
 }

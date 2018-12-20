@@ -26,7 +26,13 @@ massive(CONNECTION_STRING).then(dbInstance => {
 
 
 
-
+  app.get('/auth/session', (req, res) => {
+    if(req.session.user){
+      res.status(200).send(req.session.user)
+    } else {
+      res.status(401).send('no user')
+    }
+  })
   app.post('/auth/signup', async (req, res) => {
     const dbInstance = req.app.get('db')
     const { first_name, last_name, email, password } = req.body
@@ -62,6 +68,7 @@ massive(CONNECTION_STRING).then(dbInstance => {
     } 
  }) 
   app.get('/api/logout', ctrl.logout) 
+  app.get('/api/tasks/:id', ctrl.get_tasks)
 
 
 
