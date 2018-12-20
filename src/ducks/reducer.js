@@ -9,6 +9,8 @@ export default function reducer (state=initialState, action){
     case GET_USER:
         Object.assign({}, state, {user: action.payload})
         return state
+
+        
         default: return state;
     }
 };

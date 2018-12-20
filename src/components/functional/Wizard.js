@@ -4,19 +4,8 @@ import Modal from './Modal'
 
 
 
-class Wizard extends React.Component {
-    state = {
-        blockOne: false,
-        blockTwo: false,
-        blockThree: false
-    }
-
-    handleBlockPicker = (event) => {
-        this.setState(prevState => { return { [event.target.type]: !prevState.event.target.type } })
-    };
-
-    displayBlockOne = () => {
-        if (this.state.blockOne) {
+function Wizard (props){
+  
             return (
                 <Modal>
                     <div>
@@ -27,27 +16,14 @@ class Wizard extends React.Component {
                     <button>Add To Calendar</button>
                     </div>
                     <div>
-                    <button value={this.state.blockOne} onClick={this.handleBlockPicker}>Block 1</button>
-                    <button value={this.state.blockTwo} onClick={this.handleBlockPicker}>Block 2</button>
-                    <button vlaue={this.state.blockThree} onClick={this.handleBlockPicker}>Block 3</button>
+                    <button  onClick={props.onClick}>Block 1</button>
+                    <button  onClick={props.onClick}>Block 2</button>
+                    <button  onClick={props.onClick}>Block 3</button>
                     </div>
                 </Modal>
             )
         }
-    };
-
-    displayBlockTwo = () => { };
-
-    displayBlockThree = () => { };
-
-    render() {
-        return (
-            <div>
-
-            </div>
-        )
-    }
-}
+    
 
 
 export default Wizard
