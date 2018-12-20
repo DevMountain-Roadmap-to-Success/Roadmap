@@ -1,8 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import menu from "../assets/menu.png";
-import logo from "../assets/logo.png";
+import menu from "../../assets/menu.png";
+import logo from "../../assets/logo.png";
 import { Link } from "react-router-dom";
+import Nav from './Nav'
+import Button from './Button'
 
 const StyledHeader = styled.header`
   background-color: #252525;
@@ -30,18 +32,23 @@ const StyledHeader = styled.header`
       width: auto;
       margin-right: 5%;
     }
+    @media(max-width: 600px) {
+      height: 30px;
+    }
   }
 `;
 
 const Header = props => {
+  console.log(props)
   return (
-    <StyledHeader>
+    <StyledHeader {...props}>
       <Link to="/">
         {" "}
         <img src={logo} alt="logo" className="logo" />{" "}
       </Link>
-      {props.children}
-      <img src={menu} alt="icon" className="menu-icon" />
+       
+       { props.children }
+      <img src={menu} alt="icon" className="menu-icon" onClick={props.onClick}/>
     </StyledHeader>
   );
 };

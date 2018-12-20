@@ -6,7 +6,7 @@ import Resources from "./components/Resources";
 import JobPrep from "./components/JobPrep";
 import Dashboard from "./components/Dashboard";
 import Calendar from "./components/Calendar";
-import LandingPage from "./components/functional/LandingPage";
+import LandingPage from "./components/LandingPage";
 
 class App extends Component {
   render() {

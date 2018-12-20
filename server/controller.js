@@ -7,7 +7,12 @@ module.exports = {
         .then((user) => res.status(200).send(user))
         .catch(err => console.log(err, 'get user error'))
     },
+    logout: (req, res) => {
+        req.session.destroy()
+        res.sendStatus(200)
+        console.log('session destroyed')
 
+    },
     
 
 }
