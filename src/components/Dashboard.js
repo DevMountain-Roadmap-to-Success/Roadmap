@@ -7,7 +7,8 @@ import {getUser} from '../ducks/reducer'
 import axios from "axios";
 import styled from 'styled-components'
 import Circle from './functional/Circle'
-
+import {Link} from 'react-router-dom'
+import PlayGround from "./widgets/Playground";
 
 
 
@@ -35,14 +36,14 @@ class Dashboard extends Component {
         <Header home='home'>
           <Nav width='30%'render={
             <>
-          <nav>Calendar</nav>
+          <Link to='/playground'>Code PlayGround</Link>
           <nav>Job Prep</nav>
           <nav>Resources</nav>
        <Circle>{`${first[0]} ${last[0]}`}</Circle>
           </>}/>
        </Header> 
         <div className="dashboard_main">
-        <div className="center" />
+            <PlayGround/>
       </div>
       </div>
     );
