@@ -9,7 +9,7 @@ import styled from 'styled-components'
 import Circle from './functional/Circle'
 import {Link} from 'react-router-dom'
 import PlayGround from "./widgets/Playground";
-
+import TodoList from './TodoList'
 
 
 class Dashboard extends Component {
@@ -44,6 +44,7 @@ class Dashboard extends Component {
        </Header> 
         <div className="dashboard_main">
             <PlayGround/>
+            <TodoList />
       </div>
       </div>
     );

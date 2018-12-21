@@ -1,2 +1,6 @@
-insert into tasks (user_id, task_name, task_description, task_type)
-values ($1, $2, $3, $4)
+insert into tasks (user_id, task, complete)
+values ($1, $2, $3);
+
+
+select * from tasks
+where user_id = $1
