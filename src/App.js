@@ -7,6 +7,7 @@ import JobPrep from "./components/JobPrep";
 import Dashboard from "./components/Dashboard";
 import Calendar from "./components/Calendar";
 import LandingPage from "./components/LandingPage";
+import PlayGround from "./components/widgets/Playground";
 
 class App extends Component {
   render() {
@@ -20,6 +21,7 @@ class App extends Component {
             <Route path="/calendar" component={Calendar} />
             <Route path="/jobprep" component={JobPrep} />
             <Route path="/resources" component={Resources} />
+            <Route path='/playground' component={PlayGround}/>
           </Switch>
         </Router>
 
