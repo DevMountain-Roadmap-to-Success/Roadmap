@@ -1,11 +1,35 @@
 import React, { Component } from "react";
-import shortid from "shortid";
+import Todo from './Todo'
+import Button from './functional/Button'
+import styled from 'styled-components'
+
+const Form = styled.form`
+    width: 250px;
+    height: 300px;
+    background-color: white;
+    flex-direction: column;
+` 
+const TaskWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+
+
+    input {
+      width: 80%;
+      height: 40px;
+      font-size: 18px;
+    }
+`
+
+
 
 class TodoForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: ""
+      task: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -15,27 +39,29 @@ class TodoForm extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
   handleSubmit(e) {
+    console.log(this.state.task)
     e.preventDefault();
-    this.props.onSubmit({
-      id: shortid.generate(),
-      text: this.state.text,
-      complete: false
-      // date: moment()
-    });
-    this.setState({ text: "" });
+    this.props.onSubmit(
+      this.state.task
+    );
+    this.setState({ task: "" });
   }
 
   render() {
+    console.log(this.props.children)
     return (
-      <form onSubmit={this.handleSubmit}>
-        <input
-          name="text"
+      <Form onSubmit={this.handleSubmit}>
+        <TaskWrapper >
+          <input
+          name="task"
           placeholder="What do you need to do?"
-          value={this.state.text}
+          value={this.state.task}
           onChange={this.handleChange}
         />
-        <button onClick={this.handleSubmit}>Add</button>
-      </form>
+        <Button onClick={this.handleSubmit} name='Add'/>
+        <Todo render={this.props.children}/>
+        </TaskWrapper>
+      </Form>
     );
   }
 }

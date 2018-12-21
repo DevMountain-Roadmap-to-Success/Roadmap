@@ -1,2 +1,2 @@
-select task_name from tasks
-where task_id = $1
+select task from tasks
+where user_id = $1
