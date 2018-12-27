@@ -13,7 +13,7 @@ const link = {
 }
 class Resources extends React.Component {
     render(){
-        const API_KEY = 'AIzaSyAF3jpyne06dNiwd_sdkm0Z-J7IqhEgKls'
+
         return (
             <div>
                 <Header >
