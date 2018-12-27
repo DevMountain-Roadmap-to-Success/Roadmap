@@ -23,6 +23,7 @@ module.exports = {
     create_task: (req, res) => {
         const dbInstance = req.app.get('db')
         const {task } = req.body
+        console.log(task)
 
         dbInstance.create_task(5, task, false)
         .then((data) => res.status(200).send(data))
@@ -30,6 +31,7 @@ module.exports = {
     },
     delete_task: (req, res) => {
       const dbInstance = req.app.get('db')
+      console.log(req.params.id)
 
       dbInstance.delete_task(req.params.id, 5)
       .then((data) => res.status(200).send(data))

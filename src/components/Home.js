@@ -7,7 +7,7 @@ import Header from "./functional/Header";
 import { Link } from "react-router-dom";
 import Button from "./functional/Button";
 import Nav from "./functional/Nav";
-import Login from "./functional/Login";
+import LoginModal from "./Login";
 import axios from "axios";
 import { connect } from "react-redux";
 import { getUser } from "../ducks/reducer";
@@ -64,8 +64,7 @@ const Container = styled.div`
 class Home extends Component {
   state = {
     loginModal: false,
-    email: "",
-    password: ""
+   
   };
 
   toggleModal = () => {
@@ -77,42 +76,22 @@ class Home extends Component {
   showModal = () => {
     if (this.state.loginModal) {
       return (
-        <Login
+        <LoginModal
           onClose={this.toggleModal}
-          onClick={this.login}
-          onChange={this.handleInput}
-          email={this.state.email}
-          password={this.state.password}
+          {...this.props}
         />
       );
     }
   };
 
-  login = () => {
-    const { email, password } = this.state;
-    console.log(email, password);
-    axios
-      .post("/auth/login", { email, password })
-      .then(res => {
-         if(res.status === 200){
-            this.props.history.push('/dashboard')
-         }
-        })
-        this.toggleModal();
-  };
-
-  handleInput = event => {
-    console.log(event.target.value);
-    this.setState({ [event.target.type]: event.target.value });
-  };
 
   render() {
-    console.log(this.props.user)
+    console.log(this.props)
     return (
       <Container>
         <Header>
           <Nav
-            width="40%"
+            width="30%"
             render={
               <>
                 {" "}

@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import DropDown from './DropDown';
+
 
 const CircleDiv = styled.span`
   width: 60px;
@@ -17,8 +19,15 @@ const CircleDiv = styled.span`
 
 
 const Circle = (props) => {
+    console.log(props)
+  
     return (
-        <CircleDiv>{props.children}</CircleDiv>
+        <>
+        <CircleDiv onClick={props.onClick}>
+        {props.children}
+        </CircleDiv>
+       
+        </>
     )
 }
 

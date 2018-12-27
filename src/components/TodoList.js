@@ -1,9 +1,34 @@
 import React, { Component } from "react";
 import TodoForm from "./TodoForm";
-import Todo from "./Todo";
+import Todo from "./functional/Todo";
 import axios from "axios";
-import closeIcon from '../assets/close.png'
+import styled from 'styled-components'
+import note from '../assets/note.png'
 
+const Wrapper = styled.div `
+    background-image: url(${note});
+    background-repeat: no-repeat;
+    background-size: 400px;
+    width: 27%; 
+    display: flex;
+    justify-content: center;
+
+  
+    button {
+      background-color: transparent;
+      border: none;
+
+    }
+`
+const list = {
+  display: 'flex', 
+  textIndent:'15px', 
+  lineHeight: '25px', 
+  justifyContent: 'space-between',
+  width: '70%', 
+  alignItems: 'center',
+  fontSize: '16px'
+}
 class TodoList extends Component {
   constructor(props) {
     super(props);
@@ -14,7 +39,7 @@ class TodoList extends Component {
       task: '',
       complete: false
     };
-    this.addTodo = this.addTodo.bind(this);
+
   }
 
   componentDidMount = () => {
@@ -23,15 +48,19 @@ class TodoList extends Component {
        this.setState({tasks: res.data})
     })
   }
+
   addTodo = task => {
+    console.log(task)
     axios.post('/api/addtask', {task: task})
     .then((res) => {
     this.setState({tasks: res.data})
     console.log(res)
-    })
-    
+    }) 
   }
 
+  handleChange = (e) => {
+    this.setState({ [e.target.name ]: e.target.value })
+  }
 
   toggleComplete(id) {
     this.setState({
@@ -55,8 +84,10 @@ class TodoList extends Component {
   };
 
   deleteTodo = id => {
+    console.log(id)
    axios.delete(`/api/tasks/delete/${id}`)
-   .then((res) => {this.setState({tasks: res.data})})
+   .then((res) => { console.log(res.data) 
+    this.setState({tasks: res.data})})
   };
 
   removeComplete = id => {
@@ -65,30 +96,33 @@ class TodoList extends Component {
 
   render() {
     let tasks = this.state.tasks;
-
-    // if (this.state.todoToShow === "all") {
-    // } else if (this.state.todoToShow === "active") {
-    // tasks = this.state.tasks.filter(task => !task.complete);
-    // } else if (this.state.todoToShow === "complete") {
-    // tasks = this.state.tasks.filter(task => task.complete);
-    // }
-    console.log(tasks)
+    if (this.state.todoToShow === "all") {
+    } else if (this.state.todoToShow === "active") {
+    tasks = this.state.tasks.filter(task => !task.complete);
+    } else if (this.state.todoToShow === "complete") {
+    tasks = this.state.tasks.filter(task => task.complete);
+    }
     return (
-      <div>
-        <TodoForm onSubmit={this.addTodo} >
-        {tasks.map(task => (
-          <div
-          key={task.task_id}
-          // toggleComplete={() => this.toggleComplete(task.complete)}
+      <Wrapper>
+        <TodoForm 
+        onSubmit={this.addTodo}
+        onChange={this.handleChange}
+        task={this.state.task} >
+         {tasks.map((task, id)  => (
+          <Todo key={id}       
+          toggleComplete={() => this.toggleComplete(task.complete)}
           >
-          <span>{task.task}</span>
-          <img src={closeIcon} onClick={() => this.deleteTodo(task.task_id)} alt='x'/>
+          <div style={list}>        
+           <span style={{fontFamily: 'Indie Flower'}} key={task.task_id}>
+           <button onClick={() => this.deleteTodo(task.task_id)}>x</button>{task.task}</span>
+          {/* <input type='checkbox' onClick={() => this.toggleComplete(task.task_id)}/> */}
           </div>
+          </Todo>
         ))
       }
       </TodoForm>
 
-        <div>
+        {/* <div>
           What you have left:{" "}
           {this.state.tasks.filter(task => !task.complete).length}
         </div>
@@ -111,8 +145,7 @@ class TodoList extends Component {
             onClick={() => {
               this.setState({
               tasks: this.state.tasks.map(task => ({
-                  ...task,
-                  complete: this.state.toggleAllComplete
+                  ...task,                  complete: this.state.toggleAllComplete
                 })),
                 toggleAllComplete: !this.state.toggleAllComplete
               });
@@ -120,8 +153,8 @@ class TodoList extends Component {
           >
             Toggle All Complete: {`${this.state.toggleAllComplete}`}
           </button>
-        </div>
-      </div>
+        </div> */}
+      </Wrapper>
     );
   }
 }
