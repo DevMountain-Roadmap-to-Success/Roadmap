@@ -65,6 +65,8 @@ massive(CONNECTION_STRING).then(dbInstance => {
         console.log(req.session.user)
         res.status(200).send(req.session.user)
       }
+    } else {
+      res.status(401).send('user not found')
     } 
  }) 
   app.get('/api/logout', ctrl.logout) 

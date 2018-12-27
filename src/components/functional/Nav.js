@@ -10,11 +10,14 @@ const NavLinks = styled.nav`
     width: ${props => props.width || '60%'};
     display: flex;
     margin-right: 3%;
-    justify-content: space-evenly;
+    justify-content: ${props => props.justifyContent || 'space-between'};
     align-items: center;
     a {
         color: white;
         text-decoration: none;
+        font-size: 18px;
+        font-family: 'Nunito';
+        margin-right: '5%'
     }
     @media (max-width: 1500px) {
         font-size: 12px;

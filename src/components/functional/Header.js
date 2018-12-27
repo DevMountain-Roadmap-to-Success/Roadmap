@@ -14,7 +14,7 @@ const StyledHeader = styled.header`
   align-items: center;
   position: relative;
   z-index: 100;
-  justify-content: space-between;
+  justify-content: ${props => props.justifyContent || 'space-between'};
 
   img {
     width: 240px;
