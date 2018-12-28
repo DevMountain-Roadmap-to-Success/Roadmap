@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import xIcon from '../../assets/close.png'
+
 
 
 const Container = styled.section`

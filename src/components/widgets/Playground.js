@@ -5,15 +5,11 @@ import {Link} from 'react-router-dom'
 import Nav from '../functional/Nav'
 
 const Container = styled.iframe` 
-   position: ${props => props.position};
-   right: 5%;
-   top: 17%;
-   margin-top: ${props => props.marginTop};
-   margin-left: ${props => props.marginLeft};
-   box-shadow: 0px 2px 2px .5px rgb(68, 68, 68);
-   display: flex;
-    justify-content: center;
-    align-items: center;
+   position: ${props => props.position || 'unset'};
+   /* right: 5%;
+   top: 17%; */
+   margin-top: ${props => props.marginTop || '3%'};
+   margin-left: ${props => props.marginLeft || '10%'};
     width: ${props => props.width || '80vw'};
     height: ${props => props.height || '80vh'};
 
@@ -44,9 +40,6 @@ const PlayGround = (props) => {
             </Header>
             )}
             <Container {...props}
-                 position='unset'
-                 marginTop='3%' 
-                 marginLeft='10%'
                  src='https://repl.it/community/classrooms/14714/assignments/53105' />
             </>
         )

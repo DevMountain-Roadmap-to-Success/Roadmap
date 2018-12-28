@@ -72,6 +72,7 @@ massive(CONNECTION_STRING).then(dbInstance => {
   app.get('/api/logout', ctrl.logout) 
   app.get('/api/tasks', ctrl.get_tasks)
   app.post('/api/addtask', ctrl.create_task)
+  app.put('/api/tasks/update/:id', ctrl.complete_task)
   app.delete('/api/tasks/delete/:id', ctrl.delete_task)
 
 

@@ -3,8 +3,6 @@ import styled from "styled-components";
 import menu from "../../assets/menu.png";
 import logo from "../../assets/logo.png";
 import { Link } from "react-router-dom";
-import Nav from './Nav'
-import Button from './Button'
 
 const StyledHeader = styled.header`
   background-color: #252525;
@@ -31,6 +29,7 @@ const StyledHeader = styled.header`
       height: 40px;
       width: auto;
       margin-right: 5%;
+      cursor: pointer;
     }
     @media(max-width: 600px) {
       height: 30px;
@@ -46,7 +45,7 @@ const Header = props => {
         <img src={logo} alt="logo" className="logo" />
       </Link> 
       {props.children}     
-      <img src={menu} alt="icon" className="menu-icon" onClick={props.onClick}/>
+      {/* <img src={menu} alt="icon" className="menu-icon" onClick={props.onClick}/> */}
     </StyledHeader>
   );
 };

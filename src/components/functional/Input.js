@@ -1,32 +1,24 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react";
+import styled from "styled-components";
 
 const StyledInput = styled.input`
-    width: ${props => props.width || '80%'};
-    height: ${props => props.height || '40px'};
-    font-size: ${props => props.fontSize || '18px'};
-    margin: ${props => props.margin};
-
-
-`
+  width: ${props => props.width || "80%"};
+  height: ${props => props.height || "40px"};
+  font-size: ${props => props.fontSize || "18px"};
+  margin: ${props => props.margin};
+`;
 
 const Input = (props, render) => {
-    console.log(props)
-    return (
-
-           <StyledInput {...render.children}
-           placeholder= {props.placeholder}
-           type={props.type} 
-           onChange={props.onChange}
-           value={props.value}
-            name={ props.name}/>
-
-        // placeholder={props.placeholder}
-        // type={props.type}
-       
-
-        
-
-    )
-}
- export default Input
+  console.log(props);
+  return (
+    <StyledInput
+      {...render.children}
+      placeholder={props.placeholder}
+      type={props.type}
+      onChange={props.onChange}
+      value={props.value}
+      name={props.name}
+    />
+  );
+};
+export default Input;

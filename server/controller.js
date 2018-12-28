@@ -22,19 +22,33 @@ module.exports = {
     },
     create_task: (req, res) => {
         const dbInstance = req.app.get('db')
-        const {task } = req.body
-        console.log(task)
+        const {date_created, task} = req.body
 
-        dbInstance.create_task(5, task, false)
+        dbInstance.create_task(5, task, false, date_created )
         .then((data) => res.status(200).send(data))
         .catch(err => console.log(err, 'create task error'))
     },
-    delete_task: (req, res) => {
+    delete_task: async(req, res, next) => {
       const dbInstance = req.app.get('db')
       console.log(req.params.id)
 
-      dbInstance.delete_task(req.params.id, 5)
-      .then((data) => res.status(200).send(data))
+      dbInstance.delete_task(req.params.id)
+      .then(async() => {
+      let data = await dbInstance.get_tasks(5)
+          res.status(200).send(data)   
+
+      }).catch(err => console.log(err, 'delete error'))
+    },
+    complete_task: (req, res) => {
+        const dbInstance = req.app.get('db')
+        const { complete } = req.body
+        console.log(complete)
+
+        dbInstance.complete_task(complete, req.params.id, 5)
+        .then((tasks) => {
+            console.log(tasks)
+            res.status(200).send(tasks)
+        })
     }
 
 }

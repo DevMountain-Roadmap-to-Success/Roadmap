@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 
+
 const NavLinks = styled.nav`
     color: ${props => props.color || 'white'};
     font-size: 15.5px;
@@ -20,7 +21,9 @@ const NavLinks = styled.nav`
         margin-right: '5%'
     }
     @media (max-width: 1500px) {
+        a {
         font-size: 12px;
+        }
     }
     @media (max-width: 1100px) {
         display: none;
@@ -28,7 +31,7 @@ const NavLinks = styled.nav`
     span {
         color: white;
     }
-  
+   
   
 `
 

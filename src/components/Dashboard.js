@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { getUser } from "../ducks/reducer";
 import axios from "axios";
 import styled from "styled-components";
-import Circle from "./functional/Circle";
+import Menu from "./functional/Menu";
 import { Link } from "react-router-dom";
 import Repl from "./widgets/Playground";
 import TodoList from "./TodoList";
@@ -14,14 +14,17 @@ import DropDown from "./functional/DropDown";
 
 const PlayGround = styled(Repl)`
   width: 30%;
-  height: 400px; 
+  height: 400px;
+  margin-left: 0;
+  margin-top: 0;
+  box-shadow: 0px 2px 2px 0.5px rgb(68, 68, 68);
 `;
 
 const Container = styled.div`
-  height: 100vh;
-  width: 100vw;
+  height: 95vh;
+  padding-top: 5%;
   display: flex;
-  flex-wrap: wrap;
+  justify-content: space-evenly;
 `;
 
 class Dashboard extends Component {
@@ -41,37 +44,36 @@ class Dashboard extends Component {
       this.props.getUser(res.data);
     });
   };
-  
+
   logout = () => {
-    axios.get('/api/logout')
-    .then((res) => {
-      if(res.status === 200){
-        this.props.history.push('/home')
+    axios.get("/api/logout").then(res => {
+      if (res.status === 200) {
+        this.props.history.push("/home");
       }
-    })
-  }
+    });
+  };
   toggleMenu = () => {
     this.setState(prevState => {
       return { open: !prevState.open };
     });
   };
   showMenu = () => {
-    if(this.state.open){
+    if (this.state.open) {
       return (
-      <DropDown >
-      <span>Account</span>
-      <span onClick={this.logout}>Log Out</span>
-   </DropDown> 
-      )
+        <DropDown>
+          <span>Account</span>
+          <span onClick={this.logout}>Log Out</span>
+        </DropDown>
+      );
     }
-  }
+  };
 
   render() {
     let first = this.state.first.split("");
     let last = this.state.last.split("");
     console.log(this.props.getUser, this.props.user);
     return (
-      <div className='dashboard_main'>
+      <div className="dashboard_main">
         <Header home="home">
           <Nav
             width="40%"
@@ -80,19 +82,19 @@ class Dashboard extends Component {
                 <Link to="/playground">CODE PLAYGROUND</Link>
                 <Link to="/jobprep">JOB PREP</Link>
                 <Link to="/resources">RESOURCES</Link>
-                <Circle onClick={this.toggleMenu} >
-                {`${first[0]} ${last[0]}`}{" "}
-                </Circle>
+                <Menu onClick={this.toggleMenu}>
+                  {`${first[0]} ${last[0]}`}{" "}
+                </Menu>
               </>
             }
-            />
-            {this.showMenu()}
+          />
+          {this.showMenu()}
         </Header>
 
         <Container>
           <TodoList />
 
-          <PlayGround position="absolute" header={this.state.header} />
+          <PlayGround header={this.state.header} />
         </Container>
       </div>
     );
