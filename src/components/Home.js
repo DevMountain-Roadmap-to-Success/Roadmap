@@ -8,10 +8,8 @@ import { Link } from "react-router-dom";
 import Button from "./functional/Button";
 import Nav from "./functional/Nav";
 import LoginModal from "./Login";
-import axios from "axios";
 import { connect } from "react-redux";
 import { getUser } from "../ducks/reducer";
-import {Redirect} from 'react-router'
 
 
 

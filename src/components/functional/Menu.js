@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import DropDown from './DropDown';
+
 
 
 const CircleDiv = styled.span`
@@ -17,18 +17,15 @@ const CircleDiv = styled.span`
 
 `
 
-
-const Circle = (props) => {
+const Menu = (props) => {
     console.log(props)
-  
     return (
         <>
         <CircleDiv onClick={props.onClick}>
         {props.children}
         </CircleDiv>
-       
         </>
     )
 }
 
-export default Circle
+export default Menu

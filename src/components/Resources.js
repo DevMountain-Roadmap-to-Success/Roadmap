@@ -1,5 +1,4 @@
 import React from 'react'
-import styled from 'styled-components'
 import Header from './functional/Header';
 import Nav from './functional/Nav'
 import {Link} from 'react-router-dom'
@@ -13,7 +12,6 @@ const link = {
 }
 class Resources extends React.Component {
     render(){
-        const API_KEY = 'AIzaSyAF3jpyne06dNiwd_sdkm0Z-J7IqhEgKls'
         return (
             <div>
                 <Header >

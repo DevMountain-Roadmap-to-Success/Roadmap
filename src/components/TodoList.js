@@ -1,34 +1,46 @@
 import React, { Component } from "react";
-import TodoForm from "./TodoForm";
-import Todo from "./functional/Todo";
+import moment from "moment";
 import axios from "axios";
-import styled from 'styled-components'
+import styled from "styled-components";
+import Input from "./functional/Input";
+import Todo from "./functional/Todo";
 import note from '../assets/note.png'
 
-const Wrapper = styled.div `
-    background-image: url(${note});
-    background-repeat: no-repeat;
-    background-size: 400px;
-    width: 27%; 
-    display: flex;
-    justify-content: center;
+const Wrapper = styled.div`
+  background-color: white;
+  width: 330px;
+  height: 350px;
+  display: flex;
+  box-shadow: 0px 2px 2px 0.5px rgb(68, 68, 68);
+  justify-content: center;
+  flex-direction: "column";
 
-  
-    button {
-      background-color: transparent;
-      border: none;
+  button {
+    background-color: transparent;
+    border: none;
+  }
+`;
+const Form = styled.form`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  height: 80%;
+  margin-top: 5%;
+  font-family: "Nunito";
+  overflow: scroll;
 
-    }
-`
-const list = {
-  display: 'flex', 
-  textIndent:'15px', 
-  lineHeight: '25px', 
-  justifyContent: 'space-between',
-  width: '70%', 
-  alignItems: 'center',
-  fontSize: '16px'
-}
+  input {
+    border: none;
+    background-color: transparent;
+  }
+`;
+const Symbol = styled.button`
+  background-color: transparent;
+  border: none;
+  font-size: ${props => props.fontSize || "15px"};
+`;
+
 class TodoList extends Component {
   constructor(props) {
     super(props);
@@ -36,91 +48,82 @@ class TodoList extends Component {
       tasks: [],
       todoToShow: "all",
       toggleAllComplete: true,
-      task: '',
-      complete: false
+      task: "",
+      complete: false,
+      completeTasks: []
     };
-
   }
 
   componentDidMount = () => {
-    axios.get('/api/tasks')
-    .then((res) =>{
-       this.setState({tasks: res.data})
-    })
-  }
+    axios.get("/api/tasks").then(res => {
+      this.setState({ tasks: res.data });
+    });
+  };
 
-  addTodo = task => {
-    console.log(task)
-    axios.post('/api/addtask', {task: task})
-    .then((res) => {
-    this.setState({tasks: res.data})
-    console.log(res)
-    }) 
-  }
-
-  handleChange = (e) => {
-    this.setState({ [e.target.name ]: e.target.value })
-  }
-
-  toggleComplete(id) {
-    this.setState({
-    tasks: this.state.tasks.map(todo => {
-        if (todo.id === id) {
-          return {
-            ...todo,
-            complete: !todo.complete
-          };
-        } else {
-          return todo;
-        }
+  addTodo = e => {
+    e.preventDefault();
+    let dateCreated = moment().format("YYYY-MM-DD");
+    console.log(dateCreated);
+    axios
+      .post("/api/addtask", {
+        date_created: dateCreated,
+        task: this.state.task
       })
-    });
-  }
+      .then(res => {
+        this.setState({
+          tasks: res.data,
+          task: ""
+        });
+      });
+  };
 
-  updateTodoToShow = s => {
-    this.setState({
-      todoToShow: s
+  handleChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  deleteTodo = task_id => {
+    console.log(task_id);
+    axios.delete(`/api/tasks/delete/${task_id}`).then(res => {
+      this.setState({ tasks: res.data });
     });
   };
 
-  deleteTodo = id => {
-    console.log(id)
-   axios.delete(`/api/tasks/delete/${id}`)
-   .then((res) => { console.log(res.data) 
-    this.setState({tasks: res.data})})
-  };
-
-  removeComplete = id => {
-    this.setState({ tasks: this.state.tasks.filter(todo => !todo.complete) });
+  toggle = id => {
+    console.log(this.state);
+    this.state.tasks.map(task => {
+      if (task.task_id === id) {
+        axios
+          .put(`/api/tasks/update/${id}`, { complete: !task.complete })
+          .then(res => this.setState({ tasks: res.data }));
+      }
+    });
   };
 
   render() {
     let tasks = this.state.tasks;
-    if (this.state.todoToShow === "all") {
-    } else if (this.state.todoToShow === "active") {
-    tasks = this.state.tasks.filter(task => !task.complete);
-    } else if (this.state.todoToShow === "complete") {
-    tasks = this.state.tasks.filter(task => task.complete);
-    }
+    console.log(this.state);
+
     return (
       <Wrapper>
-        <TodoForm 
-        onSubmit={this.addTodo}
-        onChange={this.handleChange}
-        task={this.state.task} >
-         {tasks.map((task, id)  => (
-          <Todo key={id}       
-          toggleComplete={() => this.toggleComplete(task.complete)}
-          >
-          <div style={list}>        
-           <span style={{fontFamily: 'Indie Flower'}} key={task.task_id}>
-           <button onClick={() => this.deleteTodo(task.task_id)}>x</button>{task.task}</span>
-          {/* <input type='checkbox' onClick={() => this.toggleComplete(task.task_id)}/> */}
+        <Form>
+          <div style={{ display: "flex", borderBottom: "black solid thin", marginBottom: '5%' }}>
+            <Input
+              name="task"
+              placeholder="Stuff I need to do today"
+              value={this.state.task}
+              onChange={this.handleChange}
+            />
+            <Symbol onClick={this.addTodo}>+</Symbol>
           </div>
-          </Todo>
-        ))
-      }
-      </TodoForm>
+          {tasks.map(task => (
+            <Todo
+              key={task.task_id}
+              toggle={this.toggle}
+              deleteTodo={this.deleteTodo}
+              task={task}
+            />
+          ))}
+        </Form>
 
         {/* <div>
           What you have left:{" "}
