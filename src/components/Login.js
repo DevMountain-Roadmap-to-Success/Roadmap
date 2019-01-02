@@ -122,7 +122,6 @@ const LoginForm = styled(Form)`
             this.props.history.push("/dashboard");
           }
         });
-      // this.props.onClose();
     };
 
     login = () => {
@@ -133,7 +132,6 @@ const LoginForm = styled(Form)`
           this.props.history.push("/dashboard");
         }
       });
-      this.props.onClose();
     };
 
     handleInput = e => {
