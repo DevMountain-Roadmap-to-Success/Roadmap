@@ -34,7 +34,7 @@ module.exports = {
 
       dbInstance.delete_task(req.params.id)
       .then(async() => {
-      let data = await dbInstance.get_tasks(5)
+      let data = await dbInstance.get_tasks(req.session.user.user_id)
           res.status(200).send(data)   
 
       }).catch(err => console.log(err, 'delete error'))
@@ -44,7 +44,7 @@ module.exports = {
         const { complete } = req.body
         console.log(complete)
 
-        dbInstance.complete_task(complete, req.params.id, 5)
+        dbInstance.complete_task(complete, req.params.id, req.session.user.user_id)
         .then((tasks) => {
             console.log(tasks)
             res.status(200).send(tasks)
