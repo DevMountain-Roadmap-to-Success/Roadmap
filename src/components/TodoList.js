@@ -95,10 +95,8 @@ class TodoList extends Component {
   };
 
   render() {
-    console.log(this.props)
-    let tasks = this.state.tasks;
-    console.log(this.state);
-
+    let tasks = this.state.tasks
+    console.log(localStorage)
     return (
       // <Draggable defaultPosition={{ x: 50, y: 50 }}>
         <Wrapper>

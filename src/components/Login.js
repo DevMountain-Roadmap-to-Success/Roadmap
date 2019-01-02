@@ -12,7 +12,25 @@ import {Link} from 'react-router-dom'
 const LoginModal = styled(Modal)`
   /* background-color: rgba(255, 255, 255, 0.856); */
   background-image: url('http://www.siliconvalley.ninja/wp-content/uploads/2018/04/success-roadmap.png');
-  background-size: 100%;
+  background-size: 110%;
+  background-repeat: no-repeat;
+  @media (max-width: 1300px){
+    background-size: 120%;
+    height: 85%;
+    background-position-x: -100px;
+  }
+  @media (max-width: 1100px){
+    background-size: 130%;
+
+  }
+  @media (max-width: 900px){
+    background-size: 160%;
+    background-position-x: -100px;
+  }
+  @media (max-width: 700px){
+    background-size: 180%;
+    background-position-x: -100px;
+  }
   header {
     display: flex;
     flex-direction: row;
@@ -104,7 +122,8 @@ const LoginForm = styled(Form)`
       email: "",
       password: "",
       first_name: "",
-      last_name: ""
+      last_name: "",
+      error: ''
     };
 
     signup = () => {
@@ -120,7 +139,7 @@ const LoginForm = styled(Form)`
         .then(res => {
           if (res.status === 200) {
             this.props.history.push("/dashboard");
-          }
+          } 
         });
     };
 
@@ -130,6 +149,8 @@ const LoginForm = styled(Form)`
       axios.post("/auth/login", { email, password }).then(res => {
         if (res.status === 200) {
           this.props.history.push("/dashboard");
+        } else if(!res){
+          alert({error: 'account not found'})
         }
       });
     };
@@ -141,7 +162,7 @@ const LoginForm = styled(Form)`
   
 
     render() {
-      console.log(this.state);
+      console.log(this.state.error);
       return (
         <LoginModal>
         <Link to='/'> <i
@@ -235,7 +256,9 @@ const LoginForm = styled(Form)`
                 name={this.state.disabled ? "LOGIN" : "SIGN UP"}
                 onClick={this.state.disabled ?  () => this.login() : () => this.signup()  }
               />
+
           </div>
+          <p style={{color: 'red'}}>{this.state.error}</p>
         </LoginModal>
       );
     }

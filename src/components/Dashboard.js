@@ -7,13 +7,13 @@ import { getUser } from "../ducks/reducer";
 import axios from "axios";
 import styled from "styled-components";
 import Menu from "./functional/Menu";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import Repl from "./widgets/Playground";
 import TodoList from "./TodoList";
 import DropDown from "./functional/DropDown";
 // import Dashboard, { addWidget } from "react-dazzle";
 import EditTask from "./functional/EditTask";
-import Chart from './widgets/Chart'
+import Weather from './widgets/Weather'
 
 const PlayGround = styled(Repl)`
   width: 400px;
@@ -71,10 +71,10 @@ class UserDashboard extends Component {
   }
   componentDidMount = () => {
     axios.get("/auth/session").then(res => {
-      console.log(res.data);
-      this.setState({ first: res.data.first_name, last: res.data.last_name });
-      this.props.getUser(res.data);
+       this.setState({ first: res.data.first_name, last: res.data.last_name });
+       this.props.getUser(res.data);
     });
+   
   };
 
   logout = () => {
@@ -134,6 +134,7 @@ class UserDashboard extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
   render() {
+   
     let first = this.state.first.split("");
     let last = this.state.last.split("");
     console.log(this.props.getUser, this.props.user);
@@ -163,7 +164,7 @@ class UserDashboard extends Component {
           {this.renderEditTask()}
         </div>
             {/* <Chart/> */}
-        {/* <PlayGround header={this.state.header} /> */}
+            <Weather />
       </div>
     );
   }
