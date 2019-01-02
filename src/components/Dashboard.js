@@ -162,7 +162,7 @@ class UserDashboard extends Component {
           <TodoList toggleEdit={this.toggleEdit} />
           {this.renderEditTask()}
         </div>
-            <Chart/>
+            {/* <Chart/> */}
         {/* <PlayGround header={this.state.header} /> */}
       </div>
     );
