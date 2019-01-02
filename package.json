@@ -19,6 +19,7 @@
     "express-session": "^1.15.6",
     "massive": "^5.7.1",
     "mdbootstrap": "^4.6.0",
+    "moment": "^2.23.0",
     "react": "^16.6.3",
     "react-day-picker": "^7.2.4",
     "react-dazzle": "^1.4.0",
