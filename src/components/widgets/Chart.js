@@ -1,4 +1,4 @@
-import Chart from 'chart.js'
+// import Chart from 'chart.js'
 import React from 'react'
 
 const chartdata = {
@@ -9,11 +9,13 @@ const chartdata = {
 }
 
 
-Chart.defaults.global.responsive = true;
+// Chart.defaults.global.responsive = true;
 class ChartWidget extends React.Component {
     render(){
 
-      return <Chart data={chartdata}/>
+      return (
+          <div>Chart</div>
+      )
     }
 }
   
