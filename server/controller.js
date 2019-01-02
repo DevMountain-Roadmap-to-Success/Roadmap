@@ -23,7 +23,7 @@ module.exports = {
     create_task: (req, res) => {
         const dbInstance = req.app.get('db')
         const {date_created, task} = req.body
-
+    },
   get_user: (req, res) => {
     const dbInstance = req.app.get("db");
 
