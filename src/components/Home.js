@@ -4,10 +4,10 @@ import {Container} from './Styles'
 import styled from 'styled-components'
 
 
-const Home = () => {
+const Home = (props) => {
           return (
               <Container>
-                  <Login />
+                  <Login {...props}/>
 
               </Container>
           )

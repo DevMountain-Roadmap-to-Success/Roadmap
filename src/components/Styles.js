@@ -8,7 +8,7 @@ export const Container = styled.div`
   width: 100vw;
   height: 100vh;
   background-size: 140%;
-  /* background-position-y: 100px; */
+  /* background-position-y: -300px; */
   position: relative;
   font-family: "Nunito", sans-serif;
   @media (max-width: 1200px) {
