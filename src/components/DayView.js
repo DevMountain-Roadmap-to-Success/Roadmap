@@ -17,7 +17,7 @@ class DayView extends Component {
     let times = [];
     let currentTime = startTime;
     for (let i = currentTime; i < endTime; i++) {
-      times.push({ time: currentTime, activity: "" });
+      times.push({ time: moment(currentTime, 'h').format('h:mm A'), activity: "" });
       currentTime++;
     }
     this.setState({ times });
@@ -26,7 +26,7 @@ class DayView extends Component {
   render() {
     console.log(this.state.times);
     let hours = this.state.times.map((time, i) => {
-      return <TimeSlot key={time} hour={moment(time)} />
+      return <TimeSlot key={i}  time={time}/>
     });
     return (
       <div>
