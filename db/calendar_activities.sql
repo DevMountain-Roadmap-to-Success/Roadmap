@@ -1,4 +1,4 @@
-select * from date_table
+select activity from date_table
 where date = $1
 and time = $2
-and user_id = $3;
+and user_id = $3; 

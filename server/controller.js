@@ -68,7 +68,7 @@ module.exports = {
   },
   calendar_activities: (req, res) => {
     const db = req.app.get("db");
-    const { date, time } = req.params;
+    const { date, time } = req.body;
     db.calendar_activities(date, time, req.session.user.user_id).then(
       activities => res.status(200).send(activities)
     );
