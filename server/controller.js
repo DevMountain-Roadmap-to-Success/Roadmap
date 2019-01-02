@@ -24,7 +24,7 @@ module.exports = {
         const dbInstance = req.app.get('db')
         const {date_created, task} = req.body
 
-        dbInstance.create_task(5, task, false, date_created )
+        dbInstance.create_task(req.session.user.user_id, task, false, date_created )
         .then((data) => res.status(200).send(data))
         .catch(err => console.log(err, 'create task error'))
     },
