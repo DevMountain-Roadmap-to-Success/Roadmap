@@ -7,41 +7,10 @@ import styled from "styled-components";
 import Input from "./functional/Input";
 import Todo from "./functional/Todo";
 import Draggable from "react-draggable";
-// import TimePicker from "react-time-picker";
+import {Wrapper, TodoForm} from './Styles'
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import "react-day-picker/lib/style.css";
 
-
-
-const Wrapper = styled.div`
-  background-color: white;
-  width: 330px;
-  height: 350px;
-  display: flex;
-  box-shadow: 0px 1px 1px 0.5px rgb(200, 200, 200);
-  justify-content: center;
-  flex-direction: "column";
-
-  button {
-    background-color: transparent;
-    border: none;
-  }
-`;
-const TodoForm = styled.form`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  width: 80%;
-  height: 80%;
-  margin-top: 5%;
-  font-family: "Nunito";
-  overflow: scroll;
-
-  input {
-    border: none;
-    background-color: transparent;
-  }
-`;
 
 
 export const MyDatePicker = () => {
@@ -72,7 +41,7 @@ class TodoList extends Component {
   componentDidMount = () => {
     axios.get("/api/tasks").then(res => {
       this.setState({ tasks: res.data })
-      
+      this.props.getTasks(res.data)
     });
   };
 
@@ -90,7 +59,6 @@ class TodoList extends Component {
           tasks: res.data,
           task: ""
         });
-        this.props.getTasks(e.res.data)
       });
   };
 
@@ -132,19 +100,19 @@ class TodoList extends Component {
     console.log(this.state);
 
     return (
-      <Draggable defaultPosition={{ x: 50, y: 50 }}>
+      // <Draggable defaultPosition={{ x: 50, y: 50 }}>
         <Wrapper>
           <TodoForm onSubmit={this.addTodo}>
-            <div style={{ marginBottom: "3%" }}>
+            {/* <div style={{ marginBottom: "3%" }}> */}
               <Input
-                name="task"
+                type='text'
+                name='task'
                 placeholder="Stuff I need to do today"
                 value={this.state.task}
                 onChange={this.handleChange}
               />
-              {/* <Symbol onClick={this.addTodo}>+</Symbol> */}
               <hr />
-            </div>
+            {/* </div> */}
             {tasks.map(task => (
               <Todo
                 key={task.task_id}
@@ -155,41 +123,8 @@ class TodoList extends Component {
               />
             ))}
           </TodoForm>
-
-          {/* <div>
-          What you have left:{" "}
-          {this.state.tasks.filter(task => !task.complete).length}
-        </div>
-        <div>
-          <button onClick={() => this.updateTodoToShow("all")}>All</button>
-          <button onClick={() => this.updateTodoToShow("active")}>
-            Active
-          </button>
-          <button onClick={() => this.updateTodoToShow("complete")}>
-            Complete
-          </button>
-        </div>
-        {this.state.tasks.some(task => task.complete) ? (
-          <div>
-            <button onClick={this.removeComplete}>Remove All Complete</button>
-          </div>
-        ) : null}
-        <div>
-          <button
-            onClick={() => {
-              this.setState({
-              tasks: this.state.tasks.map(task => ({
-                  ...task,                  complete: this.state.toggleAllComplete
-                })),
-                toggleAllComplete: !this.state.toggleAllComplete
-              });
-            }}
-          >
-            Toggle All Complete: {`${this.state.toggleAllComplete}`}
-          </button>
-        </div> */}
         </Wrapper>
-      </Draggable>
+      // </Draggable>
     );
   }
 }
@@ -198,8 +133,4 @@ const mapStateToProps = state => {
     task: state.task
   }
 }
-
-
-
-// const bindActionCreators = {getTasks}
 export default connect(mapStateToProps, {getTasks})(TodoList);

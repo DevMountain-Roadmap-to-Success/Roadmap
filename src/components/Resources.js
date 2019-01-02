@@ -328,21 +328,15 @@ class Resources extends React.Component {
               <Link to="/playground" style={link}>
                 CODE PLAYGROUND
               </Link>
-              {this.props.user ? (
+              <Link to="/calendar" style={link}>
+                CALENDAR
+              </Link>
                 <Link to="/dashboard" style={link}>
                   DASHBOARD
                 </Link>
-              ) : (
-                <Link to="/home" style={link}>
-                  HOME
-                </Link>
-              )}
-              <Link to="/jobprep" style={link}>
-                JOB PREP
-              </Link>{" "}
-            </>
-          }
-        />
+             </>
+          
+       } />
       </Header>
       
       <Dashboard 
