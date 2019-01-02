@@ -76,6 +76,9 @@ massive(CONNECTION_STRING).then(dbInstance => {
   app.put('/api/tasks/update/:id', ctrl.update_task)
   app.delete('/api/tasks/delete/:id', ctrl.delete_task)
 
+  // calendar
+  app.get('api/activity/:date/:time', ctrl.calendar_activities)
+
 
 
 

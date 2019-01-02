@@ -1,26 +1,25 @@
 import React, { Component } from "react";
-import moment from "moment";
+// import moment from "moment";
+import axios from "axios";
 
 class TimeSlot extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      startTime: 9,
-      endTime: 17
+      activity: ""
     };
   }
 
-  componentDidMount(){
-      let times = []
-      let currentTime = this.state.startTime
-      times.push(moment(currentTime))
+  componentDidMount() {
+    axios.get('');
   }
-
-
   render() {
     return (
       <div>
-        <h1>Time</h1>
+        <h1>{this.props.time}</h1>
+        <h2>{this.props.activity}</h2>
+        <input type="text" />
+        <button>+</button>
       </div>
     );
   }
