@@ -1,81 +1,56 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { ViewState, EditingState } from '@devexpress/dx-react-scheduler';
-import { 
-Scheduler, 
-WeekView, 
-Appointments, 
-AppointmentTooltip, 
-AppointmentForm 
-} from '@devexpress/dx-react-scheduler-material-ui';
-import Wizard from './functional/Wizard';
-
+import React, { Component } from "react";
+import moment from "moment";
+import DayView from "./DayView";
+import TimeSlot from "./TimeSlot";
 
 class Calendar extends Component {
-    constructor() {
-        super();
-        this.state = {
-            blockOne: false,
-            blockTwo: false,
-            blockThree: false,
-        }
+  constructor(props) {
+    super(props);
+    this.state = {
+      weekDays: [],
+      date: moment(),
+      startOfWeek: "",
+      endOfWeek: ""
     };
+  }
 
-    handleBlockPicker = (event) => {
-        this.setState(prevState => { return { [event.target.value]: !prevState.event.target.value } })
-    };
+  componentDidMount() {
+    let stateUpdates = this.createDates();
+    let { weekDays, date, startOfWeek, endOfWeek } = stateUpdates;
+    this.setState({ weekDays, date, startOfWeek, endOfWeek });
+  }
 
-    handleAddAppt = (event) => {
-        this.setState(prevState => { return { blockOne: !prevState.blockOne } })
-    };
+  createDates = (date = moment()) => {
+    var startOfWeek = moment(date).startOf("Week");
+    var endOfWeek = moment(date).endOf("Week");
+    var days = [];
+    var day = startOfWeek;
 
-    displayBlockOne = () => {
-        if (this.state.blockOne) {
-            return (<Wizard
-                // onClick={this.handleBlockPicker()} 
-                />)
-        }
+    while (day <= endOfWeek) {
+      days.push(day.toDate());
+      day = day.clone().add(1, "d");
     }
 
-    displayBlockTwo = () => { };
-
-    displayBlockThree = () => { };
-
-
-    render() {
-        return (
-            <div>
-                <Scheduler
-                    data={[
-                        { startDate: '2018-12-20 10:00', endDate: '2018-12-20 11:00', title: 'Meeting' },
-                        { startDate: '2018-12-21 18:00', endDate: '2018-12-21 19:30', title: 'Go to a gym' }
-                    ]}
-                    >
-                    <WeekView 
-                    startDayHour={4}
-                    />
-                    <Appointments
-                    onDoubleClick={() => this.handleAddAppt}
-                    />
-                    {/* <AppointmentForm /> */}
-                    {/* <Wizard 
-                    blockOne={this.state.blockOne}
-                    /> */}
-
-                {this.displayBlockOne()}
-                </Scheduler>
-            </div>
-        )
+    let stateUpdates = {
+      date: date.format("MM/DD/YY"),
+      weekDays: days,
+      startOfWeek: startOfWeek.format("MM/DD/YY"),
+      endOfWeek: endOfWeek.format("MM/DD/YY")
     };
-};
+    return stateUpdates;
+  };
 
-
-const mapDispatchToProps = {}
-
-const mapStatetoProps = (state) => {
-    return {
-
-    }
+  render() {
+    let weekView = this.state.weekDays.map((day, i) => {
+      return <DayView key={day} date={moment(day).format("MM/DD/YY")} />;
+    });
+    return (
+      <div>
+        <h1>calendar</h1>
+        {weekView}
+      </div>
+    );
+  }
 }
 
-export default connect(mapStatetoProps, mapDispatchToProps)(Calendar);
+export default Calendar;
