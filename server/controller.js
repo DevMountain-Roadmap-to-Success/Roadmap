@@ -49,6 +49,15 @@ module.exports = {
             console.log(tasks)
             res.status(200).send(tasks)
         })
+    },
+    update_task: (req, res) => {
+        const dbInstance = req.app.get('db')
+        const {description, complete_by } = req.body
+        let complete = false
+
+
+        dbInstance.update_task(req.params.id, complete, complete_by, description, req.session.user.user_id)
+        .then((data) => res.status(200).send(data))
     }
 
 }

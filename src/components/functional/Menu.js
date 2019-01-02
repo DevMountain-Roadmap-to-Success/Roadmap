@@ -14,14 +14,15 @@ const CircleDiv = styled.span`
   text-align: center;
   line-height: 60px;
   cursor: pointer;
-
+    
 `
 
 const Menu = (props) => {
     console.log(props)
     return (
         <>
-        <CircleDiv onClick={props.onClick}>
+        <CircleDiv {...props} 
+        onClick={props.onClick}>
         {props.children}
         </CircleDiv>
         </>

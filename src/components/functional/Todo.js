@@ -17,6 +17,7 @@ const List = styled.div`
   .todo {
     margin-left: 20px;
     font-size: 20px;
+    cursor: pointer;
   }
   .checkbox {
     border-radius: 50%;
@@ -40,7 +41,7 @@ const Remove = styled.div`
 
 
 
-const Todo = ({ task, toggle, deleteTodo }) => {
+const Todo = ({ task, toggle, deleteTodo, onDoubleClick }) => {
   console.log(task);
 
   return (
@@ -48,8 +49,9 @@ const Todo = ({ task, toggle, deleteTodo }) => {
       <div
         onClick={() => toggle(task.task_id)}
         className={task.complete ? "checkbox toggle" : "checkbox"}
-      />
+        />
       <div
+        onDoubleClick={() => onDoubleClick(task.task_id, task.task)}
         key={task.task_id}
         className={task.complete ? "todo completed" : "todo"}
       >

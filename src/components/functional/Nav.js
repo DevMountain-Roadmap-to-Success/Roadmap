@@ -1,14 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
-
-
+import {Link} from 'react-router-dom'
+import Menu from './Menu'
 
 const NavLinks = styled.nav`
     color: ${props => props.color || 'white'};
     font-size: 15.5px;
     font-weight: 400;
     letter-spacing: .5px;
-    width: ${props => props.width || '60%'};
+    width: ${props => props.width || 'auto'};
     display: flex;
     margin-right: 3%;
     justify-content: ${props => props.justifyContent || 'space-between'};
@@ -16,9 +16,10 @@ const NavLinks = styled.nav`
     a {
         color: white;
         text-decoration: none;
-        font-size: 18px;
+        font-size: 16px;
         font-family: 'Nunito';
         margin-right: '5%'
+        
     }
     @media (max-width: 1500px) {
         a {
@@ -26,7 +27,9 @@ const NavLinks = styled.nav`
         }
     }
     @media (max-width: 1100px) {
+        a {
         display: none;
+        }
     }
     span {
         color: white;
@@ -41,9 +44,7 @@ const Nav = (props) => {
   
     <>
     <NavLinks {...props}>
-    {props.name}
-    {props.children}
-    {props.render.props.children}
+   {props.render.props.children}
     </NavLinks>
     </>
 
