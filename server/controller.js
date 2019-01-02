@@ -17,7 +17,7 @@ module.exports = {
     get_tasks: (req, res) => {
         const dbInstance = req.app.get('db')
 
-        dbInstance.get_tasks(5)
+        dbInstance.get_tasks(req.session.user.user_id)
         .then((data) => res.status(200).send(data))
     },
     create_task: (req, res) => {

@@ -17,15 +17,12 @@ unique(task_id)
 );
 
 create table date_table (
-date_id serial primary key,
-task_id refers  to tasks(task_id)
-numeric_format text,
-day_name text,
-calendar_day integer,
-month_name text,
-calendar_month integer,
-calendar_year integer
-);
+id serial primary key,
+user_id integer references student(user_id),
+date date,
+time time,
+activity text
+)
 
 create table hour_table (
 hour_id serial primary key,
