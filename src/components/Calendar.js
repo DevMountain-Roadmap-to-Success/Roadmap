@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import moment from "moment";
 import DayView from "./DayView";
-import TimeSlot from "./TimeSlot";
+// import TimeSlot from "./TimeSlot";
 
 class Calendar extends Component {
   constructor(props) {
@@ -44,12 +44,7 @@ class Calendar extends Component {
     let weekView = this.state.weekDays.map((day, i) => {
       return <DayView key={day} date={moment(day).format("MM/DD/YY")} />;
     });
-    return (
-      <div>
-        <h1>calendar</h1>
-        {weekView}
-      </div>
-    );
+    return <div>{weekView}</div>;
   }
 }
 
