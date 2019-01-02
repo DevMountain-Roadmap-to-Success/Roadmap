@@ -7,6 +7,7 @@ import Form from "./functional/Form";
 import Input from "./functional/Input";
 import axios from "axios";
 import success from '../assets/success-circle.png'
+import {Link} from 'react-router-dom'
 
 const LoginModal = styled(Modal)`
   /* background-color: rgba(255, 255, 255, 0.856); */
@@ -121,7 +122,7 @@ const LoginForm = styled(Form)`
             this.props.history.push("/dashboard");
           }
         });
-      this.props.onClose();
+      // this.props.onClose();
     };
 
     login = () => {
@@ -145,15 +146,14 @@ const LoginForm = styled(Form)`
       console.log(this.state);
       return (
         <LoginModal>
-         <i
+        <Link to='/'> <i
             className='	
             glyphicon glyphicon-remove close'
-              src={xIcon}
               alt=""
               width="15px"
               height="15px"
-              onClick={this.props.onClose}
-            />
+
+            /></Link>
           <div className='login-wrapper'>
           <header>
             

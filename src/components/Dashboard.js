@@ -13,6 +13,7 @@ import TodoList from "./TodoList";
 import DropDown from "./functional/DropDown";
 // import Dashboard, { addWidget } from "react-dazzle";
 import EditTask from "./functional/EditTask";
+import Draggable from "react-draggable";
 
 const PlayGround = styled(Repl)`
   width: 400px;
@@ -157,23 +158,12 @@ class UserDashboard extends Component {
           />
           {this.showMenu()}
         </Header>
-
-        {/* <Dashboard
-          widgets={this.state.widgets}
-          layout={this.state.layout}
-          editable={true}
-          onMove={this.onMove}
-
-        /> */}
-        {/* <Container> */}
         <div style={{ position: "relative", width: "400px" }}>
           <TodoList toggleEdit={this.toggleEdit} />
           {this.renderEditTask()}
         </div>
 
-        <PlayGround header={this.state.header} />
-
-        {/* </Container> */}
+        {/* <PlayGround header={this.state.header} /> */}
       </div>
     );
   }
