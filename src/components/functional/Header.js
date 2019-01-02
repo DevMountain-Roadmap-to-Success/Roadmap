@@ -11,7 +11,7 @@ const StyledHeader = styled.header`
   display: flex;
   align-items: center;
   position: relative;
-  z-index: 100;
+  z-index: 1;
   justify-content: ${props => props.justifyContent || 'space-between'};
 
   img {
@@ -45,7 +45,7 @@ const Header = props => {
         <img src={logo} alt="logo" className="logo" />
       </Link> 
       {props.children}     
-      {/* <img src={menu} alt="icon" className="menu-icon" onClick={props.onClick}/> */}
+      <img src={menu} alt="icon" className="menu-icon" onClick={props.onClick}/>
     </StyledHeader>
   );
 };

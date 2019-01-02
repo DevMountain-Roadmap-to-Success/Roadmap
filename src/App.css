@@ -1,7 +1,8 @@
 .App {
   text-align: center;
   font-family: 'Nunito', sans-serif;
-color: rgb(77, 77, 77);
+color: rgba(241, 241, 241, 0.979);
+box-shadow:  rgb(247, 33, 33);
 
 }
 

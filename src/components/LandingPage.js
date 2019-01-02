@@ -8,6 +8,7 @@ import play from "../assets/play.png";
 import chat from "../assets/chat.png";
 import phone from "../assets/smartphone.png";
 import NavLink from "./functional/Nav";
+import Login from './Login'
 import DropDown from './functional/DropDown'
 
 const Container = styled.div`
@@ -15,8 +16,8 @@ const Container = styled.div`
   background-repeat: no-repeat;
   width: 100vw;
   height: 100vh;
-  background-size: 115%;
-  background-position-y: -100px;
+  background-size: 140%;
+  /* background-position-y: 100px; */
   position: relative;
   font-family: "Nunito", sans-serif;
   @media (max-width: 1200px) {
@@ -50,10 +51,11 @@ const Container = styled.div`
   }
   .content-box {
     color: white;
-    margin-top: 15%;
+    margin-top: 5%;
     height: 50%;
     display: flex;
     flex-direction: column;
+    text-align: center;
     justify-content: space-evenly;
   }
   .wrapper {
@@ -129,6 +131,20 @@ class LandingPage extends React.Component {
       return { open: !prevState.open };
     });
   };
+  toggleLogin = () => {
+    this.setState(prevState => {
+      return {
+        showLogin: !prevState.showLogin
+      }
+    })
+  }
+  showLoginModal = () => {
+    if(this.state.showLogin){
+      return (
+        <Login onClose={this.toggleLogin} {...this.props}/>
+      )
+    }
+  }
 
   showMenu = () => {
     if (this.state.open) {
@@ -139,18 +155,20 @@ class LandingPage extends React.Component {
   render() {
     return (
       <Container>
-        <Header onClick={this.toggleMenu}>
-          <Nav render={ <>
+        <Header >
+          <Nav width='60%'
+          render={ <>
             <nav>COURSES</nav>
             <nav >STUDENT HOUSING</nav>
             <nav>LOCATIONS</nav>
             <nav>CONTACT</nav>
             <Button name="FIND YOUR COURSE" />
-                <Link to="/home" style={{ color: "#00AAE8" }}>
+                <div onClick={this.toggleLogin} style={{ color: "#00AAE8", cursor: 'pointer' }}>
                   STUDENT ROADMAP
-          </Link></> }/>
+          </div></> }/>
         </Header>
         {this.showMenu()}
+        {this.showLoginModal()}
         <main>
           <div className="content-box">
             <h1>Start a Career You're Proud of</h1>
