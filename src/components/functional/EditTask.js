@@ -48,7 +48,7 @@ class EditTask extends React.Component {
   render() {
     const FORMAT = 'M/D/YYYY';
     const { selectedDay } = this.state;
-    console.log(this.props)
+    console.log(this.props.task)
     // let task = tasks.map((task, i) => {
       // return task
     // })
@@ -73,8 +73,7 @@ class EditTask extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    tasks: state.tasks
+    task: state.task
   }
 }
-
-export default connect(mapStateToProps, getTasks)(EditTask)
+export default connect(mapStateToProps, {getTasks})(EditTask)
