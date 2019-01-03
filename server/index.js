@@ -78,6 +78,7 @@ massive(CONNECTION_STRING).then(dbInstance => {
 
   // calendar
   app.post('/api/activity', ctrl.calendar_activities)
+  app.post('/api/makeActivity', ctrl.make_activity)
 
 
 

@@ -1,4 +1,4 @@
-module.exports = { 
+module.exports = {
   get_user: (req, res) => {
     const dbInstance = req.app.get("db");
 
@@ -16,7 +16,9 @@ module.exports = {
   get_tasks: (req, res) => {
     const dbInstance = req.app.get("db");
 
-    dbInstance.get_tasks(req.session.user.user_id).then(data => res.status(200).send(data));
+    dbInstance
+      .get_tasks(req.session.user.user_id)
+      .then(data => res.status(200).send(data));
   },
   create_task: (req, res) => {
     const dbInstance = req.app.get("db");
@@ -71,6 +73,14 @@ module.exports = {
     const { date, time } = req.body;
     db.calendar_activities(date, time, req.session.user.user_id).then(
       activities => res.status(200).send(activities)
+    );
+  },
+
+  make_activity: (req, res) => {
+    const db = req.app.get("db");
+    const { date, time, activity } = req.body;
+    db.make_activity(req.session.user.user_id, date, time, activity).then(
+      activity => res.status(200).send(activity)
     );
   }
 };
