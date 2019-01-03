@@ -89,5 +89,12 @@ module.exports = {
     db.edit_activity(req.session.user.user_id, date, time, activity).then(
       activity => res.status(200).send(activity)
     );
+  },
+  delete_activity: (req, res) => {
+    const db = req.app.get("db");
+    const { id } = req.params;
+    db.delete_activity(id).then(activity =>
+      res.status(200).send(activity)
+    );
   }
 };

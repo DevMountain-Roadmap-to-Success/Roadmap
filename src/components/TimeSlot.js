@@ -6,7 +6,8 @@ class TimeSlot extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activity: ""
+      activity: "",
+      id: null
     };
   }
 
@@ -16,7 +17,7 @@ class TimeSlot extends Component {
     axios.post(`/api/activity`, { date, time }).then(res => {
       if (res.data[0]) {
         console.log(res.data[0].activity);
-        this.setState({ activity: res.data[0].activity });
+        this.setState({ activity: res.data[0].activity, id: res.data[0].id });
       }
     });
   }
@@ -40,6 +41,14 @@ class TimeSlot extends Component {
     const { activity } = this.state;
     axios.put("/api/editActivity", { date, time, activity }).then(res => {
       console.log(res.data);
+      this.setState({ activity: res.data[0].activity });
+    });
+  }
+
+  handleDelete() {
+    const { id } = this.state;
+    axios.delete(`/api/deleteActivity/${id}`).then(res => {
+      this.setState({ activity: res.data });
     });
   }
 
@@ -53,9 +62,9 @@ class TimeSlot extends Component {
           onChange={e => this.handleActivity(e.target.value)}
         />
 
-        <button onClick={() => this.handleEdit()}>Edit</button>
-
         <button onClick={() => this.makeActivity()}>+</button>
+        <button onClick={() => this.handleEdit()}>Edit</button>
+        <button onClick={() => this.handleDelete()}>Clear</button>
       </div>
     );
   }
