@@ -15,17 +15,35 @@ class TimeSlot extends Component {
     let time = this.props.time;
     console.log(date, time);
     axios.post(`/api/activity`, { date, time }).then(res => {
-      if (res.data) {
-        this.setState({ activity: res.data.activity });
+      if (res.data[0]) {
+        console.log(res.data[0].activity);
+        this.setState({ activity: res.data[0].activity });
       }
     });
   }
+  handleActivity(e) {
+    this.setState({ activity: e });
+  }
+
+  makeActivity() {
+    let date = moment(this.props.date).format("YYYY/MM/DD");
+    let time = this.props.time;
+    const { activity } = this.state;
+    axios.post("/api/makeActivity", { date, time, activity }).then(res => {
+      console.log(res.data);
+    });
+  }
+
   render() {
     return (
       <div>
         <h1>{this.props.time}</h1>
-        <input type="text" value={this.state.activity}/>
-        <button>+</button>
+        <input
+          type="text"
+          value={this.state.activity}
+          onChange={e => this.handleActivity(e.target.value)}
+        />
+        <button onClick={() => this.makeActivity()}>+</button>
       </div>
     );
   }
