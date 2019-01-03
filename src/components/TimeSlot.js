@@ -13,7 +13,6 @@ class TimeSlot extends Component {
   componentDidMount() {
     let date = moment(this.props.date).format("YYYY/MM/DD");
     let time = this.props.time;
-    console.log(date, time);
     axios.post(`/api/activity`, { date, time }).then(res => {
       if (res.data[0]) {
         console.log(res.data[0].activity);
@@ -31,6 +30,16 @@ class TimeSlot extends Component {
     const { activity } = this.state;
     axios.post("/api/makeActivity", { date, time, activity }).then(res => {
       console.log(res.data);
+      this.setState({ activity: res.data[0].activity });
+    });
+  }
+
+  handleEdit() {
+    let date = moment(this.props.date).format("YYYY/MM/DD");
+    let time = this.props.time;
+    const { activity } = this.state;
+    axios.put("/api/editActivity", { date, time, activity }).then(res => {
+      console.log(res.data);
     });
   }
 
@@ -43,6 +52,9 @@ class TimeSlot extends Component {
           value={this.state.activity}
           onChange={e => this.handleActivity(e.target.value)}
         />
+
+        <button onClick={() => this.handleEdit()}>Edit</button>
+
         <button onClick={() => this.makeActivity()}>+</button>
       </div>
     );
