@@ -68,6 +68,9 @@ module.exports = {
       )
       .then(data => res.status(200).send(data));
   },
+
+  //CALENDAR
+
   calendar_activities: (req, res) => {
     const db = req.app.get("db");
     const { date, time } = req.body;
@@ -75,7 +78,6 @@ module.exports = {
       activities => res.status(200).send(activities)
     );
   },
-
   make_activity: (req, res) => {
     const db = req.app.get("db");
     const { date, time, activity } = req.body;
@@ -97,4 +99,6 @@ module.exports = {
       res.status(200).send(activity)
     );
   }
+  
+  //CALENDAR
 };
