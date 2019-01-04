@@ -1,23 +1,123 @@
-import React from 'react'
-import styled from 'styled-components'
-import ReactWeather from 'react-open-weather'
-import 'react-open-weather/lib/css/ReactWeather.css';
-import axios from 'axios'
+import React from "react";
+import axios from "axios";
+import "./weather-icons-master/css/weather-icons.css";
+import "./weather-icons-master/css/weather-icons.min.css";
+import styled from "styled-components";
+import "./weather-icons-master/less/mappings/wi-owm.less";
+import moment from "moment";
+import night from "../../assets/nightsky.png";
+import day from "../../assets/bluesky.jpeg";
+import evening from "../../assets/sunset.jpg";
+import Draggable from 'react-draggable'
 
 
+const WeatherWidget = styled.div`
+  background-image: url(${props => props.image || day});
+  background-size: 160%;
+  background-repeat: no-repeat;
+  color: white;
+  font-size: 28px;
+  width: 350px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  font-family: 'arial';
+  border-radius: 4px;
+  box-shadow: 0px 5px 8px 2px rgb(80, 79, 110);
 
+  i {
+    font-size: 60px;
+  }
+  .wrapper {
+    display: flex;
+    width: 100%;
+    position: relative;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+  .weather-description {
+    font-size: 30px;
+  }
+`;
+const Temp = styled.div`
+  font-size: 38px;
+`;
 
-class Weather extends React.Component{
-    
+const TimeWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
 
-    render(){
+  span {
+    font-size: 17px;
+    text-align: right;
+    margin: 10px;
+  }
+`;
+const Time = styled.div`
+  font-size: 48px;
+  font-weight: bold;
+`;
+const days = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
 
-return (
-<div></div>
+class Weather extends React.Component {
+  state = {
+    weather: [],
+    temp: {},
+    code: null,
+    date: moment().format("M.DD"),
+    day: days[new Date().getDay()],
+    time: new Date().getTime(),
+    place: ""
+  };
+  componentDidMount = () => {
+    axios
+      .get(
+        "http://api.openweathermap.org/data/2.5/weather?zip=84604&units=imperial&appid=d116831d7664ec954f3938831a231317"
+      )
+      .then(res => {
+        this.setState({
+          weather: res.data.weather[0],
+          temp: res.data.main,
+          place: res.data.name
+        });
+      });
+  };
 
-)
-    }
+  render() {
+    console.log(this.state);
+    let time = moment(this.state.time).format("HH");
+    let timeDisplay = moment(this.state.time).format("hh:mm");
+    let temp = Math.round(this.state.temp.temp);
+    let id = this.state.weather.id;
+    return (
+      <Draggable>
+      <WeatherWidget image={time < '15' ? day : time > '15' && time < '18' ? evening : night}>
+        <div className="wrapper">
+          {time < "13" ? (
+            <i className={`wi wi-owm-day-${id}`} />
+          ) : (
+            <i className={`wi wi-owm-night-${id}`} />
+          )}
+
+          <TimeWrapper>
+            <span>{`${this.state.day} ${this.state.date}`}</span>
+            <Time>{timeDisplay}</Time>
+            <span>{this.state.place}</span>
+          </TimeWrapper>
+        </div>
+        <div className='wrapper'>
+          <Temp>{temp} &#8457;</Temp>
+
+          <p className="weather-description">
+            {this.state.weather.description}
+          </p>
+        </div>
+      </WeatherWidget>
+      </Draggable>
+    );
+  }
 }
 
- 
-  export default Weather
+export default Weather;
