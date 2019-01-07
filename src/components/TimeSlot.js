@@ -7,6 +7,11 @@ const Input = styled.input `
   border: none;
 
 `
+const TimeBox = styled.div `
+  border-style: solid;
+  border-width: 1px 1px 1px 1px;
+  padding: 1px;
+`
 
 class TimeSlot extends Component {
   constructor(props) {
@@ -14,7 +19,8 @@ class TimeSlot extends Component {
     this.state = {
       activity: "",
       id: null,
-      input: ""
+      input: "",
+      edit: false
     };
   }
 
@@ -27,6 +33,7 @@ class TimeSlot extends Component {
         this.setState({ activity: res.data[0].activity, id: res.data[0].id });
       }
     });
+
   }
  
 
@@ -35,10 +42,7 @@ class TimeSlot extends Component {
   }
 
   makeActivity = () => {
-    console.log(this.state.id)
-    if(this.state.id){
-      this.handleSave()
-    } else {
+    // console.log(this.state.id)
     let date = moment(this.props.date).format("YYYY/MM/DD");
     let time = this.props.time;
     const { input } = this.state;
@@ -46,31 +50,32 @@ class TimeSlot extends Component {
       console.log(res.data);
       this.setState({ activity: res.data[0].activity });
     });
-  }
 }
 
   handleEdit = (val) => {
-    this.setState({ input: val, activity: "" });
+    this.setState({ input: val, activity: "", edit: true });
+    console.log(this.state.id);
+
   }
 
   handleSave = () => {
     let activity = this.state.input;
     axios.put(`/api/editActivity/${this.state.id}`, { activity }).then(res => {
-      console.log(res.data);
-      this.setState({ activity: res.data[0].activity });
+      // console.log(res.data);
+      this.setState({ activity: res.data[0].activity, edit: false });
     });
   }
 
   handleDelete = () => {
     const { id } = this.state;
     axios.delete(`/api/deleteActivity/${id}`).then(res => {
-      this.setState({ activity: res.data });
+      this.setState({ activity: "" });
     });
   }
 
   render() {
     return (
-      <div >
+      <TimeBox>
         <h1>{this.props.time}</h1>
 
         {this.state.activity ? (
@@ -88,10 +93,10 @@ class TimeSlot extends Component {
               value={this.state.input}
               onChange={e => this.handleActivity(e.target.value)}
             />
-            <i className='material-icons' onClick={this.makeActivity}>add</i>
+            <i className='material-icons' onClick={this.state.edit? this.handleSave : this.makeActivity}>add</i>
           </>
         )}
-      </div>
+      </TimeBox>
     );
   }
 }
