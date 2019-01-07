@@ -30,11 +30,11 @@ const ModalWrapper = styled.div`
 `
 const Modal = props => {
     return (
-        <Container>
+        <Container >
             <ModalWrapper {...props}>   
             {props.children}
             </ModalWrapper>
-        </Container>
+         </Container>
     )
 }
 

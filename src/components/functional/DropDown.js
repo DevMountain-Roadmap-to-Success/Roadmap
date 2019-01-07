@@ -1,41 +1,39 @@
-import React from 'react'
+import React from 'react';
+import { MenuItem } from 'react-bootstrap';
 import styled from 'styled-components'
 
-const Menu = styled.menu `
-    width: 120px;
-    height:60px;
-    display: inline-block;
+const Menu = styled.menu`
     background-color: white;
+    padding: 20px;
+    width: 140px;
     position: absolute;
+    z-index: 100;
+    top: 50px;
+    right: 2%;
     color: black;
-    top: 30px;
-    right: 150px;
-    display: flex;
-    flex-direction: column;
-    text-indent: 5px;
+    border-radius: 3px;
+    box-shadow: 0 1px 1px 0 rgb(135, 135, 165);
 
-    span {
-        font-size: 20px;
-        font-family: 'Nunito';
-        cursor: pointer;
+    li {
+     list-style: none;
+     text-align: left;
+     line-height: 30px;
     }
-    span:hover {
-        background-color: lightgrey;
-        color: white;
-       
-    }
-
 `
 
-
-const DropDown = props => {
-    console.log(props)
+const DropDown = (props) => {
+ 
     return (
-      <Menu>
-          {props.children}
+      <Menu open={props.open}>
+        <MenuItem >Edit Profile</MenuItem>
+        <MenuItem onClick={props.logout}>Logout</MenuItem>
+    
+        <MenuItem onClick={props.delete}>Delete Account</MenuItem>
       </Menu>
-    )
-}
+
+    );
+   
+  }
 
 
-export default DropDown
+export default DropDown;

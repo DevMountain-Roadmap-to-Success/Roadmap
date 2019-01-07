@@ -101,7 +101,7 @@ class TodoList extends Component {
       // <Draggable defaultPosition={{ x: 50, y: 50 }}>
         <Wrapper>
           <TodoForm onSubmit={this.addTodo}>
-            {/* <div style={{ marginBottom: "3%" }}> */}
+            <div >
               <Input
                 type='text'
                 name='task'
@@ -110,7 +110,7 @@ class TodoList extends Component {
                 onChange={this.handleChange}
               />
               <hr />
-            {/* </div> */}
+            </div>
             {tasks.map(task => (
               <Todo
                 key={task.task_id}
