@@ -1,9 +1,7 @@
 update date_table
-set activity = $4
-where user_id = $1
-and date = $2
-and time = $3;
+set activity = $2
+where id = $1;
 
-select * from date_table
-where user_id = $1
-and activity = $4;
+
+select activity, id from date_table
+where id = $1;

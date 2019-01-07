@@ -39,7 +39,6 @@ const WeatherWidget = styled.div`
     justify-content: space-evenly;
     align-items: center;
     
-
   }
   .weather-description {
     font-size: 28px;
@@ -75,7 +74,14 @@ class Weather extends React.Component {
     date: moment().format("M.DD"),
     day: days[new Date().getDay()],
     time: new Date().getTime(),
-    place: ""
+    place: "",
+    activeDrags: 0,
+    deltaPosition: {
+      x: 0, y: 0
+    },
+    controlledPosition: {
+      x: -400, y: 200
+    }
   };
   componentDidMount = () => {
     axios

@@ -367,7 +367,7 @@ class Resources extends React.Component {
           onMove={this.onMove}
           onRemove={this.onRemove}
           onAdd={this.onAdd}
-          // editable={true}
+          editable={true}
           widgets={this.state.widgets}
           layout={this.state.layout}
         />
