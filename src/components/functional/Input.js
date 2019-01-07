@@ -8,11 +8,11 @@ const StyledInput = styled.input`
   margin: ${props => props.margin};
 `;
 
-const Input = (props, render) => {
+const Input = (props ) => {
   console.log(props);
   return (
     <StyledInput
-      {...render.children}
+      {...props}
       placeholder={props.placeholder}
       type={props.type}
       onChange={props.onChange}

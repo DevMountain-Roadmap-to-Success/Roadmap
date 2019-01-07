@@ -16,6 +16,7 @@ const chartOptions = {
     width: '400px',
     height: '400px'
 }
+
 // Chart.defaults.global.responsive = true;
 class ChartWidget extends React.Component {
     render(){

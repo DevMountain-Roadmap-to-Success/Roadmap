@@ -6,9 +6,11 @@ import styled from "styled-components";
 import "./weather-icons-master/less/mappings/wi-owm.less";
 import moment from "moment";
 import night from "../../assets/nightsky.png";
-import day from "../../assets/bluesky.jpeg";
+import day from "../../assets/daysky.jpg";
 import evening from "../../assets/sunset.jpg";
 import Draggable from 'react-draggable'
+import {Image} from 'react-bootstrap'
+
 
 
 const WeatherWidget = styled.div`
@@ -18,12 +20,12 @@ const WeatherWidget = styled.div`
   color: white;
   font-size: 28px;
   width: 350px;
-  height: 250px;
+  height: 300px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-  font-family: 'arial';
+  
   border-radius: 4px;
   box-shadow: 0px 5px 8px 2px rgb(80, 79, 110);
 
@@ -36,13 +38,17 @@ const WeatherWidget = styled.div`
     position: relative;
     justify-content: space-evenly;
     align-items: center;
+    
+
   }
   .weather-description {
-    font-size: 30px;
+    font-size: 28px;
+    font-weight: lighter;
   }
 `;
 const Temp = styled.div`
   font-size: 38px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 `;
 
 const TimeWrapper = styled.div`
@@ -52,7 +58,7 @@ const TimeWrapper = styled.div`
   span {
     font-size: 17px;
     text-align: right;
-    margin: 10px;
+    margin: 10px;   
   }
 `;
 const Time = styled.div`
@@ -86,16 +92,23 @@ class Weather extends React.Component {
   };
 
   render() {
-    console.log(this.state);
     let time = moment(this.state.time).format("HH");
+    if(time < 17 && time >= 6){
+      var image = day
+    } else if(time < 19 ){
+      image = evening 
+    } else if(time >= 19 || time < 6){
+      image = night
+    }
+    console.log(this.state);
     let timeDisplay = moment(this.state.time).format("hh:mm");
     let temp = Math.round(this.state.temp.temp);
     let id = this.state.weather.id;
     return (
-      <Draggable>
-      <WeatherWidget image={time < '15' ? day : time > '15' && time < '18' ? evening : night}>
+      <Draggable >
+      <WeatherWidget image={image}>
         <div className="wrapper">
-          {time < "13" ? (
+          {time < 17 ? (
             <i className={`wi wi-owm-day-${id}`} />
           ) : (
             <i className={`wi wi-owm-night-${id}`} />
