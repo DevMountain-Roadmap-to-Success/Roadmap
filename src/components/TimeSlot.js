@@ -12,7 +12,7 @@ const TimeBox = styled.div `
   border-width: 1px 1px 1px 1px;
   padding: 1px;
   width: 230px;
-  height 90px;
+  height: 90px;
 `
 
 class TimeSlot extends Component {
