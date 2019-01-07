@@ -12,13 +12,13 @@ import Fade from '@material-ui/core/Fade';
 
 const LoginModal = styled(Modal)`
   background-image: url('http://www.siliconvalley.ninja/wp-content/uploads/2018/04/success-roadmap.png');
-  background-size: 113%;
+  background-size: 100%;
   height: 65%;
   width: 55vw;
   background-repeat: no-repeat;
-  @media (max-width: 1500px){
+  /* @media (max-width: 1500px){
     background-size: 126%;
-  }
+  } */
   @media (max-width: 1150px){
     background-color: transparent;
     background-image: none;

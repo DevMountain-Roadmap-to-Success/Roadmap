@@ -94,7 +94,7 @@ module.exports = {
   edit_activity: (req, res) => {
     const db = req.app.get("db");
     const { date, time, activity } = req.body;
-    db.edit_activity(req.session.user.user_id, date, time, activity).then(
+    db.edit_activity(req.params.id, activity).then(
       activity => res.status(200).send(activity)
     );
   },

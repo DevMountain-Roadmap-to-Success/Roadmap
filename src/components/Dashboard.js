@@ -15,7 +15,7 @@ import EditTask from "./functional/EditTask";
 import Weather from "./widgets/Weather";
 import Chart from "./widgets/Chart";
 import DropDown from "./functional/DropDown";
-import profilePic from '../assets/profile.png'
+import profilePic from "../assets/profile.png";
 
 const Image = styled.img`
   border-radius: 50%;
@@ -30,16 +30,15 @@ const PlayGround = styled(Repl)`
 `;
 
 class UserDashboard extends Component {
-
-    state = {
-      first: "H",
-      last: "I",
-      open: false,
-      header: false,
-      dropdown: false,
-      description: "",
-      image: profilePic
-  }
+  state = {
+    first: "H",
+    last: "I",
+    open: false,
+    header: false,
+    dropdown: false,
+    description: "",
+    image: profilePic
+  };
 
   componentDidMount = () => {
     axios.get("/auth/session").then(res => {
@@ -48,11 +47,10 @@ class UserDashboard extends Component {
     });
   };
   deleteAccount = () => {
-    axios.delete('/api/account')
-    .then(() => {
-      this.props.history.push('/login')
-    })
-  }
+    axios.delete("/api/account").then(() => {
+      this.props.history.push("/login");
+    });
+  };
   logout = () => {
     axios.get("/api/logout").then(res => {
       if (res.status === 200) {
@@ -65,10 +63,9 @@ class UserDashboard extends Component {
       return { open: !prevState.open };
     });
   };
-  handleStateChange = (state) => {
+  handleStateChange = state => {
     this.setState({ open: state.isOpen });
-  }
-
+  };
 
   toggleEdit = (id, name) => {
     localStorage.setItem("id", id);
@@ -106,23 +103,30 @@ class UserDashboard extends Component {
           justifyContent="unset"
           toggleMenu={this.toggleMenu}
         >
-        <h1>Roadmap Dashboard</h1>
+          <h1>Roadmap Dashboard</h1>
           <MenuIcon>
             <Image
-              src={this.props.user.image ? this.props.user.image : this.state.image}
+              src={
+                this.props.user.image ? this.props.user.image : this.state.image
+              }
               style={{ width: "60px", height: "60px", marginLeft: 0 }}
             />
 
-          <p>{`${this.state.first.toUpperCase()} ${this.state.last.toUpperCase()}`}</p>
-          <i class='material-icons' onClick={() => this.setState({dropdown: !this.state.dropdown})}
-          style={{marginTop: '15px'}} >keyboard_arrow_down</i>
-           { this.state.dropdown ?
-            <DropDown 
-            open={this.state.open}
-            logout={this.logout}
-            delete={this.deleteAccount}/>
-              : null }
-
+            <p>{`${this.state.first.toUpperCase()} ${this.state.last.toUpperCase()}`}</p>
+            <i
+              className="material-icons"
+              onClick={() => this.setState({ dropdown: !this.state.dropdown })}
+              style={{ marginTop: "15px" }}
+            >
+              keyboard_arrow_down
+            </i>
+            {this.state.dropdown ? (
+              <DropDown
+                open={this.state.open}
+                logout={this.logout}
+                delete={this.deleteAccount}
+              />
+            ) : null}
           </MenuIcon>
         </Header>
         <SideBar
@@ -133,9 +137,8 @@ class UserDashboard extends Component {
           <Nav logout={this.logout} />
         </SideBar>
 
-
-          <TodoList toggleEdit={this.toggleEdit} />
-          {this.renderEditTask()}
+        <TodoList toggleEdit={this.toggleEdit} />
+        {this.renderEditTask()}
 
         {/* <Chart/> */}
         <Weather />

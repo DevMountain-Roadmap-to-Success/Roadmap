@@ -5,6 +5,7 @@ import logo from "../../assets/logo.png";
 import { Link } from "react-router-dom";
 import MenuIcon from "./MenuIcon";
 import Nav from './Nav'
+
 const StyledHeader = styled.header`
   background-color: ${props => props.background || '#252525'};
   height: 90px;
@@ -36,7 +37,8 @@ const StyledHeader = styled.header`
     h1 {
       text-indent: 5%;
       font-size: 40px;
-      font-family: 'Happy Monkey'
+      font-family: 'Happy Monkey';
+      width: auto;
     }
   
 `;
