@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Input from './Input'
+import {FormControl, FormGroup} from 'react-bootstrap'
 
 const Form = styled.form`
 width: 100%;
@@ -12,12 +13,12 @@ height: 60%;
 
 `
 
-export default (props, render) => {
+export default (props) => {
 
     return (
         <Form {...props}>
-            {props.render.props.children}
-        
+            {props.children}
+
         </Form>
         
 

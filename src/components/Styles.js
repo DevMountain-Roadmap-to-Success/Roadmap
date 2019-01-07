@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import NavLink from './functional/Nav'
 import background from '../assets/background.jpg'
+import paper from '../assets/note.png'
 
 export const Container = styled.div`
   background-image: url(${background});
@@ -113,13 +114,16 @@ export const Nav = styled(NavLink)`
 `;
 
 
-
+//Todo list
 export const Wrapper = styled.div`
-  background-color: white;
-  width: 330px;
+background-color: white;
+  width: 300px;
   height: 350px;
   display: flex;
-  box-shadow: 0px 1px 1px 0.5px rgb(200, 200, 200);
+  background-position-x: -50px;
+  background-position-y: -50px;
+  margin: 3%;
+  box-shadow: 1px 1px 1px 2px rgb(200, 200, 200);
   justify-content: center;
   flex-direction: "column";
 

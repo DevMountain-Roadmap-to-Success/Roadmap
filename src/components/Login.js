@@ -1,36 +1,35 @@
 import React from "react";
 import styled from "styled-components";
 import Button from "./functional/Button";
-import xIcon from "../assets/close.png";
 import Modal from "./functional/Modal";
 import Form from "./functional/Form";
 import Input from "./functional/Input";
 import axios from "axios";
-import success from '../assets/success-circle.png'
-import {Link} from 'react-router-dom'
+import {Link, Route, Redirect} from 'react-router-dom'
+import Fade from '@material-ui/core/Fade';
+
+
 
 const LoginModal = styled(Modal)`
-  /* background-color: rgba(255, 255, 255, 0.856); */
   background-image: url('http://www.siliconvalley.ninja/wp-content/uploads/2018/04/success-roadmap.png');
-  background-size: 110%;
+  background-size: 113%;
+  height: 65%;
+  width: 55vw;
   background-repeat: no-repeat;
-  @media (max-width: 1300px){
-    background-size: 120%;
-    height: 85%;
-    background-position-x: -100px;
+  @media (max-width: 1500px){
+    background-size: 126%;
   }
-  @media (max-width: 1100px){
-    background-size: 130%;
+  @media (max-width: 1150px){
+    background-color: transparent;
+    background-image: none;
+
 
   }
-  @media (max-width: 900px){
-    background-size: 160%;
-    background-position-x: -100px;
-  }
-  @media (max-width: 700px){
+ 
+  /* @media (max-width: 750px){
     background-size: 180%;
-    background-position-x: -100px;
-  }
+
+  } */
   header {
     display: flex;
     flex-direction: row;
@@ -61,6 +60,9 @@ const LoginModal = styled(Modal)`
     font-weight: 600;
     line-height: 50px;
     margin-top: 3%;
+    @media(max-width: 1150px){
+      font-size: 19px;
+    }
   }
   .close {
     position: absolute;
@@ -69,16 +71,28 @@ const LoginModal = styled(Modal)`
 
   }
   .login-wrapper {
-    width: 320px;
+    width: 300px;
     box-shadow: 0px 1px 2px 2px rgb(186, 197, 202);
-    height: 380px;
+    height: 350px;
     position: absolute;
     right: 5%;
+    margin-top: 30px;
     top: 20%;
     background-color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
+    @media(max-width: 1300px){
+      height: 300px;
+       width: 250px;
+    }
+    @media (max-width: 1150px){
+      height: 350px;
+      width: 300px;
+      right: 25%;
+      top: 5%;
+    }
+    
   }
   i {
     width: 25px;
@@ -96,7 +110,9 @@ const LoginButton = styled(Button)`
   font-size: 15px;
   background-color: #CD0000;
   box-shadow: 0px 3px 3px 3px rgb(247, 33, 33);
-
+  @media(max-width: 1150px){
+    height: 32px;
+  }
 `
 const LoginForm = styled(Form)`
   width: 100%;
@@ -106,13 +122,6 @@ const LoginForm = styled(Form)`
   justify-content: center;
   align-items: center;
 `;
-
-// const InputWrapper = styled.div `
-//     width: 100%;
-//     height: 45px;
-
-// `
-
 
 
 
@@ -125,7 +134,15 @@ const LoginForm = styled(Form)`
       last_name: "",
       error: ''
     };
+  
 
+    getValidationState() {
+      const length = this.state.email.length && this.state.password.length
+      if (length > 5) return 'success';
+      else if (length > 0) return 'error';
+      return null;
+    }
+  
     signup = () => {
       const { email, password, first_name, last_name } = this.state;
       console.log(first_name, last_name, email, password);
@@ -164,7 +181,9 @@ const LoginForm = styled(Form)`
     render() {
       console.log(this.state.error);
       return (
+
         <LoginModal>
+        
         <Link to='/'> <i
             className='	
             glyphicon glyphicon-remove close'
@@ -194,19 +213,19 @@ const LoginForm = styled(Form)`
             </h1>
           
           </header>
-          <LoginForm
-            render={
-              !this.state.disabled ? (
-                <div style={{marginBottom: '20px'}}>
+          <LoginForm validationState={this.getValidationState()}>
+              {!this.state.disabled ? (
+                <div style={{marginBottom: '20px', justifyContent: 'center', display: 'flex', flexDirection: 'column', alignItems:  'center'}}>
                 <div className='input-icon'  style={{marginBottom: '5px', display: 'flex', alignItems: 'center'}} >
-                <i className='glyphicon glyphicon-user' style={{borderRight: 'thin solid grey', height:'15px', width:'20px', color: 'grey', paddingRight: '15px'}}></i>
+                <i className='glyphicon glyphicon-user' style={{borderRight: 'thin solid grey', height:'15px', width:'20px', color: 'grey', paddingRight: '23px'}}></i>
                   <Input
-
+                    value={this.state.first_name}
                     placeholder="First Name"
                     name="first_name"
                     onChange={this.handleInput}
                   />
                   <Input
+                    value={this.state.last_name}
                     placeholder="Last Name"
                     name="last_name"
                     onChange={this.handleInput}
@@ -214,6 +233,7 @@ const LoginForm = styled(Form)`
                    <div className='input-icon' style={{marginBottom: '5px'}} >
                    <i className='glyphicon glyphicon-envelope' width='20px' height='15px' style={{borderRight: 'thin solid #279DFF', color: '#279DFF'}}></i>
                   <Input
+                    value={this.state.email}
                     placeholder="Email"
                     type="email"
                     name="email"
@@ -221,6 +241,7 @@ const LoginForm = styled(Form)`
                   /></div>
                    <div className='input-icon'  >  <i className='glyphicon glyphicon-lock' style={{borderRight: 'thin solid grey', color: 'grey'}}></i>
                   <Input
+                   value={this.state.password}
                     placeholder="Password"
                     type="password"
                     name="password"
@@ -251,7 +272,7 @@ const LoginForm = styled(Form)`
 
               )
             }
-          />
+        </LoginForm>
      <LoginButton
                 name={this.state.disabled ? "LOGIN" : "SIGN UP"}
                 onClick={this.state.disabled ?  () => this.login() : () => this.signup()  }
@@ -259,9 +280,12 @@ const LoginForm = styled(Form)`
 
           </div>
           <p style={{color: 'red'}}>{this.state.error}</p>
-        </LoginModal>
+  
+     
+       </LoginModal>
+
       );
-    }
+          }
   };
 
 export default Login;

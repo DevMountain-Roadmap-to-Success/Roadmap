@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-import { HashRouter as Router, Route, Switch } from "react-router-dom";
+import { HashRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import Login from './components/Login'
 import Resources from "./components/Resources";
 import JobPrep from "./components/JobPrep";
@@ -11,12 +11,18 @@ import PlayGround from "./components/widgets/Playground";
 import Home from './components/Home'
 
 class App extends Component {
+ getConfirmation = (message, callback) => {
+    const allowTransition = window.confirm(message)
+    callback(allowTransition)
+  }
+  
   render() {
     return (
 
 
-        <Router>
+        <Router getUserConfirmation={this.getConfirmation}>
           <Switch>
+         
             <Route exact path="/"component={LandingPage} />
             <Route exact path='/login' component={Home}/>  
             <Route exact path="/dashboard" component={Dashboard} />

@@ -6,14 +6,20 @@ import { connect } from "react-redux";
 import { getUser } from "../ducks/reducer";
 import axios from "axios";
 import styled from "styled-components";
-import Menu from "./functional/Menu";
-import { Link, Redirect } from "react-router-dom";
+import MenuIcon from "./functional/MenuIcon";
+import { Link } from "react-router-dom";
 import Repl from "./widgets/Playground";
 import TodoList from "./TodoList";
-import DropDown from "./functional/DropDown";
-// import Dashboard, { addWidget } from "react-dazzle";
+import SideBar from "./functional/SideBar";
 import EditTask from "./functional/EditTask";
-import Weather from './widgets/Weather'
+import Weather from "./widgets/Weather";
+import Chart from "./widgets/Chart";
+import DropDown from "./functional/DropDown";
+import profilePic from '../assets/profile.png'
+
+const Image = styled.img`
+  border-radius: 50%;
+`;
 
 const PlayGround = styled(Repl)`
   width: 400px;
@@ -23,60 +29,30 @@ const PlayGround = styled(Repl)`
   box-shadow: 0px 2px 2px 0.5px rgb(68, 68, 68);
 `;
 
-const Container = styled.div`
-  height: 95vh;
-  padding-top: 5%;
-  display: flex;
-  justify-content: space-evenly;
-`;
-const NavLink = styled(Nav)`
-  a {
-    margin-right: 5%;
-  }
-`
 class UserDashboard extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+
+    state = {
       first: "H",
       last: "I",
       open: false,
       header: false,
+      dropdown: false,
       description: "",
-      widgets: {
-        Todo: {
-          type: TodoList
-        },
-        Playground: {
-          type: PlayGround
-        }
-      },
-      layout: {
-        rows: [
-          {
-            columns: [
-              {
-                className: "col-md-3",
-                widgets: [{ key: "Todo" }]
-              },
-              {
-                className: "col-md-5",
-                widgets: [{ key: "Playground" }]
-              }
-            ]
-          }
-        ]
-      }
-    };
+      image: profilePic
   }
+
   componentDidMount = () => {
     axios.get("/auth/session").then(res => {
-       this.setState({ first: res.data.first_name, last: res.data.last_name });
-       this.props.getUser(res.data);
+      this.setState({ first: res.data.first_name, last: res.data.last_name });
+      this.props.getUser(res.data);
     });
-   
   };
-
+  deleteAccount = () => {
+    axios.delete('/api/account')
+    .then(() => {
+      this.props.history.push('/login')
+    })
+  }
   logout = () => {
     axios.get("/api/logout").then(res => {
       if (res.status === 200) {
@@ -89,26 +65,11 @@ class UserDashboard extends Component {
       return { open: !prevState.open };
     });
   };
-  showMenu = () => {
-    if (this.state.open) {
-      return (
-        <DropDown>
-            <>
-              <span onClick={this.logout}>
-               Logout
-              </span>
-              <Link to="/account">Account</Link>
-            </>
-          
-            </DropDown>
-      );
-    }
-  };
-  onMove = layout => {
-    this.setState({
-      layout: layout
-    });
-  };
+  handleStateChange = (state) => {
+    this.setState({ open: state.isOpen });
+  }
+
+
   toggleEdit = (id, name) => {
     localStorage.setItem("id", id);
     localStorage.setItem("name", name);
@@ -133,38 +94,51 @@ class UserDashboard extends Component {
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
+
   render() {
-   
-    let first = this.state.first.split("");
-    let last = this.state.last.split("");
-    console.log(this.props.getUser, this.props.user);
+    // let first = this.state.first.split("");
+    // let last = this.state.last.split("");
+    console.log(this.props.user);
     return (
       <div className="dashboard_main">
-        <Header >
-          <NavLink width='50%'
-            toggleMenu={this.toggleMenu}
-            render={
-              <>
-                <Link to="/calendar">
-                  <i className="fa fa-calendar">CALENDAR</i>
-                </Link>
-                <Link to="/playground">CODE PLAYGROUND</Link>
-                <Link to="/jobprep">JOB PREP</Link>
-                <Link to="/resources">RESOURCES</Link>
-                <Menu onClick={this.toggleMenu}>
-                  {`${first[0]} ${last[0]}`}
-                </Menu>
-              </>
-            }
-          />
-          {this.showMenu()}
+        <Header
+          background="#2F3642"
+          justifyContent="unset"
+          toggleMenu={this.toggleMenu}
+        >
+        <h1>Roadmap Dashboard</h1>
+          <MenuIcon>
+            <Image
+              src={this.props.user.image ? this.props.user.image : this.state.image}
+              style={{ width: "60px", height: "60px", marginLeft: 0 }}
+            />
+
+          <p>{`${this.state.first.toUpperCase()} ${this.state.last.toUpperCase()}`}</p>
+          <i class='material-icons' onClick={() => this.setState({dropdown: !this.state.dropdown})}
+          style={{marginTop: '15px'}} >keyboard_arrow_down</i>
+           { this.state.dropdown ?
+            <DropDown 
+            open={this.state.open}
+            logout={this.logout}
+            delete={this.deleteAccount}/>
+              : null }
+
+          </MenuIcon>
         </Header>
-        <div style={{ position: "relative", width: "400px" }}>
+        <SideBar
+          open={this.state.open}
+          disableOverlayClick={true}
+          handleStateChange={state => this.handleStateChange(state)}
+        >
+          <Nav logout={this.logout} />
+        </SideBar>
+
+
           <TodoList toggleEdit={this.toggleEdit} />
           {this.renderEditTask()}
-        </div>
-            {/* <Chart/> */}
-            <Weather />
+
+        {/* <Chart/> */}
+        <Weather />
       </div>
     );
   }

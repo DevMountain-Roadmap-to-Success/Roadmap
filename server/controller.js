@@ -12,6 +12,12 @@ module.exports = {
     res.sendStatus(200);
     console.log("session destroyed");
   },
+  delete_account: (req, res) => {
+    const dbInstance = req.app.get('db')
+
+    dbInstance.delete_account(req.session.user.user_id)
+    .then(() => res.sendStatus(200))
+  },
 
   get_tasks: (req, res) => {
     const dbInstance = req.app.get("db");

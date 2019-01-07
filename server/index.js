@@ -70,6 +70,9 @@ massive(CONNECTION_STRING).then(dbInstance => {
     } 
  }) 
   app.get('/api/logout', ctrl.logout) 
+  app.delete('/api/account', ctrl.delete_account)
+
+  //todolist
   app.get('/api/tasks', ctrl.get_tasks)
   app.post('/api/addtask', ctrl.create_task)
   app.put('/api/tasks/complete/:id', ctrl.complete_task)

@@ -5,9 +5,9 @@ import Button from "./functional/Button";
 import play from "../assets/play.png";
 import chat from "../assets/chat.png";
 import phone from "../assets/smartphone.png";
-import DropDown from './functional/DropDown'
+import DropDown from './functional/SideBar'
 import {Container, Nav} from './Styles'
-
+import logo from '../assets/logo.png'
 
 class LandingPage extends React.Component {
   state = {
@@ -30,18 +30,11 @@ class LandingPage extends React.Component {
   render() {
     return (
       <Container>
-        <Header >
-          <Nav width='60%'
-          render={ <>
-            <nav>COURSES</nav>
-            <nav >STUDENT HOUSING</nav>
-            <nav>LOCATIONS</nav>
-            <nav>CONTACT</nav>
-            <Button name="FIND YOUR COURSE" />
-                <Link to='/login' style={{ color: "#00AAE8", cursor: 'pointer' }}>
-                  STUDENT ROADMAP</Link> 
-          </> } />
+        <Header devLogo={logo} >
+        <Nav nav={'landing page'} />
         </Header>
+
+
         {this.showMenu()}
 
         <main>
