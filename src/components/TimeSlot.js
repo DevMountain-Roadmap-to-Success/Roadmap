@@ -7,7 +7,8 @@ class TimeSlot extends Component {
     super(props);
     this.state = {
       activity: "",
-      id: null
+      id: null,
+      input: ""
     };
   }
 
@@ -16,26 +17,30 @@ class TimeSlot extends Component {
     let time = this.props.time;
     axios.post(`/api/activity`, { date, time }).then(res => {
       if (res.data[0]) {
-        console.log(res.data[0].activity);
+        console.log(res.data);
         this.setState({ activity: res.data[0].activity, id: res.data[0].id });
       }
     });
   }
   handleActivity(e) {
-    this.setState({ activity: e });
+    this.setState({ input: e });
   }
 
   makeActivity() {
     let date = moment(this.props.date).format("YYYY/MM/DD");
     let time = this.props.time;
-    const { activity } = this.state;
-    axios.post("/api/makeActivity", { date, time, activity }).then(res => {
+    const { input } = this.state;
+    axios.post("/api/makeActivity", { date, time, input }).then(res => {
       console.log(res.data);
       this.setState({ activity: res.data[0].activity });
     });
   }
 
-  handleEdit() {
+  handleEdit(val) {
+    this.setState({ input: val, activity: "" });
+  }
+
+  handleSave() {
     let date = moment(this.props.date).format("YYYY/MM/DD");
     let time = this.props.time;
     const { activity } = this.state;
@@ -56,15 +61,25 @@ class TimeSlot extends Component {
     return (
       <div>
         <h1>{this.props.time}</h1>
-        <input
-          type="text"
-          value={this.state.activity}
-          onChange={e => this.handleActivity(e.target.value)}
-        />
 
-        <button onClick={() => this.makeActivity()}>+</button>
-        <button onClick={() => this.handleEdit()}>Edit</button>
-        <button onClick={() => this.handleDelete()}>Clear</button>
+        {this.state.activity ? (
+          <>
+            <span>{this.state.activity}</span>
+            <button onClick={() => this.handleEdit(this.state.activity)}>
+              Edit
+            </button>
+            <i className="material-icons" onClick={this.handleDelete}>clear</i>
+          </>
+        ) : (
+          <>
+            <input
+              type="text"
+              value={this.state.input}
+              onChange={e => this.handleActivity(e.target.value)}
+            />
+            <button onClick={() => this.makeActivity()}>+</button>
+          </>
+        )}
       </div>
     );
   }

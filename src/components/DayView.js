@@ -1,6 +1,25 @@
 import React, { Component } from "react";
 import moment from "moment";
 import TimeSlot from "./TimeSlot";
+import styled from "styled-components";
+
+const Div = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h1.day_name {
+    font-weight: bold;
+    font-size: 32px;
+  }
+`;
+const DayHeader = styled.div`
+  border: black thin solid;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 class DayView extends Component {
   constructor(props) {
@@ -26,14 +45,18 @@ class DayView extends Component {
   render() {
     // console.log(this.state.times);
     let hours = this.state.times.map((time, i) => {
-      return <TimeSlot key={i} time={time} date={this.props.date}/>;
+      return <TimeSlot key={i} time={time} date={this.props.date} />;
     });
     return (
-      <div>
-        <h1>{moment(this.props.date, "MM/DD/YY").format("dddd")}</h1>
-        <h2>{this.props.date}</h2>
-        {hours}
-      </div>
+      <Div>
+        <DayHeader>
+          <h1 className="day_name">
+            {moment(this.props.date, "MM/DD/YY").format("dddd")}
+          </h1>
+          <h2 className="the_dates">{this.props.date}</h2>
+        </DayHeader>
+        <span className="hours">{hours}</span>
+      </Div>
     );
   }
 }
