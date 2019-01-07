@@ -12,6 +12,8 @@ const Div = styled.div`
     font-weight: bold;
     font-size: 32px;
   }
+
+ 
 `;
 const DayHeader = styled.div`
   border: black thin solid;
@@ -20,6 +22,7 @@ const DayHeader = styled.div`
   flex-direction: column;
   align-items: center;
 `;
+
 
 class DayView extends Component {
   constructor(props) {

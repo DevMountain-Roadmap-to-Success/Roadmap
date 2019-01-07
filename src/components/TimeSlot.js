@@ -11,6 +11,8 @@ const TimeBox = styled.div `
   border-style: solid;
   border-width: 1px 1px 1px 1px;
   padding: 1px;
+  width: 230px;
+  height 90px;
 `
 
 class TimeSlot extends Component {
@@ -48,7 +50,7 @@ class TimeSlot extends Component {
     const { input } = this.state;
     axios.post("/api/makeActivity", { date, time, input }).then(res => {
       console.log(res.data);
-      this.setState({ activity: res.data[0].activity });
+      this.setState({ activity: res.data[0].activity, id: res.data[0].id });
     });
 }
 
@@ -92,6 +94,7 @@ class TimeSlot extends Component {
               type="text"
               value={this.state.input}
               onChange={e => this.handleActivity(e.target.value)}
+              placeholder="Type Here"
             />
             <i className='material-icons' onClick={this.state.edit? this.handleSave : this.makeActivity}>add</i>
           </>
