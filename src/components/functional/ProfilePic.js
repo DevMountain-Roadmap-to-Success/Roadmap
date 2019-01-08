@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import menu from '../../assets/menu.png'
+// import menu from '../../assets/menu.png'
 import DropDown from './DropDown'
 
 const CircleDiv = styled.div`

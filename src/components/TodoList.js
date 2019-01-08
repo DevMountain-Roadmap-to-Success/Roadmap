@@ -3,10 +3,10 @@ import moment from "moment";
 import axios from "axios";
 import {connect} from 'react-redux'
 import {getTasks} from '../ducks/reducer'
-import styled from "styled-components";
+// import styled from "styled-components";
 import Input from "./functional/Input";
 import Todo from "./functional/Todo";
-import Draggable from "react-draggable";
+// import Draggable from "react-draggable";
 import {Wrapper, TodoForm} from './Styles'
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import "react-day-picker/lib/style.css";

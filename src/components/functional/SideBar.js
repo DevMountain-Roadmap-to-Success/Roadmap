@@ -1,9 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { slide as Menu } from "react-burger-menu";
-import Nav from "./Nav";
 import { connect } from "react-redux";
-import axios from "axios";
+
 
 const MenuWell = styled(Menu)`
   width: 200px;

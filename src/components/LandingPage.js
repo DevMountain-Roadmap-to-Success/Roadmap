@@ -1,45 +1,23 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Header from "./Header";
-import Button from "./functional/Button";
 import play from "../assets/play.png";
 import chat from "../assets/chat.png";
 import phone from "../assets/smartphone.png";
 import DropDown from './functional/SideBar'
-import {Container, Nav} from './Styles'
+import {Container} from './Styles'
 import logo from '../assets/logo.png'
 
 class LandingPage extends React.Component {
   state = {
     open: false
   };
-
-  toggleMenu = () => {
-    this.setState(prevState => {
-      return { open: !prevState.open };
-    });
-  };
-
-
-  showMenu = () => {
-    if (this.state.open) {
-      return (
-        <DropDown />
-      )}}
-
   render() {
     return (
       <Container>
         <Header devLogo={logo} 
         background='#252525'
         justifyContent='space-between'
-        >
-        <Nav nav={'landing page'} />
-        </Header>
-
-
-        {this.showMenu()}
-
+        nav='landing page'/>
         <main>
           <div className="content-box">
             <h1>Start a Career You're Proud of</h1>

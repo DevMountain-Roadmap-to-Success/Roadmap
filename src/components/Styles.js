@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import NavLink from './functional/Nav'
 import background from '../assets/background.jpg'
-import paper from '../assets/note.png'
+// import paper from '../assets/note.png'
 
 export const Container = styled.div`
   background-image: url(${background});
