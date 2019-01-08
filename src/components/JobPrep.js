@@ -1,6 +1,32 @@
 import React, { Component } from "react";
 import Draggable, { DraggableCore } from 'react-draggable';
 import Iframe from 'react-iframe';
+import styled from "styled-components";
+import Header from './Header';
+
+const Div = styled.div`
+Div{
+width: 100vw;
+}
+
+.box{
+  display:flex;
+  height: 570px;
+  width: 770px;
+  background-color: black;
+}
+
+.frame{
+  margin-left: 35px;
+  margin-top: 35px;
+}
+
+h1{
+  margin-left: 315px;
+  margin-top: 10px;
+  color: white;
+}
+`
 
 class JobPrep extends Component {
   constructor() {
@@ -43,23 +69,26 @@ class JobPrep extends Component {
     const dragHandlers = {onStart: this.onStart, onStop: this.onStop};
     const {deltaPosition, controlledPosition} = this.state;
     return (
-      <div className="page">
+      <>
+      <Header/>
+      <Div className="page">
   
 
 
-        <Draggable onDrag={this.handleDrag} {...dragHandlers}
+        {/* <Draggable onDrag={this.handleDrag} {...dragHandlers}
         defaultPosition={{x:0, y:0}}
         >
           <div className="box">
           <h1>Job Prep</h1>
-            {/* <div>x: {deltaPosition.x.toFixed(0)}, y: {deltaPosition.y.toFixed(0)}</div> */}
+            <div>x: {deltaPosition.x.toFixed(0)}, y: {deltaPosition.y.toFixed(0)}</div>
           </div>
-        </Draggable>
+        </Draggable> */}
 
         <Draggable onDrag={this.handleDrag} {...dragHandlers}
         defaultPosition={{x:50, y:50}}
         >
           <div className="box">
+          <h1>Click Border to Drag</h1>
           
         <Iframe className="frame"
         url="https://quizlet.com/350088308/flashcards/embed"
@@ -75,7 +104,8 @@ class JobPrep extends Component {
 
 
 
-      </div>
+      </Div>
+      </>
     );
   }
 }
