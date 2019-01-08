@@ -164,7 +164,6 @@ class TimeSlot extends Component {
     } else if (this.state.priority === 1) {
       color = { backgroundColor: "rgb(255, 87, 87)" };
     }
-    console.log(color, this.state, TimeBox.backgroundColor);
     return (
       <TimeBox style={color}>
         <Time>{this.props.time}</Time>
