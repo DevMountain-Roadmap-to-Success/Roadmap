@@ -106,7 +106,7 @@ class Weather extends React.Component {
         y: y + ui.deltaY,
       }
     });
-    // console.log(this.state.deltaPosition);   
+    console.log(this.state.deltaPosition);   
 
   }
 
@@ -135,7 +135,7 @@ class Weather extends React.Component {
     let id = this.state.weather.id;
     return (
       <Draggable onDrag={this.handleDrag} {...dragHandlers}
-      defaultPosition={{x:1160 , y: -400}}
+      defaultPosition={{x:375 , y: -400}}
       grid={[25, 25]}
 
       >
