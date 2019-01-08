@@ -2,19 +2,19 @@ import React from "react";
 import styled from "styled-components";
 import menu from "../../assets/menu.png";
 import logo from "../../assets/logo.png";
-import { Link } from "react-router-dom";
-import MenuIcon from "./MenuIcon";
-import Nav from './Nav'
+import {toggleMenu} from '../../ducks/reducer'
+import {connect} from 'react-redux'
+
 
 const StyledHeader = styled.header`
-  background-color: ${props => props.background || '#252525'};
+  background-color: ${props => props.background || '#2F3642'};
   height: 90px;
   color: white;
   display: flex;
   align-items: center;
   position: relative;
   z-index: 1;
-  justify-content: ${props => props.justifyContent || 'space-between'};
+  justify-content: ${props => props.justifyContent || 'unset'};
 
   .logo {
     width: 240px;
@@ -39,21 +39,30 @@ const StyledHeader = styled.header`
       font-size: 40px;
       font-family: 'Happy Monkey';
       width: auto;
+      @media (max-width: 1200px){
+        font-size: 32px;
+      }
     }
   
 `;
 
 const Header = props => {
+  const {toggleMenu} = props
   console.log(props)
   return (
     <StyledHeader {...props}>
        {props.devLogo ?
-        <img src={logo} alt="" className="logo" style={{border: 'none'}}/>
-        : <img src={menu} onClick={props.toggleMenu} className='menu-icon' alt=''/>}
+         <img src={logo} alt="" className="logo" style={{border: 'none'}}/>
+        : <img src={menu} onClick={() => toggleMenu(props.open)} className='menu-icon' alt=''/>}
      
        {props.children} 
     </StyledHeader>
   );
 };
+const mapStateToProps = state => {
+  return {
+    open: state.open
+  }
+}
 
-export default Header;
+export default connect(mapStateToProps, {toggleMenu})(Header);

@@ -1,10 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import Button from "./Button";
-import { Link, withRouter } from "react-router-dom";
-// import {withRouter} from 'react-router'
+import { Link } from "react-router-dom";
+import {connect} from 'react-redux'
+import {toggleMenu} from '../../ducks/reducer'
 import axios from "axios";
-import "@material-ui/icons";
+
+
 
 const NavLinks = styled.div`
   color: ${props => props.color || "white"};
@@ -58,13 +60,14 @@ const MenuItems = styled.div`
   }
 `;
 
-const Nav = (props) => {
- 
-    console.log(props);
+class Nav extends React.Component  {
+  
+      render() {
+    console.log(this.props);
     return (
       <>
-        {props.nav ? (
-          <NavLinks {...props} width="60%">
+        {this.props.nav ? (
+          <NavLinks {...this.props} width="60%">
             <nav>COURSES</nav>
             <nav>STUDENT HOUSING</nav>
             <nav>LOCATIONS</nav>
@@ -75,8 +78,10 @@ const Nav = (props) => {
             </Link>
           </NavLinks>
         ) : (
-          <MenuItems>
-            {props.children}
+            
+          <MenuItems onClick={this.props.toggleMenu}>
+          
+            {this.props.children}
             <Link to="/calendar">
               <i className="material-icons">calendar_today</i>Calendar
             </Link>
@@ -90,7 +95,7 @@ const Nav = (props) => {
             <i className="material-icons">settings</i>
               Settings
             </Link>
-            <span onClick={props.logout}>
+            <span onClick={this.props.logout}>
               {" "}
               <i className="material-icons">exit_to_app</i>Logout
             </span>
@@ -99,5 +104,10 @@ const Nav = (props) => {
       </>
     );
   }
-
-export default Nav;
+}
+const mapStateToProps = state => {
+    return {
+        open: state.open
+    }
+}
+export default connect(mapStateToProps, {toggleMenu})(Nav);

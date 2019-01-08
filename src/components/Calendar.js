@@ -3,9 +3,14 @@ import moment from "moment";
 import DayView from "./DayView";
 import styled from "styled-components";
 // import TimeSlot from "./TimeSlot";
-
+import Header from './functional/Header'
+import SideBar from './functional/SideBar'
+import {Link} from 'react-router-dom'
+import {toggleMenu} from '../ducks/reducer'
+import {connect} from 'react-redux'
 const WeekContainer = styled.div`
   display: flex;
+  justify-content: center;
 `;
 
 class Calendar extends Component {
@@ -15,7 +20,8 @@ class Calendar extends Component {
       weekDays: [],
       date: moment(),
       startOfWeek: "",
-      endOfWeek: ""
+      endOfWeek: "",
+
     };
   }
 
@@ -46,11 +52,34 @@ class Calendar extends Component {
   };
 
   render() {
+    let month = moment(this.state.date).format('MMMM')
+    console.log(month)
     let weekView = this.state.weekDays.map((day, i) => {
       return <DayView key={day} date={moment(day).format("MM/DD/YY")} />;
     });
-    return <WeekContainer>{weekView}</WeekContainer>;
+    return (
+      <div>
+      <Header >
+      <h1 style={{textAlign: 'center', width: '80%'}}>{month}</h1>
+      </Header>
+    <SideBar>     
+           <Link to="/dashboard" onClick={this.props.toggleMenu}>
+              <i className="material-icons">home</i>Dashboard
+         </Link> 
+     </SideBar>
+
+
+       <WeekContainer>
+      {weekView}
+     </WeekContainer>
+     </div>
+    )
+  }
+}
+const mapStateToProps = state => {
+  return {
+    open: state.open
   }
 }
 
-export default Calendar;
+export default connect(mapStateToProps, {toggleMenu})(Calendar);
