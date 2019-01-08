@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Header from "./functional/Header";
+import Header from "./Header";
 import Button from "./functional/Button";
 import play from "../assets/play.png";
 import chat from "../assets/chat.png";

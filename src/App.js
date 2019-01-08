@@ -8,7 +8,9 @@ import Calendar from "./components/Calendar";
 import LandingPage from "./components/LandingPage";
 import PlayGround from "./components/widgets/Playground";
 import Home from './components/Home'
-
+import SideBar from './components/functional/SideBar'
+import Nav from './components/functional/Nav'
+import axios from 'axios'
 
 class App extends Component {
  state = {
@@ -22,6 +24,10 @@ class App extends Component {
      }
    })
  }
+ logout = () => {
+   axios.get('/api/logout')
+   .then(() => this.props.history.push('/login'))
+ }
 
   render() {
     return (
@@ -30,7 +36,8 @@ class App extends Component {
           <Switch>         
             <Route exact path="/"component={LandingPage} />
             <Route exact path='/login' component={Home}/>  
-            <Route exact path="/dashboard" render={() => (<Dashboard toggleMenu={this.toggleMenu} open={this.state.open}/> )} />
+            <Route exact path="/dashboard" render={() => (<Dashboard toggleMenu={this.toggleMenu} open={this.state.open} logout={this.logout}/>
+             )} />
             <Route path="/calendar" render={() => (<Calendar toggleMenu={this.toggleMenu} open={this.state.open}/> )} />
             <Route path="/jobprep" render={() => (<JobPrep toggleMenu={this.toggleMenu} open={this.state.open}/> )} /> />
             <Route path="/resources" render={() => (<Resources toggleMenu={this.toggleMenu} open={this.state.open}/> )}  />

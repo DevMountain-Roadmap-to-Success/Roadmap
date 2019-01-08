@@ -39,31 +39,25 @@ const MenuWell = styled(Menu)`
   }
 `;
 
-class SideBar extends React.Component {
-  logout = () => {
-    axios.get("/api/logout").then(res => {
-      if (res.status === 200) {
-        this.props.history.push("/");
-      }
-    });
-  };
-  render() {
-    console.log(this.props);
-    const { open } = this.props;
+const SideBar = (props) => {
+
+
+    console.log (props);
+    const { open } = props;
     return (
       <MenuWell
         customBurgerIcon={false}
         width="250px"
         isOpen={open}
         noOverlay
-        onStateChange={this.props.handleStateChange}
+        onStateChange={props.handleStateChange}
         disableOverlayClick={true}
       >
-        <Nav>{this.props.children}</Nav>
+        {props.children}
       </MenuWell>
     );
   }
-}
+
 const mapStateToProps = state => {
   return {
     open: state.open

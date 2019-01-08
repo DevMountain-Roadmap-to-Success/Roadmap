@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "./functional/Header";
+import Header from "./Header";
 import Nav from "./functional/Nav";
 import codewars from "../assets/codewars.png";
 import udemy from "../assets/udemy.png";
@@ -349,12 +349,7 @@ class Resources extends React.Component {
         <Header>
           <h1>Resources</h1>
         </Header>
-        <SideBar >
-            <Link to="/dashboard" >
-              <i className="material-icons">home</i>Dashboard
-            </Link>
-        </SideBar>
-
+        
         <Dashboard
           onMove={this.onMove}
           onRemove={this.onRemove}

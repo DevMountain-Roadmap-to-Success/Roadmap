@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import menu from '../../assets/menu.png'
-
+import DropDown from './DropDown'
 
 const CircleDiv = styled.div`
   height: 60px;
@@ -28,13 +28,18 @@ const CircleDiv = styled.div`
 const MenuIcon = (props) => {
     console.log(props)
     return (
-
-        <CircleDiv {...props} 
+<>
+        <CircleDiv {...props}
         onClick={props.onClick}>
         {props.children}
         </CircleDiv>
-        
-
+        {props.dropdown? 
+         <DropDown
+         open={props.dropdown}
+         logout={props.logout}
+         delete={props.deleteAccount}
+        />  : null }
+</>
     )
 }
 
