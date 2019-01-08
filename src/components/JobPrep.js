@@ -6,13 +6,14 @@ import Header from './Header';
 
 const Div = styled.div`
 Div{
+  display: flex;
 width: 100vw;
 }
 
 .box{
   display:flex;
-  height: 570px;
-  width: 770px;
+  height: 470px;
+  width: 670px;
   background-color: black;
 }
 
@@ -22,8 +23,15 @@ width: 100vw;
 }
 
 h1{
-  margin-left: 315px;
+  margin-left: 250px;
   margin-top: 10px;
+  color: white;
+}
+h2{
+  display:flex;
+  justify-content: space-between;
+  margin-left: -180px;
+  margin-top: 445px;
   color: white;
 }
 `
@@ -53,6 +61,8 @@ class JobPrep extends Component {
         y: y + ui.deltaY,
       }
     });
+    // console.log(this.state.deltaPosition);   
+
   }
 
   onStart = () => {
@@ -85,16 +95,35 @@ class JobPrep extends Component {
         </Draggable> */}
 
         <Draggable onDrag={this.handleDrag} {...dragHandlers}
-        defaultPosition={{x:50, y:50}}
+        defaultPosition={{x:25, y:25}}
+        grid={[25, 25]}
         >
           <div className="box">
           <h1>Click Border to Drag</h1>
           
         <Iframe className="frame"
         url="https://quizlet.com/350088308/flashcards/embed"
-        width="700px"
-        height="500px"
+        width="600px"
+        height="400px"
         />
+        <h2>React / Node Interview Questions</h2>
+        </div>
+      </Draggable>
+
+      <Draggable onDrag={this.handleDrag} {...dragHandlers}
+        defaultPosition={{x:730, y:-445}}
+        grid={[25, 25]}
+
+        >
+          <div className="box">
+          <h1>Click Border to Drag</h1>
+          
+        <Iframe className="frame"
+        url="https://quizlet.com/350088308/flashcards/embed"
+        width="600px"
+        height="400px"
+        />
+        <h2>React / Node Interview Questions</h2>
         </div>
       </Draggable>
 
