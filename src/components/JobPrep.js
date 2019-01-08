@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Draggable, { DraggableCore } from 'react-draggable';
+import Iframe from 'react-iframe';
 
 class JobPrep extends Component {
   constructor() {
@@ -13,6 +14,7 @@ class JobPrep extends Component {
         x: -400, y: 200
       }
     }
+
     this.handleDrag = this.handleDrag.bind(this);
 
   };
@@ -41,14 +43,8 @@ class JobPrep extends Component {
     const dragHandlers = {onStart: this.onStart, onStop: this.onStop};
     const {deltaPosition, controlledPosition} = this.state;
     return (
-      <div>
-        {/* <Draggable
-      grid={[25, 25]}
-      defaultPosition={{x:500, y:500}}
-      onDrag={this.handleDrag}
-      >
-        <h1>Job Prep</h1>
-      </Draggable> */}
+      <div className="page">
+  
 
 
         <Draggable onDrag={this.handleDrag} {...dragHandlers}
@@ -56,23 +52,28 @@ class JobPrep extends Component {
         >
           <div className="box">
           <h1>Job Prep</h1>
-            <div>x: {deltaPosition.x.toFixed(0)}, y: {deltaPosition.y.toFixed(0)}</div>
+            {/* <div>x: {deltaPosition.x.toFixed(0)}, y: {deltaPosition.y.toFixed(0)}</div> */}
           </div>
         </Draggable>
 
-        <Draggable onDrag={this.handleDrag} {...dragHandlers}>
+        <Draggable onDrag={this.handleDrag} {...dragHandlers}
+        defaultPosition={{x:50, y:50}}
+        >
           <div className="box">
-          <h1>Job Prep</h1>
-            <div>x: {deltaPosition.x.toFixed(0)}, y: {deltaPosition.y.toFixed(0)}</div>
-          </div>
-        </Draggable>
+          
+        <Iframe className="frame"
+        url="https://quizlet.com/350088308/flashcards/embed"
+        width="700px"
+        height="500px"
+        />
+        </div>
+      </Draggable>
 
-        <Draggable onDrag={this.handleDrag} {...dragHandlers}>
-          <div className="box">
-          <h1>Job Prep</h1>
-            <div>x: {deltaPosition.x.toFixed(0)}, y: {deltaPosition.y.toFixed(0)}</div>
-          </div>
-        </Draggable>
+
+
+        {/* <iframe src="https://quizlet.com/350088308/flashcards/embed" height="500" width="100%" style="border:0"></iframe> */}
+
+
 
       </div>
     );
