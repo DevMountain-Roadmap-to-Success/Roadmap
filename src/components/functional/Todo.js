@@ -34,7 +34,7 @@ const List = styled.div`
 
 const Remove = styled.div`
   position: absolute;
-  right: 30px;
+  right: 20px;
   font-size: 10px;
   cursor: pointer;
 `;
@@ -51,6 +51,7 @@ const Todo = ({ task, toggle, deleteTodo, onDoubleClick }) => {
         className={task.complete ? "checkbox toggle" : "checkbox"}
         />
       <div
+        style={{width: '55%', wordWrap: 'break-word'}}
         onDoubleClick={() => onDoubleClick(task.task_id, task.task)}
         key={task.task_id}
         className={task.complete ? "todo completed" : "todo"}
