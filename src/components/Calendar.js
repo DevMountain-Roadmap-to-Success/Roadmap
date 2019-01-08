@@ -3,11 +3,11 @@ import moment from "moment";
 import DayView from "./DayView";
 import styled from "styled-components";
 // import TimeSlot from "./TimeSlot";
-import Header from './Header'
-import SideBar from './functional/SideBar'
-import {Link} from 'react-router-dom'
-import {toggleMenu} from '../ducks/reducer'
-import {connect} from 'react-redux'
+import Header from "./Header";
+import SideBar from "./functional/SideBar";
+import { Link } from "react-router-dom";
+import { toggleMenu } from "../ducks/reducer";
+import { connect } from "react-redux";
 const WeekContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -20,8 +20,7 @@ class Calendar extends Component {
       weekDays: [],
       date: moment(),
       startOfWeek: "",
-      endOfWeek: "",
-
+      endOfWeek: ""
     };
   }
 
@@ -51,28 +50,43 @@ class Calendar extends Component {
     return stateUpdates;
   };
 
+  switchWeek = days => {
+    let newDay = this.state.date;
+    newDay = moment(newDay).add(days, "d");
+
+    let stateUpdates = this.createDates(newDay);
+    let { weekDays, date, startOfWeek, endOfWeek } = stateUpdates;
+    this.setState({ weekDays, date, startOfWeek, endOfWeek });
+  };
+
   render() {
-    let month = moment(this.state.date).format('MMMM')
-    console.log(month)
+    let month = moment(this.state.date).format("MMMM");
+    console.log(month);
     let weekView = this.state.weekDays.map((day, i) => {
       return <DayView key={day} date={moment(day).format("MM/DD/YY")} />;
     });
     return (
       <div>
-      <Header >
-      <h1 style={{textAlign: 'center', width: '80%'}}>{month}</h1>
-      </Header>
-       <WeekContainer>
-      {weekView}
-     </WeekContainer>
-     </div>
-    )
+        <Header>
+          <h1 style={{ textAlign: "center", width: "80%" }}>{month}</h1>
+        </Header>
+        <div>
+          <button onClick={() => this.switchWeek(-7)}>{"<"}</button>
+          <h2>{` ${this.state.startOfWeek} - ${this.state.endOfWeek} `}</h2>
+          <button onClick={() => this.switchWeek(7)}>{">"}</button>
+        </div>
+        <WeekContainer>{weekView}</WeekContainer>
+      </div>
+    );
   }
 }
 const mapStateToProps = state => {
   return {
     open: state.open
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps, {toggleMenu})(Calendar);
+export default connect(
+  mapStateToProps,
+  { toggleMenu }
+)(Calendar);
