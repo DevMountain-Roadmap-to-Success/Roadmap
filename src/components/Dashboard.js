@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./Dashboard.css";
-import Header from "./functional/Header";
+import Header from "./Header";
 import { connect } from "react-redux";
 import { getUser } from "../ducks/reducer";
 import axios from "axios";
@@ -8,24 +8,24 @@ import styled from "styled-components";
 import MenuIcon from "./functional/MenuIcon";
 import Repl from "./widgets/Playground";
 import TodoList from "./TodoList";
-import SideBar from "./functional/SideBar";
 import EditTask from "./functional/EditTask";
 import Weather from "./widgets/Weather";
 // import Chart from "./widgets/Chart";
 import DropDown from "./functional/DropDown";
 import profilePic from "../assets/profile.png";
+import {withRouter} from 'react-router'
 
 const Image = styled.img`
   border-radius: 50%;
 `;
 
-const PlayGround = styled(Repl)`
-  width: 400px;
-  height: 400px;
-  margin-left: 0;
-  margin-top: 0;
-  box-shadow: 0px 2px 2px 0.5px rgb(68, 68, 68);
-`;
+// const PlayGround = styled(Repl)`
+//   width: 400px;
+//   height: 400px;
+//   margin-left: 0;
+//   margin-top: 0;
+//   box-shadow: 0px 2px 2px 0.5px rgb(68, 68, 68);
+// `;
 
 class UserDashboard extends Component {
   state = {
@@ -50,11 +50,7 @@ class UserDashboard extends Component {
     });
   };
 
-  toggleMenu = () => {
-    this.setState(prevState => {
-      return { open: !prevState.open };
-    });
-  };
+
   handleStateChange = state => {
     this.setState({ open: state.isOpen });
   };
@@ -91,12 +87,13 @@ class UserDashboard extends Component {
     return (
       <div className="dashboard_main">
         <Header
+        {...this.props}
           justifyContent="unset"
-          // toggleMenu={this.props.toggleMenu}
         >
           <h1>Roadmap Dashboard</h1>
-          <MenuIcon>
+          <MenuIcon {...this.props} dropdown={this.state.drowdown}>
             <Image
+
               src={
                 this.props.user.image ? this.props.user.image : this.state.image
               }
@@ -111,21 +108,15 @@ class UserDashboard extends Component {
             >
               keyboard_arrow_down
             </i>
-            {this.state.dropdown ? (
-              <DropDown
-                open={this.state.open}
-                logout={this.logout}
-                delete={this.deleteAccount}
-              />
-            ) : null}
-          </MenuIcon>
+          
+          </MenuIcon >
         </Header>
-        <SideBar
+        {/* <SideBar
         {...this.props}
           // open={this.props.open}
           disableOverlayClick={true}
           handleStateChange={state => this.handleStateChange(state)}
-        />
+        /> */}
 
 
         <TodoList toggleEdit={this.toggleEdit} />
@@ -144,7 +135,7 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   { getUser }
-)(UserDashboard);
+)(UserDashboard));

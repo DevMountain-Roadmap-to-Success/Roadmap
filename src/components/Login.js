@@ -12,17 +12,24 @@ import Fade from '@material-ui/core/Fade';
 
 const LoginModal = styled(Modal)`
   background-image: url('http://www.siliconvalley.ninja/wp-content/uploads/2018/04/success-roadmap.png');
-  background-size: 100%;
-  height: 65%;
+  background-size: 117%;
+  background-color: #4592B4;
+  height: 35vw;
   width: 55vw;
   background-repeat: no-repeat;
   /* @media (max-width: 1500px){
     background-size: 126%;
   } */
-  @media (max-width: 1150px){
-    background-color: transparent;
+  @media (max-width: 1100px){
+    position: relative;
     background-image: none;
-
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 350px;
+    width: 300px;
 
   }
  
@@ -60,8 +67,11 @@ const LoginModal = styled(Modal)`
     font-weight: 600;
     line-height: 50px;
     margin-top: 3%;
-    @media(max-width: 1150px){
+    @media(min-width: 900px)and (max-width: 1250px){
       font-size: 19px;
+    }
+    @media(max-width: 1100px){
+      font-size: 22px;
     }
   }
   .close {
@@ -71,9 +81,9 @@ const LoginModal = styled(Modal)`
 
   }
   .login-wrapper {
-    width: 300px;
+    width: 35%;
     box-shadow: 0px 1px 2px 2px rgb(186, 197, 202);
-    height: 350px;
+    height: 65%;
     position: absolute;
     right: 5%;
     margin-top: 30px;
@@ -82,15 +92,15 @@ const LoginModal = styled(Modal)`
     display: flex;
     flex-direction: column;
     align-items: center;
-    @media(max-width: 1300px){
-      height: 300px;
-       width: 250px;
-    }
-    @media (max-width: 1150px){
-      height: 350px;
-      width: 300px;
-      right: 25%;
-      top: 5%;
+ 
+    @media (max-width: 1100px){
+        width: 100%;
+        height: 100%;
+        position: relative;
+        right: 0;
+        margin: 0;
+        top: 0;
+        padding-bottom: 30px;
     }
     
   }
@@ -110,9 +120,13 @@ const LoginButton = styled(Button)`
   font-size: 15px;
   background-color: #CD0000;
   box-shadow: 0px 3px 3px 3px rgb(247, 33, 33);
-  @media(max-width: 1150px){
-    height: 32px;
+  @media(max-width: 1250px){
+    height: 30px;
   }
+  @media(max-width: 1100px){
+    height: 40px;
+  }
+  
 `
 const LoginForm = styled(Form)`
   width: 100%;
@@ -121,6 +135,10 @@ const LoginForm = styled(Form)`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @media(max-width: 1100px){
+    height: 60%;
+  }
 `;
 
 

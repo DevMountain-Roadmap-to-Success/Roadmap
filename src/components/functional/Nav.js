@@ -1,14 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import Button from "./Button";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import {connect} from 'react-redux'
 import {toggleMenu} from '../../ducks/reducer'
 import axios from "axios";
 
 
 
-const NavLinks = styled.div`
+const Links = styled.div`
   color: ${props => props.color || "white"};
   font-size: 15.5px;
   font-weight: 400;
@@ -67,34 +67,37 @@ class Nav extends React.Component  {
     return (
       <>
         {this.props.nav ? (
-          <NavLinks {...this.props} width="60%">
+          <Links {...this.props} width="60%">
             <nav>COURSES</nav>
             <nav>STUDENT HOUSING</nav>
             <nav>LOCATIONS</nav>
             <nav>CONTACT</nav>
             <Button name="FIND YOUR COURSE" />
-            <Link to="/login" style={{ color: "#00AAE8", cursor: "pointer" }}>
+            <NavLink to="/login" style={{ color: "#00AAE8", cursor: "pointer" }}>
               STUDENT ROADMAP
-            </Link>
-          </NavLinks>
+            </NavLink>
+          </Links>
         ) : (
             
           <MenuItems onClick={this.props.toggleMenu}>
           
             {this.props.children}
-            <Link to="/calendar">
+            <NavLink to="/dashboard" onClick={this.props.toggleMenu}>
+              <i className="material-icons">home</i>Dashboard
+         </NavLink> 
+            <NavLink to="/calendar">
               <i className="material-icons">calendar_today</i>Calendar
-            </Link>
-            <Link to="/resources">
+            </NavLink>
+            <NavLink to="/resources">
               <i className="material-icons">local_library</i>Resources
-            </Link>
-            <Link to="/jobprep">
+            </NavLink>
+            <NavLink to="/jobprep">
               <i className="material-icons">next_week</i>Job Prep
-            </Link>
-            <Link to='/'>
+            </NavLink>
+            <NavLink to='/'>
             <i className="material-icons">settings</i>
               Settings
-            </Link>
+            </NavLink>
             <span onClick={this.props.logout}>
               {" "}
               <i className="material-icons">exit_to_app</i>Logout

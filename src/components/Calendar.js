@@ -3,7 +3,7 @@ import moment from "moment";
 import DayView from "./DayView";
 import styled from "styled-components";
 // import TimeSlot from "./TimeSlot";
-import Header from './functional/Header'
+import Header from './Header'
 import SideBar from './functional/SideBar'
 import {Link} from 'react-router-dom'
 import {toggleMenu} from '../ducks/reducer'
@@ -62,13 +62,6 @@ class Calendar extends Component {
       <Header >
       <h1 style={{textAlign: 'center', width: '80%'}}>{month}</h1>
       </Header>
-    <SideBar>     
-           <Link to="/dashboard" onClick={this.props.toggleMenu}>
-              <i className="material-icons">home</i>Dashboard
-         </Link> 
-     </SideBar>
-
-
        <WeekContainer>
       {weekView}
      </WeekContainer>
