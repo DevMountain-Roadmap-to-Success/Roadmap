@@ -20,6 +20,18 @@ const SwitchWeek = styled.div`
   font-weight: bold;
   font-size: 28px;
   margin-top: 10px;
+
+  button{
+    border-radius:5px;
+    background: #2F3642;
+    color: #F3F3F3;
+    box-shadow: 1px 1px 1px gray;
+    outline: none;
+  }
+  button:hover{
+    background-color: rgb(122, 202, 248);
+    cursor: pointer;
+  }
 `;
 
 class Calendar extends Component {
