@@ -9,7 +9,7 @@ import night from "../../assets/nightsky.png";
 import day from "../../assets/daysky.jpg";
 import evening from "../../assets/sunset.jpg";
 import Draggable from 'react-draggable'
-import {Image} from 'react-bootstrap'
+
 
 
 

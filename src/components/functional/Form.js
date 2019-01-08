@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import Input from './Input'
-import {FormControl, FormGroup} from 'react-bootstrap'
+// import Input from './Input'
+// import {FormControl, FormGroup} from 'react-bootstrap'
 
 const Form = styled.form`
 width: 100%;
