@@ -8,9 +8,18 @@ import SideBar from "./functional/SideBar";
 import { Link } from "react-router-dom";
 import { toggleMenu } from "../ducks/reducer";
 import { connect } from "react-redux";
+
 const WeekContainer = styled.div`
   display: flex;
   justify-content: center;
+`;
+const SwitchWeek = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  font-weight: bold;
+  font-size: 28px;
+  margin-top: 10px;
 `;
 
 class Calendar extends Component {
@@ -70,11 +79,11 @@ class Calendar extends Component {
         <Header>
           <h1 style={{ textAlign: "center", width: "80%" }}>{month}</h1>
         </Header>
-        <div>
+        <SwitchWeek>
           <button onClick={() => this.switchWeek(-7)}>{"<"}</button>
           <h2>{` ${this.state.startOfWeek} - ${this.state.endOfWeek} `}</h2>
           <button onClick={() => this.switchWeek(7)}>{">"}</button>
-        </div>
+        </SwitchWeek>
         <WeekContainer>{weekView}</WeekContainer>
       </div>
     );
