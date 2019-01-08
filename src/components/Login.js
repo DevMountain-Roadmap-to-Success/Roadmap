@@ -5,8 +5,9 @@ import Modal from "./functional/Modal";
 import Form from "./functional/Form";
 import Input from "./functional/Input";
 import axios from "axios";
-import {Link, Route, Redirect} from 'react-router-dom'
-import Fade from '@material-ui/core/Fade';
+import {Link } from 'react-router-dom'
+import {connect} from 'react-redux'
+import {getUser} from '../ducks/reducer'
 
 
 
@@ -183,6 +184,7 @@ const LoginForm = styled(Form)`
       console.log(email, password)
       axios.post("/auth/login", { email, password }).then(res => {
         if (res.status === 200) {
+          this.props.getUser(res.data)
           this.props.history.push("/dashboard");
         } else if(!res){
           alert({error: 'account not found'})
@@ -305,5 +307,9 @@ const LoginForm = styled(Form)`
       );
           }
   };
-
-export default Login;
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  }
+}
+export default connect(mapStateToProps, {getUser})(Login);

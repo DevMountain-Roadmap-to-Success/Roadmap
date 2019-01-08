@@ -9,7 +9,8 @@ const initialState = {
 export default function reducer (state=initialState, action){
     switch(action.type) {
     case GET_USER:
-      return Object.assign({}, state, {user: action.payload})
+      return (state, Object.assign({}, state, {user: action.payload}))
+
 
     case GET_TASKS:
         return Object.assign({}, state, {task: action.payload})

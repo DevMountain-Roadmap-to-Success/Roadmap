@@ -8,14 +8,20 @@ import Calendar from "./components/Calendar";
 import LandingPage from "./components/LandingPage";
 import PlayGround from "./components/widgets/Playground";
 import Home from './components/Home'
-import SideBar from './components/functional/SideBar'
-import Nav from './components/functional/Nav'
+import {connect} from 'react-redux'
+import {getUser} from './ducks/reducer'
 import axios from 'axios'
 
 class App extends Component {
  state = {
    open: false
  }
+
+ componentDidMount = () => {
+  axios.get('/auth/session')
+  .then(res => { 
+    this.props.getUser(res.data)})
+  }
 
  toggleMenu = () => {
    this.setState(prevState => {
@@ -28,6 +34,7 @@ class App extends Component {
    axios.get('/api/logout')
    .then(() => this.props.history.push('/login'))
  }
+  // onKeyDown
 
   render() {
     return (
@@ -47,5 +54,9 @@ class App extends Component {
     );
   }
 }
-
-export default App;
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  }
+}
+export default connect(mapStateToProps, {getUser})(App);

@@ -4,20 +4,16 @@ import Header from "./Header";
 import { connect } from "react-redux";
 import { getUser } from "../ducks/reducer";
 import axios from "axios";
-import styled from "styled-components";
-import MenuIcon from "./functional/MenuIcon";
-import Repl from "./widgets/Playground";
+// import styled from "styled-components";
+// import Repl from "./widgets/Playground";
 import TodoList from "./TodoList";
 import EditTask from "./functional/EditTask";
 import Weather from "./widgets/Weather";
 // import Chart from "./widgets/Chart";
-import DropDown from "./functional/DropDown";
 import profilePic from "../assets/profile.png";
 import {withRouter} from 'react-router'
 
-const Image = styled.img`
-  border-radius: 50%;
-`;
+
 
 // const PlayGround = styled(Repl)`
 //   width: 400px;
@@ -35,15 +31,10 @@ class UserDashboard extends Component {
     header: false,
     dropdown: false,
     description: "",
-    image: profilePic
+
   };
 
-  componentDidMount = () => {
-    axios.get("/auth/session").then(res => {
-      this.setState({ first: res.data.first_name, last: res.data.last_name });
-      this.props.getUser(res.data);
-    });
-  };
+  
   deleteAccount = () => {
     axios.delete("/api/account").then(() => {
       this.props.history.push("/login");
@@ -81,9 +72,6 @@ class UserDashboard extends Component {
   };
 
   render() {
-    // let first = this.state.first.split("");
-    // let last = this.state.last.split("");
-    console.log(this.props.user);
     return (
       <div className="dashboard_main">
         <Header
@@ -91,34 +79,9 @@ class UserDashboard extends Component {
           justifyContent="unset"
         >
           <h1>Roadmap Dashboard</h1>
-          <MenuIcon {...this.props} dropdown={this.state.drowdown}>
-            <Image
-
-              src={
-                this.props.user.image ? this.props.user.image : this.state.image
-              }
-              style={{ width: "60px", height: "60px", marginLeft: 0 }}
-            />
-
-            <p>{`${this.state.first.toUpperCase()} ${this.state.last.toUpperCase()}`}</p>
-            <i
-              className="material-icons"
-              onClick={() => this.setState({ dropdown: !this.state.dropdown })}
-              style={{ marginTop: "15px" }}
-            >
-              keyboard_arrow_down
-            </i>
-          
-          </MenuIcon >
+         
         </Header>
-        {/* <SideBar
-        {...this.props}
-          // open={this.props.open}
-          disableOverlayClick={true}
-          handleStateChange={state => this.handleStateChange(state)}
-        /> */}
-
-
+      
         <TodoList toggleEdit={this.toggleEdit} />
         {this.renderEditTask()}
 

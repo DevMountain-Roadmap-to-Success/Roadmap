@@ -2,12 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import menu from "../assets/menu.png";
 import logo from "../assets/logo.png";
-import {toggleMenu} from '../ducks/reducer'
+import {toggleMenu, getUser} from '../ducks/reducer'
 import {connect} from 'react-redux'
 import SideBar from './functional/SideBar'
 import Nav from './functional/Nav'
 import axios from 'axios'
 import {withRouter} from 'react-router'
+import ProfilePic from './functional/ProfilePic'
+import defaultPic from '../assets/profile.png'
 
 const StyledHeader = styled.header`
   background-color: ${props => props.background || '#2F3642'};
@@ -48,9 +50,23 @@ const StyledHeader = styled.header`
     }
   
 `;
+const Image = styled.img`
+  border-radius: 50%;
+`
+
 
 class Header extends React.Component {
+  state = {
+    dropdown: false,
+    first: '',
+    last: ''
+  }
+componentDidMount = (props) => {
+  let {first_name, last_name} = this.props.user
+  this.setState({first: first_name, last: last_name})
+}
 
+  
   logout = () => {
     axios.get('/api/logout')
     .then(() => this.props.history.push('/login'))
@@ -58,6 +74,7 @@ class Header extends React.Component {
 
   render(){
   const {toggleMenu} = this.props
+  const { first_name, last_name, image } = this.props.user
   console.log(this.props)
   return (
     <>
@@ -67,6 +84,25 @@ class Header extends React.Component {
         : <img src={menu} onClick={() => toggleMenu(this.props.open)} className='menu-icon' alt=''/>}
       
        {this.props.children} 
+       <ProfilePic {...this.props} dropdown={this.state.dropdown}>
+            <Image
+
+              src={
+                image ? image : defaultPic
+              }
+              style={{ width: "60px", height: "60px", marginLeft: 0 }}
+            />
+
+            <p style={{textTransform: 'uppercase'}} >{`${first_name} ${last_name}`}</p>
+            <i
+              className="material-icons"
+              onClick={() => this.setState({ dropdown: !this.state.dropdown })}
+              style={{ marginTop: "18px" }}
+            >
+              keyboard_arrow_down
+            </i>
+          
+          </ProfilePic >
     </StyledHeader>
     <SideBar isOpen={this.props.open} >
     <Nav logout={this.logout}/>
@@ -78,8 +114,9 @@ class Header extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    open: state.open
+    open: state.open,
+    user: state.user
   }
 }
 
-export default withRouter(connect(mapStateToProps, {toggleMenu})(Header))
+export default withRouter(connect(mapStateToProps, {toggleMenu, getUser})(Header))
