@@ -8,7 +8,7 @@ const Input = styled.input`
   font-size: 16px;
 `;
 const TimeBox = styled.div`
-  border: rgb(165, 165, 165) .5px solid;
+  border: rgb(165, 165, 165) 0.5px solid;
   padding: 5px;
   width: 200px;
   position: relative;
@@ -27,15 +27,15 @@ const TimeBox = styled.div`
     font-size: 12px;
   }
 `;
-const Activity = styled.span `
+const Activity = styled.span`
   margin-left: 15px;
   font-size: 18px;
-`
-const Time = styled.div `
+`;
+const Time = styled.div`
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 10px;
-`
+`;
 const CheckBoxWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -100,7 +100,7 @@ class TimeSlot extends Component {
   };
 
   handleSave = () => {
-    console.log(this.state.priority)
+    console.log(this.state.priority);
     let activity = this.state.input;
     let priority = this.state.priority;
     axios
@@ -130,22 +130,26 @@ class TimeSlot extends Component {
         <>
           <i
             className="material-icons"
-            id='edit'
-            title='save'
+            id="edit"
+            title="save"
             onClick={this.state.edit ? this.handleSave : this.makeActivity}
           >
             add
           </i>
           <CheckBoxWrapper>
-           <span> Priority:</span>
-           <div>
-            High
-            <input type="checkbox" name={1} onChange={(e) => this.handleCheckBox(e)} />
-            Med
-            <input type="checkbox" name={2} onChange={this.handleCheckBox} />
-            Low
-            <input type="checkbox" name={3} onChange={this.handleCheckBox} />
-          </div>
+            <span> Priority:</span>
+            <div>
+              High
+              <input
+                type="checkbox"
+                name={1}
+                onChange={e => this.handleCheckBox(e)}
+              />
+              Med
+              <input type="checkbox" name={2} onChange={this.handleCheckBox} />
+              Low
+              <input type="checkbox" name={3} onChange={this.handleCheckBox} />
+            </div>
           </CheckBoxWrapper>
         </>
       );
@@ -170,17 +174,18 @@ class TimeSlot extends Component {
             <Activity>{this.state.activity}</Activity>
             <i
               className="material-icons"
-              id='edit'
-              title='edit'
+              id="edit"
+              title="edit"
               onClick={() => this.handleEdit(this.state.activity)}
             >
               edit
             </i>
-            <i 
-            className="material-icons" 
-            id='clear'
-            title='delete'
-            onClick={this.handleDelete}>
+            <i
+              className="material-icons"
+              id="clear"
+              title="delete"
+              onClick={this.handleDelete}
+            >
               clear
             </i>
           </>

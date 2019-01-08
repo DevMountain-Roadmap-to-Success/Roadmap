@@ -12,8 +12,6 @@ const Div = styled.div`
     font-weight: bold;
     font-size: 32px;
   }
-
- 
 `;
 const DayHeader = styled.div`
   border: rgb(165, 165, 165) thin solid;
@@ -23,7 +21,6 @@ const DayHeader = styled.div`
   align-items: center;
   margin-top: 5%;
 `;
-
 
 class DayView extends Component {
   constructor(props) {
