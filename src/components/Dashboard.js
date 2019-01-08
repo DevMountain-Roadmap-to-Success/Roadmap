@@ -1,19 +1,17 @@
 import React, { Component } from "react";
 import "./Dashboard.css";
 import Header from "./functional/Header";
-import Nav from "./functional/Nav";
 import { connect } from "react-redux";
 import { getUser } from "../ducks/reducer";
 import axios from "axios";
 import styled from "styled-components";
 import MenuIcon from "./functional/MenuIcon";
-import { Link } from "react-router-dom";
 import Repl from "./widgets/Playground";
 import TodoList from "./TodoList";
 import SideBar from "./functional/SideBar";
 import EditTask from "./functional/EditTask";
 import Weather from "./widgets/Weather";
-import Chart from "./widgets/Chart";
+// import Chart from "./widgets/Chart";
 import DropDown from "./functional/DropDown";
 import profilePic from "../assets/profile.png";
 
@@ -51,13 +49,7 @@ class UserDashboard extends Component {
       this.props.history.push("/login");
     });
   };
-  logout = () => {
-    axios.get("/api/logout").then(res => {
-      if (res.status === 200) {
-        this.props.history.push("/");
-      }
-    });
-  };
+
   toggleMenu = () => {
     this.setState(prevState => {
       return { open: !prevState.open };
@@ -99,9 +91,8 @@ class UserDashboard extends Component {
     return (
       <div className="dashboard_main">
         <Header
-          background="#2F3642"
           justifyContent="unset"
-          toggleMenu={this.toggleMenu}
+          // toggleMenu={this.props.toggleMenu}
         >
           <h1>Roadmap Dashboard</h1>
           <MenuIcon>
@@ -130,12 +121,12 @@ class UserDashboard extends Component {
           </MenuIcon>
         </Header>
         <SideBar
-          open={this.state.open}
+        {...this.props}
+          // open={this.props.open}
           disableOverlayClick={true}
           handleStateChange={state => this.handleStateChange(state)}
-        >
-          <Nav logout={this.logout} />
-        </SideBar>
+        />
+
 
         <TodoList toggleEdit={this.toggleEdit} />
         {this.renderEditTask()}
@@ -148,7 +139,8 @@ class UserDashboard extends Component {
 }
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+
   };
 };
 

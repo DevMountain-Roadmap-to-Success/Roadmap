@@ -30,7 +30,10 @@ class LandingPage extends React.Component {
   render() {
     return (
       <Container>
-        <Header devLogo={logo} >
+        <Header devLogo={logo} 
+        background='#252525'
+        justifyContent='space-between'
+        >
         <Nav nav={'landing page'} />
         </Header>
 

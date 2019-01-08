@@ -86,15 +86,15 @@ module.exports = {
   },
   make_activity: (req, res) => {
     const db = req.app.get("db");
-    const { date, time, input } = req.body;
-    db.make_activity(req.session.user.user_id, date, time, input).then(
+    const { date, time, input, priority } = req.body;
+    db.make_activity(req.session.user.user_id, date, time, input, priority).then(
       activity => res.status(200).send(activity)
     );
   },
   edit_activity: (req, res) => {
     const db = req.app.get("db");
-    const { date, time, activity } = req.body;
-    db.edit_activity(req.params.id, activity).then(
+    const { activity, priority } = req.body;
+    db.edit_activity(req.params.id, activity, priority).then(
       activity => res.status(200).send(activity)
     );
   },

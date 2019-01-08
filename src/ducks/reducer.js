@@ -1,8 +1,9 @@
-import {GET_USER, GET_TASKS} from './constants'
+import {GET_USER, GET_TASKS, TOGGLE_MENU} from './constants'
 
 const initialState = {
     user: {},
-    task: {}
+    task: {},
+    open: false
 };
 
 export default function reducer (state=initialState, action){
@@ -12,9 +13,12 @@ export default function reducer (state=initialState, action){
 
     case GET_TASKS:
         return Object.assign({}, state, {task: action.payload})
+    case TOGGLE_MENU:
+        return Object.assign({}, state, {open: action.payload})    
         default: return state;
     }
 };
 
 export const getUser = user => ({type: GET_USER, payload: user })
-export const getTasks = task => ({type: GET_TASKS, payload: task})                
+export const getTasks = task => ({type: GET_TASKS, payload: task})
+export const toggleMenu = open => ({type: TOGGLE_MENU, payload: !open})                

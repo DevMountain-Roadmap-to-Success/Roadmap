@@ -341,26 +341,18 @@ class Resources extends React.Component {
       layout: layout
     });
   };
-  toggleMenu = () => {
-    this.setState(prevState => {
-      return { open: !prevState.open };
-    });
-  };
+  
   render() {
     console.log(this.state.layout);
     return (
       <div style={{ backgroundColor: "#2F3642", height: '100vh'}}>
-        <Header 
-        toggleMenu={this.toggleMenu} 
-        background="#2F3642">
+        <Header>
           <h1>Resources</h1>
         </Header>
-        <SideBar open={this.state.open}>
-          <Nav>
-            <Link to="/dashboard">
-              <i class="material-icons">home</i>Dashboard
+        <SideBar >
+            <Link to="/dashboard" >
+              <i className="material-icons">home</i>Dashboard
             </Link>
-          </Nav>
         </SideBar>
 
         <Dashboard

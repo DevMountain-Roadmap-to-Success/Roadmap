@@ -16,11 +16,12 @@ const Div = styled.div`
  
 `;
 const DayHeader = styled.div`
-  border: black thin solid;
+  border: rgb(165, 165, 165) thin solid;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 5%;
 `;
 
 
