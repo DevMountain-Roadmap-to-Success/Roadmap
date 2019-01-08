@@ -106,7 +106,6 @@ class Weather extends React.Component {
         y: y + ui.deltaY,
       }
     });
-    console.log(this.state.deltaPosition);   
 
   }
 
