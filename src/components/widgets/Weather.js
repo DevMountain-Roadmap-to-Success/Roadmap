@@ -97,7 +97,30 @@ class Weather extends React.Component {
       });
   };
 
+
+  handleDrag = (e, ui) => {
+    const { x, y } = this.state.deltaPosition;
+    this.setState({
+      deltaPosition: {
+        x: x + ui.deltaX,
+        y: y + ui.deltaY,
+      }
+    });
+    // console.log(this.state.deltaPosition);   
+
+  }
+
+  onStart = () => {
+    this.setState({activeDrags: ++this.state.activeDrags});
+  }
+
+  onStop = () => {
+    this.setState({activeDrags: --this.state.activeDrags});
+  }
+
+
   render() {
+    const dragHandlers = {onStart: this.onStart, onStop: this.onStop};
     let time = moment(this.state.time).format("HH");
     if(time < 17 && time >= 6){
       var image = day
@@ -106,12 +129,16 @@ class Weather extends React.Component {
     } else if(time >= 19 || time < 6){
       image = night
     }
-    console.log(this.state);
+    // console.log(this.state);
     let timeDisplay = moment(this.state.time).format("hh:mm");
     let temp = Math.round(this.state.temp.temp);
     let id = this.state.weather.id;
     return (
-      <Draggable >
+      <Draggable onDrag={this.handleDrag} {...dragHandlers}
+      defaultPosition={{x:1160 , y: -400}}
+      grid={[25, 25]}
+
+      >
       <WeatherWidget image={image}>
         <div className="wrapper">
           {time < 17 ? (
