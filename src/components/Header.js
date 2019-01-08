@@ -78,12 +78,16 @@ componentDidMount = (props) => {
   console.log(this.props)
   return (
     <>
-    <StyledHeader {...this.props}>
+    <StyledHeader {...this.props} >
        {this.props.devLogo ?
+       <>
          <img src={logo} alt="" className="logo" style={{border: 'none'}}/>
-        : <img src={menu} onClick={() => toggleMenu(this.props.open)} className='menu-icon' alt=''/>}
-      
-       {this.props.children} 
+         <Nav nav={this.props.nav} />
+         </>
+        :
+        <>
+        <img src={menu} onClick={() => toggleMenu(this.props.open)} className='menu-icon' alt=''/>      
+        {this.props.children} 
        <ProfilePic {...this.props} dropdown={this.state.dropdown}>
             <Image
 
@@ -103,11 +107,12 @@ componentDidMount = (props) => {
             </i>
           
           </ProfilePic >
+          </> }
     </StyledHeader>
     <SideBar isOpen={this.props.open} >
     <Nav logout={this.logout}/>
     </SideBar>
-
+     
     </>
   );
 };

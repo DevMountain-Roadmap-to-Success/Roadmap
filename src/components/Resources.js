@@ -1,15 +1,13 @@
 import React from "react";
 import Header from "./Header";
-import Nav from "./functional/Nav";
 import codewars from "../assets/codewars.png";
 import udemy from "../assets/udemy.png";
 import pluralsight from "../assets/pluralsight.png";
 import bookshelf from "../assets/bookshelf.jpg";
 import styled from "styled-components";
-import SideBar from "./functional/SideBar";
 import Dashboard, { addWidget } from "react-dazzle";
 import "react-dazzle/lib/style/style.css";
-import { Link } from "react-router-dom";
+
 
 const link = {
   textDecoration: "none",
