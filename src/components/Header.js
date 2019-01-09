@@ -20,7 +20,7 @@ const StyledHeader = styled.header`
   position: relative;
   z-index: 1;
   justify-content: ${props => props.justifyContent || 'unset'};
-
+  border-bottom: rgba(255, 255, 255, 0.808) solid thin;
   .logo {
     width: 240px;
     height: 45px;

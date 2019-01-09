@@ -37,7 +37,7 @@ const PlayGround = props => {
     // <Link to='/jobprep' style={link} >JOB PREP</Link> </>}/>
     // </Header>
     // )}
-    <Draggable defaultPosition={{x: 1100, y: -300}}>
+    <Draggable>
       <Container
         {...props}
         src="https://repl.it/community/classrooms/14714/assignments/53105"

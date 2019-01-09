@@ -1,13 +1,18 @@
 .dashboard_main {
-  background-color: #EEEEEE;
+  background-color: #2E3543;
   height: 100vh;
   width: 100vw;
+  position: fixed;
+  
+
+
+
 
 }
 .center {
   height: 40vh;
   width: 40vw;
-  background: blue;
+  background: rgba(255, 255, 255, 0.808);
 }
 .add-widget-button {
   display: none;
