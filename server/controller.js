@@ -104,7 +104,12 @@ module.exports = {
     db.delete_activity(id).then(activity =>
       res.status(200).send(activity)
     );
-  }
+  },
   
   //CALENDAR
+
+  get_trivia: (req, res) => {
+    
+  }
+
 };

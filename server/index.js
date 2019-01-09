@@ -85,6 +85,8 @@ massive(CONNECTION_STRING).then(dbInstance => {
   app.put('/api/editActivity/:id', ctrl.edit_activity)
   app.delete('/api/deleteActivity/:id', ctrl.delete_activity)
 
+  app.get('/api/trivia', ctrl.get_trivia)
+
 
 
 
