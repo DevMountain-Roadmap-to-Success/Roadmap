@@ -3,6 +3,7 @@ import NavLink from './functional/Nav'
 import background from '../assets/background.jpg'
 // import paper from '../assets/note.png'
 
+//landing
 export const Container = styled.div`
   background-image: url(${background});
   background-repeat: no-repeat;
@@ -86,6 +87,7 @@ export const Container = styled.div`
     }
   }
 `;
+
 export const Nav = styled(NavLink)`
   .navbar {
     width: 500px;
@@ -116,15 +118,17 @@ export const Nav = styled(NavLink)`
 
 //Todo list
 export const Wrapper = styled.div`
-background-color: white;
-  width: 300px;
-  height: 350px;
+background-color: rgba(255, 255, 255, 0.959);
+  width: 350px;
+  height: 400px;
   display: flex;
   background-position-x: -50px;
   background-position-y: -50px;
-  box-shadow: 1px 1px 1px 2px rgb(200, 200, 200);
+  box-shadow: 0px 1px 1px 0px rgb(200, 200, 200);
   justify-content: center;
   flex-direction: "column";
+  border-radius: 2px;
+
 
   button {
     background-color: transparent;

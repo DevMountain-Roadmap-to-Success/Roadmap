@@ -4,25 +4,20 @@ import Header from "./Header";
 import { connect } from "react-redux";
 import { getUser } from "../ducks/reducer";
 import axios from "axios";
-// import styled from "styled-components";
 // import Repl from "./widgets/Playground";
 import TodoList from "./TodoList";
 import EditTask from "./functional/EditTask";
 import Weather from "./widgets/Weather";
-// import Chart from "./widgets/Chart";
+// import ReactLoading from 'react-loading'
 import styled from 'styled-components'
 import {withRouter} from 'react-router'
 
 const Dashboard = styled.div `
-  display: grid;
-  grid-template-columns: 400px auto auto;
+display: grid;
+grid-template-columns: auto auto auto;
+grid-row-gap: 30px;
   padding: 20px;
-  grid-gap: 10px;
 
-  > div {
-    padding: 10px 0;
-
-  }
 `
 const WeatherWidget = styled(Weather)`
   grid-column-start: 1;
@@ -31,12 +26,25 @@ const WeatherWidget = styled(Weather)`
 
 `
 // const PlayGround = styled(Repl)`
-//   width: 400px;
+//   width: 800px;
 //   height: 400px;
 //   margin-left: 0;
 //   margin-top: 0;
-//   box-shadow: 0px 2px 2px 0.5px rgb(68, 68, 68);
+//   border-radius: 2px;
+//   /* box-shadow: 0px 1px 1px 0.5px rgb(200, 198, 190); */
+  
+
 // `;
+const Box = styled.div`
+  width: 300px;
+  height: 400px;
+  background-color: rgba(255, 255, 255, 0.959);
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`
 
 class UserDashboard extends Component {
   state = {
@@ -49,7 +57,7 @@ class UserDashboard extends Component {
 
   };
 
-  
+ 
   deleteAccount = () => {
     axios.delete("/api/account").then(() => {
       this.props.history.push("/login");
@@ -84,6 +92,8 @@ class UserDashboard extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+
+
   render() {
     return (
       <div className="dashboard_main">
@@ -97,9 +107,11 @@ class UserDashboard extends Component {
       <Dashboard>
         <TodoList toggleEdit={this.toggleEdit} />
         {this.renderEditTask()}
-
-        {/* <Chart/> */}
+         <Box draggable={true} >
+          {/* <ReactLoading type='spokes' color='black'/> */}
+          </Box>
         <WeatherWidget/>
+        <div className='droptarget' style={{width:'400px', height: '400px', backgroundColor: 'white'}}></div>
         </Dashboard>
       </div>
     );
