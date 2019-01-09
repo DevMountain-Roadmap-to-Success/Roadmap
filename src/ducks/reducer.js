@@ -4,7 +4,7 @@ const initialState = {
     user: {},
     task: {},
     open: false,
-    position: {}
+    position: []
 };
 
 export default function reducer (state=initialState, action){
@@ -23,7 +23,7 @@ export default function reducer (state=initialState, action){
     }
 };
 
-export const getPosition = position => ({type: GET_POSITION, payload: position})
+export const getPosition = (array) => ({type: GET_POSITION, payload: array})
 export const getUser = user => ({type: GET_USER, payload: user })
 export const getTasks = task => ({type: GET_TASKS, payload: task})
-export const toggleMenu = open => ({type: TOGGLE_MENU, payload: !open})                
+export const toggleMenu = open => ({type: TOGGLE_MENU, payload: !open})             
