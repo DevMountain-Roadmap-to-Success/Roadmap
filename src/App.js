@@ -12,6 +12,8 @@ import {connect} from 'react-redux'
 import {getUser} from './ducks/reducer'
 import axios from 'axios'
 
+import Trivia from './components/Trivia'
+
 class App extends Component {
  state = {
    open: false
@@ -49,6 +51,7 @@ class App extends Component {
             <Route path="/jobprep" render={() => (<JobPrep toggleMenu={this.toggleMenu} open={this.state.open}/> )} /> />
             <Route path="/resources" render={() => (<Resources toggleMenu={this.toggleMenu} open={this.state.open}/> )}  />
             <Route path='/playground' component={PlayGround}/>
+            <Route path="/trivia" component={Trivia}/>
           </Switch>
         </Router>
     );
