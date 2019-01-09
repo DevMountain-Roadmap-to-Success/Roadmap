@@ -88,7 +88,9 @@ componentDidMount = (props) => {
         <>
         <img src={menu} onClick={() => toggleMenu(this.props.open)} className='menu-icon' alt=''/>      
         {this.props.children} 
-       <ProfilePic {...this.props} dropdown={this.state.dropdown}>
+       <ProfilePic {...this.props} 
+       logout={this.logout}
+       dropdown={this.state.dropdown}>
             <Image
 
               src={

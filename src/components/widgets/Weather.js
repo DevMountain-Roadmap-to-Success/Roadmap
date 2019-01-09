@@ -134,8 +134,8 @@ class Weather extends React.Component {
     let id = this.state.weather.id;
     return (
       <Draggable onDrag={this.handleDrag} {...dragHandlers}
-      defaultPosition={{x:375 , y: -400}}
-      grid={[25, 25]}
+      // defaultPosition={{x:375 , y: -400}}
+      // grid={[25, 25]}
 
       >
       <WeatherWidget image={image}>

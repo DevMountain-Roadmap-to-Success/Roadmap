@@ -10,11 +10,26 @@ import TodoList from "./TodoList";
 import EditTask from "./functional/EditTask";
 import Weather from "./widgets/Weather";
 // import Chart from "./widgets/Chart";
-import profilePic from "../assets/profile.png";
+import styled from 'styled-components'
 import {withRouter} from 'react-router'
 
+const Dashboard = styled.div `
+  display: grid;
+  grid-template-columns: 400px auto auto;
+  padding: 20px;
+  grid-gap: 10px;
 
+  > div {
+    padding: 10px 0;
 
+  }
+`
+const WeatherWidget = styled(Weather)`
+  grid-column-start: 1;
+  grid-column-end: 2;
+  
+
+`
 // const PlayGround = styled(Repl)`
 //   width: 400px;
 //   height: 400px;
@@ -46,9 +61,7 @@ class UserDashboard extends Component {
     this.setState({ open: state.isOpen });
   };
 
-  toggleEdit = (id, name) => {
-    localStorage.setItem("id", id);
-    localStorage.setItem("name", name);
+  toggleEdit = () => {
     this.setState(prevState => {
       return {
         editTask: !prevState.editTask
@@ -81,12 +94,13 @@ class UserDashboard extends Component {
           <h1>Roadmap Dashboard</h1>
          
         </Header>
-      
+      <Dashboard>
         <TodoList toggleEdit={this.toggleEdit} />
         {this.renderEditTask()}
 
         {/* <Chart/> */}
-        <Weather />
+        <WeatherWidget/>
+        </Dashboard>
       </div>
     );
   }

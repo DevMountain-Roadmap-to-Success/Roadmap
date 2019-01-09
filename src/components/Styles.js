@@ -122,7 +122,6 @@ background-color: white;
   display: flex;
   background-position-x: -50px;
   background-position-y: -50px;
-  margin: 3%;
   box-shadow: 1px 1px 1px 2px rgb(200, 200, 200);
   justify-content: center;
   flex-direction: "column";
@@ -136,7 +135,7 @@ export const TodoForm = styled.form`
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 80%;
+  width: 90%;
   height: 80%;
   margin-top: 5%;
   font-family: "Nunito";
@@ -145,6 +144,7 @@ export const TodoForm = styled.form`
   input {
     border: none;
     background-color: transparent;
+    margin-left: 10px;
   }
 `;
 

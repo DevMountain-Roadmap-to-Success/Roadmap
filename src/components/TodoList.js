@@ -101,11 +101,11 @@ class TodoList extends Component {
       // <Draggable defaultPosition={{ x: 50, y: 50 }}>
         <Wrapper>
           <TodoForm onSubmit={this.addTodo}>
-            <div >
+            <div style={{display:'flex', justifyContent: 'center'}} >
               <Input
                 type='text'
                 name='task'
-                placeholder="Stuff I need to do today"
+                placeholder="Stuff I need to do today..."
                 value={this.state.task}
                 onChange={this.handleChange}
               />
