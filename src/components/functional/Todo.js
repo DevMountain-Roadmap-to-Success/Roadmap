@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const List = styled.div`
-  background: #ffffff;
+
   height: 65px;
   width: 100%;
   display: flex;

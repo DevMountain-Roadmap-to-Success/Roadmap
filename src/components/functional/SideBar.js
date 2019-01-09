@@ -18,8 +18,6 @@ const MenuWell = styled(Menu)`
   margin: 0;
   -webkit-transition-delay: 3s;
   border-color: #303741;
-  /* position: absolute; */
-  /* top: 0; */
 
   span {
     cursor: pointer;
