@@ -7,10 +7,12 @@ import { getUser } from "../ducks/reducer";
 
 //components and styles
 import "./Dashboard.css";
+import styled from 'styled-components';
 import Header from "./Header";
 import TodoList from "./todos/TodoList";
 import Weather from "./widgets/Weather";
 import Dashboard from 'react-dazzle'
+import Flashcard from './Flashcard';
 // import Trivia from './Trivia'
 
 // const PlayGround = styled(Repl)`
@@ -22,6 +24,16 @@ import Dashboard from 'react-dazzle'
 //   /* box-shadow: 0px 1px 1px 0.5px rgb(200, 198, 190); */
 // `;
 
+const Div = styled.div`
+width: 100vw;
+height: 100vh;
+display:flex;
+`
+
+
+const Flashcard1 = styled(Flashcard)`
+position:absolute;
+`
 
 class UserDashboard extends Component {
  
@@ -34,12 +46,16 @@ class UserDashboard extends Component {
           justifyContent="unset"
         >
           <h1>Roadmap Dashboard</h1>
-         
         </Header>
+
+
+        <Div>
       <Dashboard/>
         <TodoList toggleEdit={this.toggleEdit} />
         {/* <Trivia /> */}
         <Weather/>
+        <Flashcard1 />
+      </Div> 
       
 
       </div>
