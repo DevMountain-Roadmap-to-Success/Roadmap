@@ -7,8 +7,8 @@ export const Menu = styled.menu`
     width: 140px;
     position: absolute;
     z-index: 100;
-    top: 60px;
-    right: 3%;
+    top: ${props => props.top || "60px"};
+    right: ${props => props.right || "3%"};
     color: black;
     border-radius: 3px;
     box-shadow: 0 1px 1px 0 rgb(135, 135, 165);
