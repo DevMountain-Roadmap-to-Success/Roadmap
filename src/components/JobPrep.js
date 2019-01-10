@@ -97,7 +97,10 @@ class JobPrep extends Component {
     });
 
     console.log(e.target.id, 
-      // {x: x + ui.deltaX, y: y + ui.deltaY,}
+      {x: x, y: y,},
+      {x: x + ui.deltaX, y: y + ui.deltaY,},
+      {x: ui.lastX + ui.deltaX, y: ui.lastY + ui.deltaY,},
+      
       )
 
   }
@@ -137,20 +140,20 @@ class JobPrep extends Component {
         </div>
       </Draggable>
 
-      {/* <Draggable onDrag={this.handleDrag} {...dragHandlers}
+      <Draggable onDrag={this.handleDrag} {...dragHandlers}
         defaultPosition={{x:730, y:-445}}
         grid={[10, 10]}
 
         >
-          <div className="box">
-          <h1>React / Node Interview Question</h1>
+          <div className="box" id={1}>
+          <h1 id={1}>React / Node Interview Question</h1>
           
         <Iframe className="frame"
         url="https://quizlet.com/350088308/flashcards/embed"
         width="600px"
         height="400px"
         />
-        <h2>Click Border to Drag</h2>
+        <h2 id={1}>Click Border to Drag</h2>
         </div>
       </Draggable>
 
@@ -188,7 +191,7 @@ class JobPrep extends Component {
         />
         <h2 className="gaunt2">Click Borders to Drag</h2>
         </div>
-      </Draggable> */}
+      </Draggable>
 
         {/* <iframe src="https://quizlet.com/350088308/flashcards/embed" height="500" width="100%" style="border:0"></iframe> */}
 

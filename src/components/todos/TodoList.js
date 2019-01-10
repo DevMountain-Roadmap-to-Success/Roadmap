@@ -1,17 +1,16 @@
 import React, { Component } from "react";
 import moment from "moment";
 import axios from "axios";
-import {connect} from 'react-redux'
-import {getTasks} from '../../ducks/reducer'
+import { connect } from "react-redux";
+import { getTasks } from "../../ducks/reducer";
 // import styled from "styled-components";
 import Input from "../functional/Input";
 import Todo from "./Todo";
 // import Draggable from "react-draggable";
-import {Wrapper, TodoForm} from '../Styles'
+import { Wrapper, TodoForm } from "./TodoStyles";
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import "react-day-picker/lib/style.css";
-import EditTask from './EditTask'
-
+import EditTask from "./EditTask";
 
 export const MyDatePicker = () => {
   return (
@@ -19,42 +18,32 @@ export const MyDatePicker = () => {
       dayPickerProps={{
         month: new Date(),
         showWeekNumbers: true,
-        todayButton: 'Today',
+        todayButton: "Today"
       }}
     />
   );
-}
+};
 class TodoList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       tasks: [],
-      todoToShow: "all",
       toggleAllComplete: true,
       task: "",
       complete: false,
       completeTasks: [],
       editTask: false,
       id: null,
-      selectedDay: ''
+      selectedDay: "",
+      addToCalendar: false
     };
   }
 
   componentDidMount = () => {
     axios.get("/api/tasks").then(res => {
-      console.log(res.data)
-      this.setState({ tasks: res.data })
-      this.props.getTasks(res.data)
-    });
-  };
-
-
-
-  toggleEdit = () => {
-    this.setState(prevState => {
-      return {
-        editTask: !prevState.editTask
-      };
+      console.log(res.data);
+      this.setState({ tasks: res.data });
+      this.props.getTasks(res.data);
     });
   };
 
@@ -76,7 +65,7 @@ class TodoList extends Component {
   };
 
   handleChange = e => {
-    console.log(e.target.name)
+    console.log(e.target.name);
     this.setState({ [e.target.name]: e.target.value });
   };
 
@@ -99,85 +88,113 @@ class TodoList extends Component {
   };
 
   toggleEditTask = (id, task) => {
-    console.log(task, id)
+    console.log(task, id);
     this.setState({
       id: id,
       task: task,
       editTask: !this.state.editTask
-    })
-  }
-  
-  updateTask = (task_name, task_description) => {
-    if(this.state.description.length && this.state.task.length > 0){
-      var description = this.state.description
-      var task = this.state.task
-    } else {
-     description = task_description
-    task = task_name
-    }
-    var day = this.state.selectedDay
-    day = moment().format('YYYY-MM-DD')
-    axios.put(`/api/tasks/update/${this.state.id}`, {
-      complete_by: day,
-      description,
-      task
-    })
-    .then((res) => {
-      this.setState({ editTask: false, tasks: res.data, task: '', id: ''})
-    })
- 
-}
-  
+    });
+    return id;
+  };
 
-  handleDayChange = (day ) => {
-    this.setState({selectedDay: day})
+  updateTask = () => {
+    console.log(this.state);
+    const { task, description } = this.state;
+    var day = this.state.selectedDay;
+    day = moment().format("YYYY-MM-DD");
+    this.state.addToCalendar
+      ? axios.post("/api/makeActivity").then(res => {
+          if (res.status === 200) {
+            axios
+              .put(`/api/tasks/update/${this.state.id}`, {
+                complete_by: day,
+                description,
+                task
+              })
+              .then(res => {
+                this.setState({
+                  editTask: false,
+                  tasks: res.data,
+                  task: "",
+                  id: ""
+                });
+              });
+          }
+        })
+      : axios
+          .put(`/api/tasks/update/${this.state.id}`, {
+            complete_by: day,
+            description,
+            task
+          })
+          .then(res => {
+            this.setState({
+              editTask: false,
+              tasks: res.data,
+              task: "",
+              id: ""
+            });
+          });
+  };
+
+  addTo = () => {
+    this.setState(prevState => {
+      return { addToCalendar: !prevState.addToCalendar };
+    });
+    
+  };
+
+  handlePicker = e => {
+    this.setState({ [e.target.name]: e.target.value });
   };
   showTasks = () => {
-    let tasks = this.state.tasks
-    return tasks.map(task => ( 
-      
+    let tasks = this.state.tasks;
+    return tasks.map(task => (
       <Todo
-     key={task.task_id}
-     toggle={this.toggle}
-     deleteTodo={this.deleteTodo}
-     task={task}
-     editTask={ this.toggleEditTask }
-   />
-   
-   ))}
-  
- 
+        key={task.task_id}
+        toggle={this.toggle}
+        deleteTodo={this.deleteTodo}
+        task={task}
+        editTask={this.toggleEditTask}
+      />
+    ));
+  };
+
   render() {
+    console.log(this.state.addToCalendar)
     return (
       // <Draggable defaultPosition={{ x: 50, y: 50 }}>
+      !this.state.editTask ? (
         <Wrapper>
           <TodoForm onSubmit={this.addTodo}>
-          {!this.state.editTask ?
-          <>
-            <div style={{display:'flex', justifyContent: 'center'}} >
+            <div style={{ display: "flex", justifyContent: "center" }}>
               <Input
-                type='text'
-                name='task'
+                type="text"
+                name="task"
                 placeholder="Stuff I need to do today..."
                 value={this.state.task}
                 onChange={this.handleChange}
               />
               <hr />
             </div>
-          { this.showTasks() }
-          </>
-          
-           :  <EditTask
-            {...this.state}
-           toggle={this.toggleEditTask}
-           editTask={this.state.editTask}
-           update={this.updateTask}
-           name="description"
-           onChange={this.handleChange}
-           handleDayChange={this.handleDayChange}
-           selectedDay={this.state.selectedDay} /> }
+            {this.showTasks()}
           </TodoForm>
         </Wrapper>
+      ) : (
+        <EditTask
+          {...this.state}
+          editTask={this.state.editTask}
+          selectedDay={this.state.selectedDay}
+          id={this.state.id}
+          name="description"
+          toggle={this.toggleEditTask}
+          update={this.updateTask}
+          onSelect={this.addTo}
+          
+          onChange={this.handleChange}
+          handlePicker={this.handleChange}
+        />
+      )
       // </Draggable>
     );
   }
@@ -185,6 +202,9 @@ class TodoList extends Component {
 const mapStateToProps = state => {
   return {
     task: state.task
-  }
-}
-export default connect(mapStateToProps, {getTasks})(TodoList);
+  };
+};
+export default connect(
+  mapStateToProps,
+  { getTasks }
+)(TodoList);

@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 // import menu from '../../assets/menu.png'
 import DropDown from './DropDown'
-
+import {MenuItem} from 'react-bootstrap-dropdown-menu'
 const CircleDiv = styled.div`
   height: 60px;
   /* border-radius: 30px; */
@@ -33,12 +33,15 @@ const MenuIcon = (props) => {
         onClick={props.onClick}>
         {props.children}
         </CircleDiv>
-        {props.dropdown? 
+        { props.dropdown? 
          <DropDown
          open={props.dropdown}
-         logout={props.logout}
-         delete={props.deleteAccount}
-        />  : null }
+    
+        > 
+        <MenuItem >Edit Profile</MenuItem>  
+        <MenuItem onClick={props.logout}>Logout</MenuItem>  
+        <MenuItem onClick={props.deleteAccount}>Delete Account</MenuItem>
+        </DropDown>  : null }
 </>
     )
 }

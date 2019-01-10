@@ -3,10 +3,10 @@ import moment from "moment";
 import DayView from "./DayView";
 import styled from "styled-components";
 // import TimeSlot from "./TimeSlot";
-import Header from "./Header";
-import SideBar from "./functional/SideBar";
+import Header from "../Header";
+import SideBar from "../functional/SideBar";
 import { Link } from "react-router-dom";
-import { toggleMenu } from "../ducks/reducer";
+import { toggleMenu } from "../../ducks/reducer";
 import { connect } from "react-redux";
 
 const WeekContainer = styled.div`
