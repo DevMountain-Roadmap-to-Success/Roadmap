@@ -1,13 +1,38 @@
 import styled from 'styled-components'
 import Input from '../functional/Input'
 import Button from '../functional/Button'
+import Radio from '@material-ui/core/Radio'
+
+export const RadioButton = styled.input`
+  color: blue;
+  background-color: blue;
+  ::selection {
+    color: blue;
+  }
+`
+
+export const Subject = styled.div `
+   display: flex;
+   flex-wrap: wrap;
+   width: 100%;
+
+   .type {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     padding: 5px;
+     background-color:white;
+   }
+   #radio {
+     fill: 'blue';
+   }
+`
 
 export const EditButton = styled(Button)`
-  position: absolute;
-  right: 5px;
-  top: 5px;
-  width: 70px;
-  height: 20px;
+  /* position: absolute; */
+  
+  width: 100px;
+  height: 40px;
   color: white;
 
 `
@@ -94,10 +119,16 @@ export const TodoForm = styled.form`
 `;
 
 
+export const Date = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+`
+
+
 
 
 export const EditBox = styled.div`
-  background-color: white;
   width: 350px;
   height: 400px;
   display: flex;
@@ -105,7 +136,8 @@ export const EditBox = styled.div`
   align-items: center;
   position: relative;
   justify-content: center;
-   
+   background-color: white;
+
  
   
 `
@@ -113,10 +145,12 @@ export const Main = styled.main`
   height: 70%;
   display: flex;
   flex-direction: column;
-  width: 70%;
+  /* justify-content: center; */
+  align-items: center;
+  width: 90%;
 
   textarea {
-    height: 100px;
+    height: 50px;
   }
   p {
     font-size: 14px;

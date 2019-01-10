@@ -64,15 +64,13 @@ module.exports = {
   },
   update_task: (req, res) => {
     const dbInstance = req.app.get("db");
-    const { description, complete_by, task } = req.body;
+    const { task } = req.body;
     let complete = false;
 
     dbInstance
       .update_task(
         req.params.id,
         complete,
-        complete_by,
-        description,
         task,
         req.session.user.user_id
       )
@@ -91,6 +89,7 @@ module.exports = {
   make_activity: (req, res) => {
     const db = req.app.get("db");
     const { date, time, input, priority } = req.body;
+    console.log(req.body)
     db.make_activity(
       req.session.user.user_id,
       date,

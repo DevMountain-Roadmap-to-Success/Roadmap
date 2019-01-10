@@ -36,11 +36,9 @@ const MenuIcon = (props) => {
         { props.dropdown? 
          <DropDown
          open={props.dropdown}
-    
+            
         > 
-        <MenuItem >Edit Profile</MenuItem>  
-        <MenuItem onClick={props.logout}>Logout</MenuItem>  
-        <MenuItem onClick={props.deleteAccount}>Delete Account</MenuItem>
+       
         </DropDown>  : null }
 </>
     )

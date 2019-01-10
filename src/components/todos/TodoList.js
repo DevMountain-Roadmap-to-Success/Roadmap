@@ -2,27 +2,16 @@ import React, { Component } from "react";
 import moment from "moment";
 import axios from "axios";
 import { connect } from "react-redux";
+import {withRouter} from 'react-router'
 import { getTasks } from "../../ducks/reducer";
-// import styled from "styled-components";
 import Input from "../functional/Input";
 import Todo from "./Todo";
-// import Draggable from "react-draggable";
 import { Wrapper, TodoForm } from "./TodoStyles";
-import DayPickerInput from "react-day-picker/DayPickerInput";
 import "react-day-picker/lib/style.css";
 import EditTask from "./EditTask";
 
-export const MyDatePicker = () => {
-  return (
-    <DayPickerInput
-      dayPickerProps={{
-        month: new Date(),
-        showWeekNumbers: true,
-        todayButton: "Today"
-      }}
-    />
-  );
-};
+
+
 class TodoList extends Component {
   constructor(props) {
     super(props);
@@ -35,7 +24,9 @@ class TodoList extends Component {
       editTask: false,
       id: null,
       selectedDay: "",
-      addToCalendar: false
+      addToCalendar: false,
+      time: "",
+      priority: null
     };
   }
 
@@ -65,7 +56,7 @@ class TodoList extends Component {
   };
 
   handleChange = e => {
-    console.log(e.target.name);
+    console.log(e.target.name, e.target.value);
     this.setState({ [e.target.name]: e.target.value });
   };
 
@@ -75,7 +66,20 @@ class TodoList extends Component {
       this.setState({ tasks: res.data });
     });
   };
-
+  selectSubject = e => {
+    console.log(e.target.name);
+    var val = null;
+    if (e.target.name === "job prep") {
+      val = 1;
+    } else if (e.target.name === "practice") {
+      val = 2;
+    } else if (e.target.name === "portfolio") {
+      val = 3;
+    } else {
+      val = 4;
+    }
+    this.setState({ priority: val });
+  };
   toggle = id => {
     console.log(this.state);
     this.state.tasks.map(task => {
@@ -99,53 +103,39 @@ class TodoList extends Component {
 
   updateTask = () => {
     console.log(this.state);
-    const { task, description } = this.state;
+    const { task, description, priority } = this.state;
     var day = this.state.selectedDay;
-    day = moment().format("YYYY-MM-DD");
-    this.state.addToCalendar
-      ? axios.post("/api/makeActivity").then(res => {
-          if (res.status === 200) {
-            axios
-              .put(`/api/tasks/update/${this.state.id}`, {
-                complete_by: day,
-                description,
-                task
-              })
-              .then(res => {
-                this.setState({
-                  editTask: false,
-                  tasks: res.data,
-                  task: "",
-                  id: ""
-                });
-              });
-          }
-        })
-      : axios
-          .put(`/api/tasks/update/${this.state.id}`, {
-            complete_by: day,
-            description,
-            task
-          })
-          .then(res => {
-            this.setState({
-              editTask: false,
-              tasks: res.data,
-              task: "",
-              id: ""
-            });
-          });
+    var time = this.state.time;
+    let newDay = moment(day).format("YYYY-MM-DD");
+    let newTime = moment(time, "h").format("h:mm A");
+    const input = task;
+    console.log(time, day);
+    axios
+      .post("/api/makeActivity", {
+        input,
+        time: newTime,
+        date: newDay,
+        priority
+      })
+
+      .then(res => {
+        if (res.status === 200) {
+          this.props.history.push('/calendar')
+        }
+      });
   };
 
   addTo = () => {
     this.setState(prevState => {
       return { addToCalendar: !prevState.addToCalendar };
     });
-    
+  };
+  handleTime = e => {
+    this.setState({ time: e });
   };
 
-  handlePicker = e => {
-    this.setState({ [e.target.name]: e.target.value });
+  handleDayChange = e => {
+    this.setState({ selectedDay: e });
   };
   showTasks = () => {
     let tasks = this.state.tasks;
@@ -161,7 +151,7 @@ class TodoList extends Component {
   };
 
   render() {
-    console.log(this.state.addToCalendar)
+    console.log(this.state.addToCalendar);
     return (
       // <Draggable defaultPosition={{ x: 50, y: 50 }}>
       !this.state.editTask ? (
@@ -183,16 +173,18 @@ class TodoList extends Component {
       ) : (
         <EditTask
           {...this.state}
+          key={1}
           editTask={this.state.editTask}
           selectedDay={this.state.selectedDay}
           id={this.state.id}
-          name="description"
+          time={this.state.time}
           toggle={this.toggleEditTask}
-          update={this.updateTask}
+          onClick={this.updateTask}
           onSelect={this.addTo}
-          
           onChange={this.handleChange}
-          handlePicker={this.handleChange}
+          selectSubject={this.selectSubject}
+          handleTime={e => this.handleTime(e)}
+          handleDayPicker={e => this.handleDayChange(e)}
         />
       )
       // </Draggable>
@@ -204,7 +196,7 @@ const mapStateToProps = state => {
     task: state.task
   };
 };
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   { getTasks }
-)(TodoList);
+)(TodoList));
