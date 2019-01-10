@@ -64,7 +64,7 @@ module.exports = {
   },
   update_task: (req, res) => {
     const dbInstance = req.app.get("db");
-    const { description, complete_by } = req.body;
+    const { description, complete_by, task } = req.body;
     let complete = false;
 
     dbInstance
@@ -73,6 +73,7 @@ module.exports = {
         complete,
         complete_by,
         description,
+        task,
         req.session.user.user_id
       )
       .then(data => res.status(200).send(data));

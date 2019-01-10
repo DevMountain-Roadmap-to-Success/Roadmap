@@ -1,17 +1,9 @@
 import React from 'react'
-import styled from 'styled-components'
+import {Form} from './ElementStyles'
 // import Input from './Input'
 // import {FormControl, FormGroup} from 'react-bootstrap'
 
-const Form = styled.form`
-width: 100%;
-height: 60%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 
-`
 
 export default (props) => {
 
