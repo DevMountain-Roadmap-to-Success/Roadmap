@@ -14,13 +14,13 @@ Div{
 width: 100vw;
 }
 
-.box{
+/* .box{
   display:flex;
   height: 470px;
   width: 670px;
   background-color: black;
   border-radius: 5px;
-}
+} */
 
 .box2{
   display:flex;
@@ -33,17 +33,17 @@ width: 100vw;
   border-radius: 5px;
 }
 
-.frame{
+/* .frame{
   margin-left: 35px;
   margin-top: 35px;
-}
+} */
 
 .gauntlet{
   margin-left: 5px;
   margin-top: 30px;
 }
 
-h1{
+/* h1{
   margin-left: 220px;
   margin-top: 10px;
   color: white;
@@ -54,7 +54,7 @@ h2{
   margin-left: -190px;
   margin-top: 445px;
   color: white;
-}
+} */
 
 .gaunt{
   margin-left: 440px;
@@ -124,25 +124,18 @@ class JobPrep extends Component {
       <Header/>
       <Div className="page">
 
-      <Flashcard />
+     
 
-        {/* <Draggable onDrag={this.handleDrag} {...dragHandlers}
+         <Draggable onDrag={this.handleDrag} {...dragHandlers}
         defaultPosition={{x:25, y:25}}
         grid={[10, 10]}
         >
-          <div className="box" id={0}>
-          <h1 id={0}>React / Node Interview Questions</h1>
-          
-        <Iframe className="frame"
-        url="https://quizlet.com/350088308/flashcards/embed"
-        width="600px"
-        height="400px"
-        />
-        <h2 id={0}>Click Border to Drag</h2>
-        </div>
+
+<Flashcard />
+        
       </Draggable>
 
-      <Draggable onDrag={this.handleDrag} {...dragHandlers}
+      {/* <Draggable onDrag={this.handleDrag} {...dragHandlers}
         defaultPosition={{x:730, y:-445}}
         grid={[10, 10]}
 
