@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Header from './Header';
 import {connect} from 'react-redux';
 import {getPosition} from './../ducks/reducer';
+import Flashcard from './Flashcard';
 
 
 const Div = styled.div`
@@ -123,8 +124,9 @@ class JobPrep extends Component {
       <Header/>
       <Div className="page">
 
+      <Flashcard />
 
-        <Draggable onDrag={this.handleDrag} {...dragHandlers}
+        {/* <Draggable onDrag={this.handleDrag} {...dragHandlers}
         defaultPosition={{x:25, y:25}}
         grid={[10, 10]}
         >
@@ -191,7 +193,7 @@ class JobPrep extends Component {
         />
         <h2 className="gaunt2">Click Borders to Drag</h2>
         </div>
-      </Draggable>
+      </Draggable> */}
 
         {/* <iframe src="https://quizlet.com/350088308/flashcards/embed" height="500" width="100%" style="border:0"></iframe> */}
 
