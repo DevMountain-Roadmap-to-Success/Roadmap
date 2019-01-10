@@ -81,6 +81,7 @@ class TimeSlot extends Component {
   makeActivity = () => {
     let date = moment(this.props.date).format("YYYY/MM/DD");
     let time = this.props.time;
+    console.log(time)
     const { input, priority } = this.state;
     axios
       .post("/api/makeActivity", { date, time, input, priority })
@@ -163,6 +164,8 @@ class TimeSlot extends Component {
       color = { backgroundColor: "rgb(244, 247, 113)" };
     } else if (this.state.priority === 1) {
       color = { backgroundColor: "rgb(255, 87, 87)" };
+    } else if (this.state.priority === 4) {
+      color = {backgroundColor: 'rgb(111, 253, 142)'}
     }
     return (
       <TimeBox style={color}>
