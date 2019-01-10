@@ -1,12 +1,6 @@
 import React from "react";
-import styled from "styled-components";
+import {StyledInput} from './ElementStyles'
 
-const StyledInput = styled.input`
-  width: ${props => props.width || "80%"};
-  height: ${props => props.height || "40px"};
-  font-size: ${props => props.fontSize || "18px"};
-  margin: ${props => props.margin};
-`;
 
 const Input = (props ) => {
   console.log(props);

@@ -1,53 +1,61 @@
 import React from 'react';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
-import styled from 'styled-components'
+import {Back, EditBox, Main, EditInput, EditButton } from './TodoStyles'
+import { Radio } from 'react-bootstrap'
+import TimePicker from 'react-time-picker'
+class EditTask extends React.Component {
+    state = {
+       edit: false,
+      calendarAdd: false
+     }
 
+    render(){
+      console.log(this.props.id, this.props )
 
+      const FORMAT = 'M/D/YYYY';
+      const { selectedDay } = this.props;
+      let { tasks}  = this.props
+      let taskInfo = tasks.map((task ) => {
+        if(task.task_id === this.props.id){
+      return (
+             <>
+              <Back onClick={this.props.toggle}>{`<< Back`}</Back>
+              <EditButton name={this.state.edit ? 'Update' : 'Edit'} onClick={this.state.edit? this.props.update : () => this.setState({edit: !this.state.edit})}/>
+              <Main >
+             { task.complete_by && task.task.length > 0 && !this.state.edit ?
+             <div>
+             <span>{task.task}</span>
+              <span>{`Complete by: ${task.complete_by}`}</span> 
+              <p>{`Notes: ${task.description}`}</p>
+            </div>
+              :
+              <div>
+                <span> Would you like to add this to calendar? <Radio name='addToCalendar' onSelect={this.props.handlePicker}/> </span>
+                 <EditInput className='card-header' onChange={(e) => this.props.onChange(e)} name='task'  placeholder='Task name..' value={this.props.task}/>
+              <span>Pick a due date:
+                </span>
+                <DayPickerInput name='selectedDay' onDayChange={() => this.props.handlePicker(selectedDay)} format={FORMAT} />
+                <hr/>
+                <textarea onChange={this.props.onChange} name='description' value={this.props.description} placeholder='Additional Notes... '/>
+                <TimePicker /> 
+                </div>
+              }
+               
+             </Main> 
+             </>
+        
+            )
+          } 
+        })
 
-
-const Div = styled.div`
-   max-width: 250px;
-   .card-header, .card-body {
-   display: flex;
-   flex-direction: column;
-   }
-    
-   button {
-     background-color: blue;
-   }
-`
-
-const EditTask = (props) => {
-  
-    const FORMAT = 'M/D/YYYY';
-    const { selectedDay } = props;
-  let { tasks}  = props
-    console.log(props.tasks, props)
+   
     return (
 
-      <Div >
-      <span onClick={props.toggle}>{`<< Back`}</span>
-      <div className='card-header'>
-      <i className="fas fa-star"></i>{tasks[0].task}
-     { tasks[0].complete_by && tasks[0].task.length > 0 ?
-      `complete by: ${tasks[0].complete_by}` : null }
-      </div> 
-      <div className='card-body' >
-        <textarea
-        value={tasks[0].description} 
-        placeholder='Notes...'
-        onChange={props.onChange} 
-        name='description'/>
-        {selectedDay && <p>Complete by:{selectedDay.toLocaleDateString()}</p>}
-        {!selectedDay && <p>Pick a day</p>}
-        <DayPickerInput onDayChange={() => props.handleDayChange(selectedDay)} format={FORMAT} placeholder='M/D/YYYY'/>
-        <button className='btn btn-primary' onClick={() => props.update(tasks[0].description, tasks[0].task)}>Update</button> 
-     </div> 
-      </Div>
-
+      <EditBox >{taskInfo}</EditBox>
     );
   }
+}
 
 
 export default EditTask

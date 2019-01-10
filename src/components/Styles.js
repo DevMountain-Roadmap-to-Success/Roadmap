@@ -116,39 +116,5 @@ export const Nav = styled(NavLink)`
 `;
 
 
-//Todo list
-export const Wrapper = styled.div`
-background-color: rgba(255, 255, 255, 0.959);
-  width: 350px;
-  height: 400px;
-  display: flex;
-  background-position-x: -50px;
-  background-position-y: -50px;
-  box-shadow: 0px 1px 1px 0px rgb(200, 200, 200);
-  justify-content: center;
-  flex-direction: "column";
-  border-radius: 2px;
 
-
-  button {
-    background-color: transparent;
-    border: none;
-  }
-`;
-export const TodoForm = styled.form`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  width: 90%;
-  height: 80%;
-  margin-top: 5%;
-  font-family: "Nunito";
-  overflow: scroll;
-
-  input {
-    border: none;
-    background-color: transparent;
-    margin-left: 10px;
-  }
-`;
 

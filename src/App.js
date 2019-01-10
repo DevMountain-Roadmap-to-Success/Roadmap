@@ -4,7 +4,7 @@ import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import Resources from "./components/Resources";
 import JobPrep from "./components/JobPrep";
 import Dashboard from "./components/Dashboard";
-import Calendar from "./components/Calendar";
+import Calendar from "./components/calendar/Calendar";
 import LandingPage from "./components/LandingPage";
 import PlayGround from "./components/widgets/Playground";
 import Home from './components/Home'
