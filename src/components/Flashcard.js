@@ -1,12 +1,14 @@
+//dependencies
 import React, { Component } from 'react';
-import styled from 'styled-components';
 import Iframe from 'react-iframe';
-import FlashcardMenu from './functional/FlashcardMenu';
+//styling imports
+import styled from 'styled-components';
 import { StyledButton } from './functional/ElementStyles';
-import Draggable, { DraggableCore } from 'react-draggable';
+//components
+import FlashcardMenu from './functional/FlashcardMenu';
 ;
 
-
+//styling
 const Div = styled.div`
 Div{
   display: flex;
@@ -69,13 +71,14 @@ class Flashcard extends Component {
 
 
     render() {
-
+        //opens and closes the menu
         let handleOpenClose = () => {
             this.setState(prevState => {
                 return { menuOpen: !prevState.menuOpen }
             })
         };
 
+        //this renders the menu
         let handleShowMenu = () => {
             if (this.state.menuOpen === true) {
                 return (<FlashcardMenu
@@ -86,6 +89,7 @@ class Flashcard extends Component {
             }
         };
 
+        //This handles what displays in the component by what is clicked on the menu
         let handleClick = (id) => {
             let newData = this.state.links[id]
             this.setState({
@@ -94,8 +98,6 @@ class Flashcard extends Component {
                 menuOpen: false
             })
         };
-
-        const dragHandlers = {onStart: this.onStart, onStop: this.onStop};
 
 
         return (
@@ -123,5 +125,7 @@ class Flashcard extends Component {
         )
     }
 };
+
+
 
 export default Flashcard;
