@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router";
+import {withRouter} from 'react-router'
 
 //redux
 import { connect } from "react-redux";
@@ -7,13 +7,13 @@ import { getUser } from "../ducks/reducer";
 
 //components and styles
 import "./Dashboard.css";
-import styled from "styled-components";
+import styled from 'styled-components';
 import Header from "./Header";
 import TodoList from "./todos/TodoList";
 import Weather from "./widgets/Weather";
-import Dashboard from "react-dazzle";
-import Flashcard from "./Flashcard";
-import Trivia from "./Trivia";
+import Dashboard from 'react-dazzle'
+import Flashcard from './Flashcard';
+// import Trivia from './Trivia'
 
 // const PlayGround = styled(Repl)`
 //   width: 800px;
@@ -25,44 +25,51 @@ import Trivia from "./Trivia";
 // `;
 
 const Div = styled.div`
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-`;
+width: 100vw;
+height: 100vh;
+display:flex;
+`
+
 
 const Flashcard1 = styled(Flashcard)`
-  position: absolute;
-`;
+position:absolute;
+`
 
 class UserDashboard extends Component {
+ 
+ 
   render() {
     return (
       <div className="dashboard_main">
-        <Header {...this.props} justifyContent="unset">
+        <Header
+        {...this.props}
+          justifyContent="unset"
+        >
           <h1>Roadmap Dashboard</h1>
         </Header>
 
+
         <Div>
-          <Dashboard />
-          <TodoList toggleEdit={this.toggleEdit} />
-          {/* <Trivia /> */}
-          <Weather />
-          <Flashcard1 />
-          <Trivia />
-        </Div>
+      <Dashboard/>
+        <TodoList toggleEdit={this.toggleEdit} />
+        {/* <Trivia /> */}
+        <Weather/>
+        <Flashcard1 />
+      </Div> 
+      
+
       </div>
     );
   }
 }
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+
   };
 };
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    { getUser }
-  )(UserDashboard)
-);
+export default withRouter(connect(
+  mapStateToProps,
+  { getUser }
+)(UserDashboard));
