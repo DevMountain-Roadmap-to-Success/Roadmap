@@ -3,6 +3,9 @@ import Draggable, { DraggableCore } from 'react-draggable';
 import Iframe from 'react-iframe';
 import styled from "styled-components";
 import Header from './Header';
+import {connect} from 'react-redux';
+import {getPosition} from './../ducks/reducer';
+
 
 const Div = styled.div`
 Div{
@@ -76,9 +79,8 @@ class JobPrep extends Component {
       deltaPosition: {
         x: 0, y: 0
       },
-      controlledPosition: {
-        x: -400, y: 200
-      }
+      0:{}
+     
     }
 
     this.handleDrag = this.handleDrag.bind(this);
@@ -93,7 +95,10 @@ class JobPrep extends Component {
         y: y + ui.deltaY,
       }
     });
-    // console.log(this.state.deltaPosition);   
+
+    console.log(e.target.id, 
+      // {x: x + ui.deltaX, y: y + ui.deltaY,}
+      )
 
   }
 
@@ -114,35 +119,25 @@ class JobPrep extends Component {
       <>
       <Header/>
       <Div className="page">
-  
 
-
-        {/* <Draggable onDrag={this.handleDrag} {...dragHandlers}
-        defaultPosition={{x:0, y:0}}
-        >
-          <div className="box">
-          <h1>Job Prep</h1>
-            <div>x: {deltaPosition.x.toFixed(0)}, y: {deltaPosition.y.toFixed(0)}</div>
-          </div>
-        </Draggable> */}
 
         <Draggable onDrag={this.handleDrag} {...dragHandlers}
         defaultPosition={{x:25, y:25}}
         grid={[10, 10]}
         >
-          <div className="box">
-          <h1>React / Node Interview Questions</h1>
+          <div className="box" id={0}>
+          <h1 id={0}>React / Node Interview Questions</h1>
           
         <Iframe className="frame"
         url="https://quizlet.com/350088308/flashcards/embed"
         width="600px"
         height="400px"
         />
-        <h2>Click Border to Drag</h2>
+        <h2 id={0}>Click Border to Drag</h2>
         </div>
       </Draggable>
 
-      <Draggable onDrag={this.handleDrag} {...dragHandlers}
+      {/* <Draggable onDrag={this.handleDrag} {...dragHandlers}
         defaultPosition={{x:730, y:-445}}
         grid={[10, 10]}
 
@@ -193,7 +188,7 @@ class JobPrep extends Component {
         />
         <h2 className="gaunt2">Click Borders to Drag</h2>
         </div>
-      </Draggable>
+      </Draggable> */}
 
         {/* <iframe src="https://quizlet.com/350088308/flashcards/embed" height="500" width="100%" style="border:0"></iframe> */}
 
@@ -205,4 +200,15 @@ class JobPrep extends Component {
   }
 }
 
-export default JobPrep;
+
+const mapDispatchtoProps = {
+  getPosition
+}
+
+const mapStatetoProps = (state) => {
+  return {
+    position: state.position
+  }
+}
+
+export default connect(mapStatetoProps, mapDispatchtoProps)(JobPrep);
