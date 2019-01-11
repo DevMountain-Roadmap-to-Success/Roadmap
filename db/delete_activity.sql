@@ -1,2 +1,2 @@
-delete from date_table 
-where id = $1
+delete from tasks
+where task_id = $1

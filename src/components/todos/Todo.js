@@ -1,10 +1,13 @@
 import React from "react";
 import {List, Remove} from './TodoStyles'
-
-
+import {connect} from 'react-redux'
+import {addTask} from '../../ducks/reducer'
 
 const Todo = (props) => {
   let {task} = props
+  props.allTasks.map(task => (
+    props.addTask(task)
+  ))
   console.log(props);
   return (
     <List>
@@ -25,4 +28,10 @@ const Todo = (props) => {
     </List>
   );
 };
-export default Todo;
+const mapStateToProps = state => {
+  return { 
+    todo: state.todo,
+    allTasks: state.allTasks
+  }
+}
+export default connect(mapStateToProps, {addTask})(Todo)

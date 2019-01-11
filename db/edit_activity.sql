@@ -1,11 +1,11 @@
-update date_table
-set activity = $2
-where id = $1;
+update tasks
+set task = $2
+where task_id = $1;
 
-update date_table
+update tasks
 set priority = $3
-where id = $1;
+where task_id = $1;
 
 
-select activity, id, priority from date_table
-where id = $1;
+select * from tasks
+where task_id = $1;

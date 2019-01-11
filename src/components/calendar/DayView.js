@@ -42,11 +42,22 @@ class DayView extends Component {
     }
     this.setState({ times });
   }
+  toggleEditTask = (id, task) => {
+    console.log(this.props.allTasks)
+    return this.props.allTasks.map(task => {
+    if(task.task_id === id){
+      this.props.addTask(task)
+     this.setState({
+      editTask: !this.state.editTask
+    });
+  }
+})
+  }
 
   render() {
     // console.log(this.state.times);
     let hours = this.state.times.map((time, i) => {
-      return <TimeSlot key={i} time={time} date={this.props.date} />;
+      return <TimeSlot edit={this.props.edit} toggleEdit={this.props.toggle} key={i} time={time} date={this.props.date} />;
     });
     return (
       <Div>

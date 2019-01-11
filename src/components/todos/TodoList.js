@@ -3,13 +3,13 @@ import moment from "moment";
 import axios from "axios";
 import { connect } from "react-redux";
 import {withRouter} from 'react-router'
-import { getTasks } from "../../ducks/reducer";
+import { getTasks, addTask } from "../../ducks/reducer";
 import Input from "../functional/Input";
 import Todo from "./Todo";
 import { Wrapper, TodoForm } from "./TodoStyles";
 import "react-day-picker/lib/style.css";
 import EditTask from "./EditTask";
-
+import ReactLoading from 'react-loading'
 
 
 class TodoList extends Component {
@@ -23,17 +23,17 @@ class TodoList extends Component {
       completeTasks: [],
       editTask: false,
       id: null,
-      selectedDay: "",
       addToCalendar: false,
       time: "",
-      priority: null
+      priority: null,
+      isLoading: true
     };
   }
 
   componentDidMount = () => {
     axios.get("/api/tasks").then(res => {
-      console.log(res.data);
-      this.setState({ tasks: res.data });
+      console.log(res);
+      this.setState({ tasks: res.data, isLoading: false });
       this.props.getTasks(res.data);
     });
   };
@@ -66,20 +66,7 @@ class TodoList extends Component {
       this.setState({ tasks: res.data });
     });
   };
-  selectSubject = e => {
-    console.log(e.target.name);
-    var val = null;
-    if (e.target.name === "job prep") {
-      val = 1;
-    } else if (e.target.name === "practice") {
-      val = 2;
-    } else if (e.target.name === "portfolio") {
-      val = 3;
-    } else {
-      val = 4;
-    }
-    this.setState({ priority: val });
-  };
+  
   toggle = id => {
     console.log(this.state);
     this.state.tasks.map(task => {
@@ -92,70 +79,32 @@ class TodoList extends Component {
   };
 
   toggleEditTask = (id, task) => {
-    console.log(task, id);
-    this.setState({
-      id: id,
-      task: task,
+    console.log(this.props.allTasks)
+    return this.props.allTasks.map(task => {
+    if(task.task_id === id){
+      this.props.addTask(task)
+     this.setState({
       editTask: !this.state.editTask
     });
-    return id;
-  };
-
-  updateTask = () => {
-    console.log(this.state);
-    const { task, description, priority } = this.state;
-    var day = this.state.selectedDay;
-    var time = this.state.time;
-    let newDay = moment(day).format("YYYY-MM-DD");
-    let newTime = moment(time, "h").format("h:mm A");
-    const input = task;
-    console.log(time, day);
-    axios
-      .post("/api/makeActivity", {
-        input,
-        time: newTime,
-        date: newDay,
-        priority
-      })
-
-      .then(res => {
-        if (res.status === 200) {
-          this.props.history.push('/calendar')
-        }
-      });
-  };
-
-  addTo = () => {
-    this.setState(prevState => {
-      return { addToCalendar: !prevState.addToCalendar };
-    });
-  };
-  handleTime = e => {
-    this.setState({ time: e });
-  };
-
-  handleDayChange = e => {
-    this.setState({ selectedDay: e });
-  };
-  showTasks = () => {
-    let tasks = this.state.tasks;
-    return tasks.map(task => (
-      <Todo
-        key={task.task_id}
-        toggle={this.toggle}
-        deleteTodo={this.deleteTodo}
-        task={task}
-        editTask={this.toggleEditTask}
-      />
-    ));
-  };
+  }
+})
+  }
+  onClose = () => {
+    this.setState({editTask: !this.state.editTask})
+  }
+  renderLoading = () => {
+   if(this.state.isLoading){
+   return <ReactLoading type='spokes' color='black'/> 
+    }
+  }
 
   render() {
-    console.log(this.state.addToCalendar);
+    let tasks = this.state.tasks;
     return (
       // <Draggable defaultPosition={{ x: 50, y: 50 }}>
       !this.state.editTask ? (
         <Wrapper>
+        
           <TodoForm onSubmit={this.addTodo}>
             <div style={{ display: "flex", justifyContent: "center" }}>
               <Input
@@ -167,21 +116,26 @@ class TodoList extends Component {
               />
               <hr />
             </div>
-            {this.showTasks()}
+          { tasks.map(task => (
+      <Todo
+        key={task.task_id}
+        toggle={this.toggle}
+        deleteTodo={this.deleteTodo}
+        task={task}
+        editTask={this.toggleEditTask}
+      />
+    ))}
+            {this.renderLoading()}
+      
           </TodoForm>
         </Wrapper>
       ) : (
         <EditTask
           {...this.state}
           key={1}
-          editTask={this.state.editTask}
-          selectedDay={this.state.selectedDay}
-          id={this.state.id}
-          time={this.state.time}
-          toggle={this.toggleEditTask}
-          onClick={this.updateTask}
+          // editTask={this.state.editTask}
+          toggle={this.onClose}
           onSelect={this.addTo}
-          onChange={this.handleChange}
           selectSubject={this.selectSubject}
           handleTime={e => this.handleTime(e)}
           handleDayPicker={e => this.handleDayChange(e)}
@@ -193,10 +147,11 @@ class TodoList extends Component {
 }
 const mapStateToProps = state => {
   return {
-    task: state.task
+    todo: state.todo,
+    allTasks: state.allTasks
   };
 };
 export default withRouter(connect(
   mapStateToProps,
-  { getTasks }
+  { getTasks, addTask }
 )(TodoList));

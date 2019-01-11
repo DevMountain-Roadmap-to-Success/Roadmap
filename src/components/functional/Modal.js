@@ -6,12 +6,17 @@ import styled from "styled-components";
 const Container = styled.section`
   width: auto;
   height: 100%;
-  position: relative;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
   background-color: rgba(22, 22, 22, 0.63);
   z-index: 100;
   display: flex;
   justify-content: center;
   align-items: center;
+
 
 `;
 
