@@ -9,9 +9,7 @@ import Gauntlet from './functional/Gauntlet';
 
 var ReactGridLayout = require('react-grid-layout');
 
-const Fiv = styled.div`
-
-  /* background-color: red; */
+const Drag = styled.div`
   display:flex;
   justify-content: space-around;
 `
@@ -47,14 +45,14 @@ class JobPrep extends Component {
         >
           {/* <Div className="page"> */}
 
-          <Fiv key='flashcard' className='testBox'>
+          <Drag key='flashcard' className='testBox'>
             <Flashcard />
-          </Fiv>
+          </Drag>
 
-          <Fiv key='weather'>
+          <Drag key='weather'>
 
             <Weather />
-          </Fiv>
+          </Drag>
 
 
           <Gaunt key='gauntlet'>
