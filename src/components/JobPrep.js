@@ -21,10 +21,7 @@ background-color:black;
 `
 
 class JobPrep extends Component {
-  constructor() {
-    super();
 
-  };
   render() {
     const { collision, compact } = this.props
 
