@@ -8,7 +8,17 @@ import SideBar from "../functional/SideBar";
 import { Link } from "react-router-dom";
 import { toggleMenu } from "../../ducks/reducer";
 import { connect } from "react-redux";
+import Modal from '../functional/Modal'
+import EditTask from '../todos/EditTask'
+import TodoList from '../todos/TodoList'
+import Form from '../functional/Form'
 
+// const EditBox = styled(EditTask)`
+//   width: 300px;
+//   height: 300px;
+// z-index:10;
+//   background-color: white;
+// `
 const WeekContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -41,7 +51,10 @@ class Calendar extends Component {
       weekDays: [],
       date: moment(),
       startOfWeek: "",
-      endOfWeek: ""
+      endOfWeek: "",
+      edit: false,
+      activity: '',
+      id: null
     };
   }
 
@@ -79,12 +92,34 @@ class Calendar extends Component {
     let { weekDays, date, startOfWeek, endOfWeek } = stateUpdates;
     this.setState({ weekDays, date, startOfWeek, endOfWeek });
   };
+  showEditBox = () => {
+    if(this.state.edit){
+      return (
+<Modal>
+  <Form>
+<EditTask id={this.state.id} >
+
+</EditTask>
+</Form>
+</Modal>
+
+
+      )
+    }
+  }
+  toggleEdit = (val, id) => {
+    this.setState(prevState => {
+      return { edit: !prevState.edit}
+     });
+     this.setState({activity: val, id: id })
+  };
+  
 
   render() {
+    console.log(this.state)
     let month = moment(this.state.date).format("MMMM");
-    console.log(month);
     let weekView = this.state.weekDays.map((day, i) => {
-      return <DayView key={day} date={moment(day).format("MM/DD/YY")} />;
+      return <DayView edit={this.state.edit} toggle={this.toggleEdit}key={day} date={moment(day).format("MM/DD/YY")} />;
     });
     return (
       <div>
@@ -96,7 +131,8 @@ class Calendar extends Component {
           <h2>{` ${this.state.startOfWeek} - ${this.state.endOfWeek} `}</h2>
           <button onClick={() => this.switchWeek(7)}>{">"}</button>
         </SwitchWeek>
-        <WeekContainer>{weekView}</WeekContainer>
+        <WeekContainer>{weekView}{this.showEditBox()}</WeekContainer>
+     
       </div>
     );
   }

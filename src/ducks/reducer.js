@@ -2,10 +2,12 @@ import {GET_USER, GET_TASKS, TOGGLE_MENU, GET_POSITION} from './constants'
 
 const initialState = {
     user: {},
-    task: {},
+    allTasks: [],
+    todo: {},
     open: false,
     position: []
 };
+const ADD_TASK = 'ADD_TASK'
 
 export default function reducer (state=initialState, action){
     switch(action.type) {
@@ -16,14 +18,17 @@ export default function reducer (state=initialState, action){
     return Object.assign({}, state, {position: action.payload})
 
     case GET_TASKS:
-        return Object.assign({}, state, {task: action.payload})
+        return Object.assign({}, state, {allTasks: action.payload})
+
+    case ADD_TASK:
+    return Object.assign({}, state, {todo: action.payload})
     case TOGGLE_MENU:
         return Object.assign({}, state, {open: action.payload})    
         default: return state;
     }
 };
-
+export const addTask = todo => ({type: ADD_TASK, payload: todo})
 export const getPosition = (array) => ({type: GET_POSITION, payload: array})
 export const getUser = user => ({type: GET_USER, payload: user })
-export const getTasks = task => ({type: GET_TASKS, payload: task})
+export const getTasks = allTasks => ({type: GET_TASKS, payload: allTasks})
 export const toggleMenu = open => ({type: TOGGLE_MENU, payload: !open})             
