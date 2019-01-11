@@ -36,7 +36,8 @@ const MenuIcon = (props) => {
         { props.dropdown? 
          <DropDown
          open={props.dropdown}
-            
+          logout={props.logout}  
+          deleteAccount={props.deleteAccount}
         > 
        
         </DropDown>  : null }

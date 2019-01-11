@@ -2,7 +2,18 @@ import React, { Component } from "react";
 import moment from "moment";
 import axios from "axios";
 import styled from "styled-components";
+import Radio from '@material-ui/core/Radio';
+import Modal from '../functional/Modal'
+import EditTask from '../todos/EditTask'
+import {connect} from 'react-redux'
+import {getTasks} from '../../ducks/reducer'
 
+const EditBox = styled(EditTask)`
+  width: 300px;
+  height: 300px;
+z-index:10;
+  background-color: white;
+`
 const Input = styled.input`
   border: none;
   font-size: 16px;
@@ -48,6 +59,11 @@ const CheckBoxWrapper = styled.div`
   }
 `;
 
+const EditModal = styled(Modal)`
+    width: 300px;
+
+`
+
 class TimeSlot extends Component {
   constructor(props) {
     super(props);
@@ -64,12 +80,14 @@ class TimeSlot extends Component {
     let date = moment(this.props.date).format("YYYY/MM/DD");
     let time = this.props.time;
     axios.post(`/api/activity`, { date, time }).then(res => {
+      console.log(res.data)
       if (res.data[0]) {
         this.setState({
-          activity: res.data[0].activity,
-          id: res.data[0].id,
+          activity: res.data[0].task,
+          id: res.data[0].task_id,
           priority: res.data[0].priority
         });
+        this.props.getTasks(res.data[0])
       }
     });
   };
@@ -88,20 +106,19 @@ class TimeSlot extends Component {
       .then(res => {
         console.log(res.data);
         this.setState({
-          activity: res.data[0].activity,
-          id: res.data[0].id,
+          activity: res.data[0].task,
+          id: res.data[0].task_id,
           priority: res.data[0].priority
         });
       });
   };
 
   handleEdit = val => {
-    this.setState({ input: val, activity: "", edit: true });
+    this.setState({ input: val, activity: "" });
     console.log(this.state.id);
   };
 
   handleSave = () => {
-    console.log(this.state.priority);
     let activity = this.state.input;
     let priority = this.state.priority;
     axios
@@ -109,9 +126,10 @@ class TimeSlot extends Component {
       .then(res => {
         // console.log(res.data);
         this.setState({
-          activity: res.data[0].activity,
-          edit: false,
-          priority: res.data[0].priority
+          activity: res.data[0].task,
+          edit: !this.state.edit,
+          priority: res.data[0].priority,
+          id: res.data[0].task_id
         });
       });
   };
@@ -125,39 +143,22 @@ class TimeSlot extends Component {
   handleCheckBox = e => {
     this.setState({ priority: e.target.name });
   };
+
   renderIcon = () => {
+    const {activity} = this.state
     if (this.state.input.length > 0) {
       return (
         <>
-          <i
-            className="material-icons"
-            id="edit"
-            title="save"
-            onClick={this.state.edit ? this.handleSave : this.makeActivity}
-          >
-            add
-          </i>
-          <CheckBoxWrapper>
-            <span> Priority:</span>
-            <div>
-              High
-              <input
-                type="checkbox"
-                name={1}
-                onChange={e => this.handleCheckBox(e)}
-              />
-              Med
-              <input type="checkbox" name={2} onChange={this.handleCheckBox} />
-              Low
-              <input type="checkbox" name={3} onChange={this.handleCheckBox} />
-            </div>
-          </CheckBoxWrapper>
+          <i className='material-icons' onClick={activity ? this.handleSave : this.makeActivity}>add</i>
         </>
       );
     }
   };
 
+ 
   render() {
+    console.log(this.props)
+    const {todo} = this.props
     if (this.state.priority === 3) {
       var color = { backgroundColor: "rgb(122, 202, 248)" };
     } else if (this.state.priority === 2) {
@@ -168,6 +169,7 @@ class TimeSlot extends Component {
       color = {backgroundColor: 'rgb(111, 253, 142)'}
     }
     return (
+      <>
       <TimeBox style={color}>
         <Time>{this.props.time}</Time>
 
@@ -178,7 +180,7 @@ class TimeSlot extends Component {
               className="material-icons"
               id="edit"
               title="edit"
-              onClick={() => this.handleEdit(this.state.activity)}
+              onClick={() => this.props.toggleEdit(this.state.activity, this.state.id)}
             >
               edit
             </i>
@@ -199,12 +201,17 @@ class TimeSlot extends Component {
               onChange={e => this.handleActivity(e.target.value)}
               placeholder="Type Here"
             />
-            {this.renderIcon()}
+    {this.renderIcon()}
+
           </>
         )}
       </TimeBox>
+        </>
     );
   }
 }
+const mapStateToProps = state => {
+  return { allTasks: state.allTasks, todo: state.todos}
+}
 
-export default TimeSlot;
+export default connect(mapStateToProps, {getTasks})(TimeSlot);

@@ -80,6 +80,7 @@ massive(CONNECTION_STRING).then(dbInstance => {
   app.delete('/api/tasks/delete/:id', ctrl.delete_task)
 
   // calendar
+  app.get('/api/activity', ctrl.get_activities)
   app.post('/api/activity', ctrl.calendar_activities)
   app.post('/api/makeActivity', ctrl.make_activity)
   app.put('/api/editActivity/:id', ctrl.edit_activity)

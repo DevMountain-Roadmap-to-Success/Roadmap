@@ -167,5 +167,6 @@ export const Back = styled.span`
   position: absolute;
   left: 8px;
   top: 10px;
+  cursor: pointer;
 `
 

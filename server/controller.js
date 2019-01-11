@@ -22,19 +22,24 @@ module.exports = {
       .then(() => res.sendStatus(200));
   },
 
-  get_tasks: (req, res) => {
+  get_tasks: async(req, res) => {
     const dbInstance = req.app.get("db");
-
-    dbInstance
+    try {
+   let tasks = await dbInstance
       .get_tasks(req.session.user.user_id)
-      .then(data => res.status(200).send(data));
+  
+     res.status(200).send(tasks)
+    } 
+    catch(err){
+      console.log(err, 'get tasks error')
+    }
   },
   create_task: (req, res) => {
     const dbInstance = req.app.get("db");
     const { date_created, task } = req.body;
-
+    const complete = false
     dbInstance
-      .create_task(req.session.user.user_id, task, false, date_created)
+      .create_task(req.session.user.user_id, task, complete, date_created)
       .then(data => res.status(200).send(data))
       .catch(err => console.log(err, "create task error"));
   },
@@ -64,7 +69,7 @@ module.exports = {
   },
   update_task: (req, res) => {
     const dbInstance = req.app.get("db");
-    const { task } = req.body;
+    const { task, date, time, priority, description } = req.body;
     let complete = false;
 
     dbInstance
@@ -72,6 +77,10 @@ module.exports = {
         req.params.id,
         complete,
         task,
+        date, 
+        priority,
+        time,
+        description,
         req.session.user.user_id
       )
       .then(data => res.status(200).send(data));
@@ -86,15 +95,22 @@ module.exports = {
       activities => res.status(200).send(activities)
     );
   },
+  get_activities: (req, res) => {
+    const db = req.app.get('db')
+    db.get_activities(req.session.user.user_id)
+    .then((data) => res.status(200).send(data))
+  },
   make_activity: (req, res) => {
     const db = req.app.get("db");
     const { date, time, input, priority } = req.body;
+    const complete = false
     console.log(req.body)
     db.make_activity(
       req.session.user.user_id,
       date,
       time,
       input,
+      complete,
       priority
     ).then(activity => res.status(200).send(activity));
   },
