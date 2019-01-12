@@ -1,5 +1,5 @@
-insert into tasks (user_id, task, complete, date)
-values ($1, $2, $3, $4);
+insert into tasks (user_id, task, complete, date, time)
+values ($1, $2, $3, $4, $5);
 
 
 

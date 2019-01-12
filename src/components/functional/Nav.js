@@ -63,7 +63,7 @@ const MenuItems = styled.div`
 class Nav extends React.Component  {
   
       render() {
-    console.log(this.props);
+
     return (
       <>
         {this.props.nav ? (

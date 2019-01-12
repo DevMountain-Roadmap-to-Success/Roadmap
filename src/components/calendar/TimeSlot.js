@@ -4,7 +4,7 @@ import axios from "axios";
 import styled from "styled-components";
 import Radio from '@material-ui/core/Radio';
 import Modal from '../functional/Modal'
-import EditTask from '../todos/EditTask'
+import EditTask from './EditTask'
 import {connect} from 'react-redux'
 import {getTasks} from '../../ducks/reducer'
 
@@ -72,7 +72,8 @@ class TimeSlot extends Component {
       id: null,
       input: "",
       edit: false,
-      priority: null
+      priority: null,
+      time: ''
     };
   }
 
@@ -80,17 +81,28 @@ class TimeSlot extends Component {
     let date = moment(this.props.date).format("YYYY/MM/DD");
     let time = this.props.time;
     axios.post(`/api/activity`, { date, time }).then(res => {
-      console.log(res.data)
       if (res.data[0]) {
         this.setState({
           activity: res.data[0].task,
           id: res.data[0].task_id,
-          priority: res.data[0].priority
+          priority: res.data[0].priority,
         });
-        this.props.getTasks(res.data[0])
-      }
+        axios.get('/api/activity')
+        .then((res) => {
+        this.props.getTasks(res.data)
+      })
+    }
     });
   };
+  componentDidUpdate = (prevProps, prevState) => {
+
+      // only update chart if the data has changed
+      if (this.state !== prevState) {
+          this.render()
+      }
+    
+  }
+
 
   handleActivity = e => {
     this.setState({ input: e });
@@ -104,7 +116,6 @@ class TimeSlot extends Component {
     axios
       .post("/api/makeActivity", { date, time, input, priority })
       .then(res => {
-        console.log(res.data);
         this.setState({
           activity: res.data[0].task,
           id: res.data[0].task_id,
@@ -119,10 +130,9 @@ class TimeSlot extends Component {
   };
 
   handleSave = () => {
-    let activity = this.state.input;
-    let priority = this.state.priority;
+   const { id, priority, activity } = this.state
     axios
-      .put(`/api/editActivity/${this.state.id}`, { activity, priority })
+      .put(`/api/editActivity/${id}`, { activity, priority })
       .then(res => {
         // console.log(res.data);
         this.setState({
@@ -131,13 +141,14 @@ class TimeSlot extends Component {
           priority: res.data[0].priority,
           id: res.data[0].task_id
         });
+        
       });
   };
 
   handleDelete = () => {
     const { id } = this.state;
     axios.delete(`/api/deleteActivity/${id}`).then(() => {
-      this.setState({ activity: "", priority: null });
+      this.setState({ activity: "", priority: null, input: '' });
     });
   };
   handleCheckBox = e => {
@@ -157,8 +168,7 @@ class TimeSlot extends Component {
 
  
   render() {
-    console.log(this.props)
-    const {todo} = this.props
+console.log(this.props)
     if (this.state.priority === 3) {
       var color = { backgroundColor: "rgb(122, 202, 248)" };
     } else if (this.state.priority === 2) {
@@ -168,6 +178,8 @@ class TimeSlot extends Component {
     } else if (this.state.priority === 4) {
       color = {backgroundColor: 'rgb(111, 253, 142)'}
     }
+
+
     return (
       <>
       <TimeBox style={color}>
@@ -180,13 +192,12 @@ class TimeSlot extends Component {
               className="material-icons"
               id="edit"
               title="edit"
-              onClick={() => this.props.toggleEdit(this.state.activity, this.state.id)}
+              onClick={() => this.props.toggleEdit(this.state.id, this.props.time, this.props.date)}
             >
               edit
             </i>
             <i
               className="material-icons"
-              id="clear"
               title="delete"
               onClick={this.handleDelete}
             >
@@ -195,13 +206,8 @@ class TimeSlot extends Component {
           </>
         ) : (
           <>
-            <Input
-              type="text"
-              value={this.state.input}
-              onChange={e => this.handleActivity(e.target.value)}
-              placeholder="Type Here"
-            />
-    {this.renderIcon()}
+             <i className='material-icons' new='new' onClick={() => this.props.toggleEdit(1, this.props.time, this.props.date)}>add</i>
+    {/* {this.renderIcon()} */}
 
           </>
         )}

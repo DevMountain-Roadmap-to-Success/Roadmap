@@ -8,7 +8,7 @@ import Input from "../functional/Input";
 import Todo from "./Todo";
 import { Wrapper, TodoForm } from "./TodoStyles";
 import "react-day-picker/lib/style.css";
-import EditTask from "./EditTask";
+import EditTask from "../calendar/EditTask";
 import ReactLoading from 'react-loading'
 
 
@@ -25,7 +25,7 @@ class TodoList extends Component {
       id: null,
       addToCalendar: false,
       time: "",
-      priority: null,
+      priority: 4,
       isLoading: true
     };
   }
@@ -41,11 +41,13 @@ class TodoList extends Component {
   addTodo = e => {
     e.preventDefault();
     let dateCreated = moment().format("YYYY-MM-DD");
+    let time = moment('h').format('h:mm A')
     console.log(dateCreated);
     axios
       .post("/api/addtask", {
         date_created: dateCreated,
-        task: this.state.task
+        task: this.state.task,
+        time: time
       })
       .then(res => {
         this.setState({
@@ -102,7 +104,7 @@ class TodoList extends Component {
     let tasks = this.state.tasks;
     return (
       // <Draggable defaultPosition={{ x: 50, y: 50 }}>
-      !this.state.editTask ? (
+
         <Wrapper>
         
           <TodoForm onSubmit={this.addTodo}>
@@ -122,25 +124,17 @@ class TodoList extends Component {
         toggle={this.toggle}
         deleteTodo={this.deleteTodo}
         task={task}
-        editTask={this.toggleEditTask}
+        // edit={this.state.editTask}
+        // editTask={this.toggleEditTask}
       />
     ))}
             {this.renderLoading()}
       
           </TodoForm>
         </Wrapper>
-      ) : (
-        <EditTask
-          {...this.state}
-          key={1}
-          // editTask={this.state.editTask}
-          toggle={this.onClose}
-          onSelect={this.addTo}
-          selectSubject={this.selectSubject}
-          handleTime={e => this.handleTime(e)}
-          handleDayPicker={e => this.handleDayChange(e)}
-        />
-      )
+
+       
+      
       // </Draggable>
     );
   }

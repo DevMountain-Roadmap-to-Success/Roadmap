@@ -26,7 +26,6 @@ const CircleDiv = styled.div`
 
 
 const MenuIcon = (props) => {
-    console.log(props)
     return (
 <>
         <CircleDiv {...props}

@@ -18,10 +18,11 @@ export default function reducer (state=initialState, action){
     return Object.assign({}, state, {position: action.payload})
 
     case GET_TASKS:
-        return Object.assign({}, state, {allTasks: action.payload})
+        return (state, Object.assign({}, state, {allTasks: action.payload}))
 
     case ADD_TASK:
-    return Object.assign({}, state, {todo: action.payload})
+    return (state, Object.assign({}, state, {todo: action.payload}))
+    
     case TOGGLE_MENU:
         return Object.assign({}, state, {open: action.payload})    
         default: return state;

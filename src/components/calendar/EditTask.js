@@ -2,6 +2,7 @@ import React from "react";
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import "react-day-picker/lib/style.css";
 import axios from 'axios'
+import {addTask, getTasks} from '../../ducks/reducer'
 import {
   Back,
   EditBox,
@@ -9,29 +10,42 @@ import {
   EditInput,
   EditButton,
   Subject,
-  Date
-} from "./TodoStyles";
+  Date,
+  EditWrap
+} from "../todos/TodoStyles";
 import Radio from "@material-ui/core/Radio";
 import TimePicker from "react-time-picker";
 import { withRouter } from "react-router";
 import { connect } from "react-redux";
-import moment, { relativeTimeThreshold } from "moment";
+import moment from "moment";
 
 class EditTask extends React.Component {
   state = {
     edit: false,
     calendarAdd: false,
     checked: { color: "blue" },
-    priority: null,
-    selectedDay: "",
-    time: '',
+    priority: 4,
+    selectedDay: '',
+    time: '9:00',
     input: '',
     description: ''
   };
 
   componentDidMount = () => {
-    this.setState({input: this.props.todo.task})
+    const {todo} = this.props
+    if(todo.time){
+      var time = todo.time
+    } else {
+      time = this.props.time
+    }
+    let newTime = moment(time, 'h:mm A').format('HH:mm')
+    todo.length > 0 ?
+    // let day = moment(this.props.selectedDay).format('YYYY-MM-DD')  
+      this.setState({selectedDay: this.props.selectedDay, input: todo.task, time: newTime, priority: todo.priority})
+    :
+    this.setState({selectedDay: this.props.selectedDay, time: newTime })
   }
+
   toggleEditState = () => {
     this.setState(prevState => {
       return { edit: !prevState.edit };
@@ -68,9 +82,11 @@ class EditTask extends React.Component {
     }
     this.setState({ priority: val });
   };
+  
 
   updateTask = (id) => {
     const { input, description, priority } = this.state;
+    console.log( priority)
     var day = this.state.selectedDay;
     var time = this.state.time;
     let newDay = moment(day).format("YYYY-MM-DD");
@@ -80,7 +96,6 @@ class EditTask extends React.Component {
     } else {
       task = this.props.todo.task
     }
-    console.log(task);
     axios
       .put(`/api/tasks/update/${id}`, {
         task,
@@ -91,9 +106,7 @@ class EditTask extends React.Component {
       })
 
       .then(res => {
-        if (res.status === 200) {
-          this.props.history.push('/calendar')
-        }
+        this.props.getTasks(res.data)
       });
   };
 
@@ -102,35 +115,16 @@ class EditTask extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   };
   render() {
-    var day = this.state.selectedDay;
+    const {input, selectedDay, time, description, priority} = this.state
     const FORMAT = "M/D/YYYY";
     const { todo } = this.props;
 
-    if (todo.time) {
-      var savedTime = todo.time;
-    } else {
-      savedTime = '';
-    }
-
+console.log(this.props)
     return (
-      <EditBox key={todo.id}>
-        <Back onClick={this.props.toggle}>{`<< Back`}</Back>
+      <EditBox >
 
-        {!this.state.edit ? (
-          <Main>
-            <i className="material-icons" onClick={this.toggleEditState}>
-              edit
-            </i>
-            <span key={todo.task_id}>{todo.task}</span>
-            <span>
-              Complete by:
-              {this.renderDatePicker()}
-            </span>
-            <p>{`Notes: ${todo.description}`}</p>
-          </Main>
-        ) : (
-          <Main>
-            <EditInput
+        <Back onClick={this.props.toggle}>{`<< Back`}</Back>
+        <EditInput
               className="card-header"
               onChange={e => this.handleChange(e)}
               name="input"
@@ -138,13 +132,17 @@ class EditTask extends React.Component {
               value={this.state.input}
             />
             <hr />
+        {this.state.edit ? (
+          <Main>
+           
             <Subject
-              onChange={e => this.selectSubject(e)}
+              
               aria-label="Type:"
             >
               <span className="type">
                 Job Prep
                 <Radio
+                onChange={e => this.selectSubject(e)}
                   checked={this.state.priority === 1}
                   type="radio"
                   name="job prep"
@@ -154,6 +152,7 @@ class EditTask extends React.Component {
               <span className="type">
                 Practice Code
                 <Radio
+                onChange={e => this.selectSubject(e)}
                   checked={this.state.priority === 2}
                   type="radio"
                   name="practice"
@@ -163,6 +162,7 @@ class EditTask extends React.Component {
               <span className="type">
                 Portfolio{" "}
                 <Radio
+                onChange={e => this.selectSubject(e)}
                   checked={this.state.priority === 3}
                   name="portfolio"
                   value={3}
@@ -171,29 +171,45 @@ class EditTask extends React.Component {
               <span className="type">
                 Other{" "}
                 <Radio
+                onChange={e => this.selectSubject(e)}
                   checked={this.state.priority === 4}
                   name="other"
                   value={4}
                 />
               </span>
             </Subject>
-            <textarea onChange={(e) => this.handleChange(e)} name='description' value={this.props.description} placeholder='Additional Notes... '/>
+            <EditWrap>
+            <textarea onChange={(e) => this.handleChange(e)} name='description' value={todo.description ? todo.description : this.state.description} placeholder='Additional Notes... '/>
 
             <Date>
               {" "}
               Pick a due date:
               <DayPickerInput
-               value={day}
+               value={this.state.selectedDay}
                 name="selectedDay"
                 onDayChange={this.handleDayChange}
                 format={FORMAT}
               />
             </Date>
-            <TimePicker value={savedTime} onChange={this.handleTime} />
+            <TimePicker value={this.state.time} onChange={this.handleTime} />
+            <EditButton name="Add to Calendar" onClick={this.props.id === 1 ? () => this.props.makeActivity(input, time, selectedDay, description, priority) : () => this.updateTask(todo.task_id)} />
+            </EditWrap>
+          </Main>
+             ) : (
+          <Main>
+            <i className="material-icons" onClick={this.setState({edit: !this.state.edit})}>
+              edit
+            </i>
+            <span key={todo.task_id}>{todo.task}</span>
+            <span>
+              Complete by:
+              {this.renderDatePicker()}
+            </span>
+            <p>{`Notes: ${todo.description}`}</p>
+           
           </Main>
         )}
 
-        <EditButton name="Add to Calendar" onClick={() => this.updateTask(todo.task_id)} />
       </EditBox>
     );
   }
@@ -202,4 +218,4 @@ const mapStateToProps = state => {
   return { allTasks: state.allTasks, todo: state.todo };
 };
 
-export default withRouter(connect(mapStateToProps)(EditTask));
+export default withRouter(connect(mapStateToProps, {getTasks, addTask})(EditTask));

@@ -24,6 +24,9 @@ set description = $7
 where task_id = $1;
 
 select * from tasks
-where user_id = $8
-and date <= current_date - 1;
+where time = $6
+and date = $4
+and user_id = $8;
+
+
 

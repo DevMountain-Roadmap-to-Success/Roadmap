@@ -36,10 +36,10 @@ module.exports = {
   },
   create_task: (req, res) => {
     const dbInstance = req.app.get("db");
-    const { date_created, task } = req.body;
+    const { date_created, task, time } = req.body;
     const complete = false
     dbInstance
-      .create_task(req.session.user.user_id, task, complete, date_created)
+      .create_task(req.session.user.user_id, task, complete, date_created, time)
       .then(data => res.status(200).send(data))
       .catch(err => console.log(err, "create task error"));
   },
@@ -91,6 +91,8 @@ module.exports = {
   calendar_activities: (req, res) => {
     const db = req.app.get("db");
     const { date, time } = req.body;
+
+
     db.calendar_activities(date, time, req.session.user.user_id).then(
       activities => res.status(200).send(activities)
     );
@@ -102,15 +104,16 @@ module.exports = {
   },
   make_activity: (req, res) => {
     const db = req.app.get("db");
-    const { date, time, input, priority } = req.body;
+    const { newDate, newTime, input, priority, description } = req.body;
     const complete = false
     console.log(req.body)
     db.make_activity(
       req.session.user.user_id,
-      date,
-      time,
+      newDate,
+      newTime,
       input,
       complete,
+      description,
       priority
     ).then(activity => res.status(200).send(activity));
   },

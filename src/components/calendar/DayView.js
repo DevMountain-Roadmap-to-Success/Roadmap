@@ -2,11 +2,13 @@ import React, { Component } from "react";
 import moment from "moment";
 import TimeSlot from "./TimeSlot";
 import styled from "styled-components";
-
+import {connect} from 'react-redux'
+import {getTasks, addTask} from '../../ducks/reducer'
 const Div = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
 
   h1.day_name {
     font-weight: bold;
@@ -26,8 +28,8 @@ class DayView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      startTime: 9,
-      endTime: 17,
+      startTime: 6,
+      endTime: 20,
       times: []
     };
   }
@@ -42,17 +44,7 @@ class DayView extends Component {
     }
     this.setState({ times });
   }
-  toggleEditTask = (id, task) => {
-    console.log(this.props.allTasks)
-    return this.props.allTasks.map(task => {
-    if(task.task_id === id){
-      this.props.addTask(task)
-     this.setState({
-      editTask: !this.state.editTask
-    });
-  }
-})
-  }
+  
 
   render() {
     // console.log(this.state.times);
@@ -72,4 +64,10 @@ class DayView extends Component {
     );
   }
 }
-export default DayView;
+const mapStateToProps = state => {
+  return { 
+    todo: state.todo,
+    allTasks: state.allTasks
+  }
+}
+export default connect(mapStateToProps, {getTasks, addTask})(DayView);
