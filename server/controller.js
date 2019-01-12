@@ -69,17 +69,17 @@ module.exports = {
   },
   update_task: (req, res) => {
     const dbInstance = req.app.get("db");
-    const { task, date, time, priority, description } = req.body;
+    const { input, newDate, newTime, priority, description } = req.body;
     let complete = false;
 
     dbInstance
       .update_task(
         req.params.id,
         complete,
-        task,
-        date, 
+        input,
+        newDate, 
         priority,
-        time,
+        newTime,
         description,
         req.session.user.user_id
       )

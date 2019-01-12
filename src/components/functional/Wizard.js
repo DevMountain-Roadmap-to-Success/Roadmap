@@ -1,46 +1,74 @@
-import React from 'react'
-import styled from 'styled-components'
-import Card from '@material-ui/core/Card';
+import React from "react";
+import styled from "styled-components";
+import Card from "@material-ui/core/Card";
 
-const WizardBox = styled.div `
-    width: 400px;
-    height: 500px;
-    margin-top: 160px;
+const WizardBox = styled.div`
+  width: 20%;
+  height: 640px;
+`;
 
+const KeyCard = styled(Card)`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 15px;
+
+  
+`;
+const KeyTypes = styled.div `
+    margin-top: 10%;
     div {
         padding: 10px;
-        font-size: 14px;
-    }
-
-`// var color = { backgroundColor: "rgb(122, 202, 248)" };
-// } else if (this.state.priority === 2) {
-//   color = { backgroundColor: "rgb(244, 247, 113)" };
-// } else if (this.state.priority === 1) {
-//   color = { backgroundColor: "rgb(255, 87, 87)" };
-// } else if (this.state.priority === 4) {
-//   color = {backgroundColor: 'rgb(111, 253, 142)'}
-// }
-
-
-function Wizard (props){
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
   
-            return (
+  span {
+    display: flex;
+    line-height: 25px;
+    margin-bottom: 5px;
+    font-size: 16px;
+    height: 70px;
+  }
+  h1 {
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+  }
+`
 
-                <WizardBox>
-                    <Card style={{height: '100%', width:'100%'}}>
-                   
-                    <div style={{backgroundColor: "rgb(122, 202, 248)", height: '60px', width: '100px' }}>Practice Code: 2 hours daily</div>
-                  
-                    <div style={{backgroundColor:  "rgb(244, 247, 113)" , height: '60px', width: '100px' }}>  Jop Prep: 1 hour daily</div>
-                    <div style={{backgroundColor:  "rgb(255, 87, 87)", height: '60px', width: '100px' }}>Improve Portfolio: 4 hours daily</div>
-                    <div style={{backgroundColor: 'rgb(111, 253, 142)', height: '60px', width: '100px' }}>Other</div>
+const Wizard = props => {
+  return (
+    <WizardBox>
+      <KeyCard>
+    <hr/>
+     <KeyTypes>
+         <h1>Recommended Schedule</h1><hr/>
+        <span>
+          <div style={{ backgroundColor: "rgb(122, 202, 248)" }} />Write
+          Code - 2 hours daily
+        </span>
 
-                    </Card>
+        <span>
+          <div style={{ backgroundColor: "rgb(244, 247, 113)" }}> </div>Jop
+          Prep - 1 hour daily
+        </span>
+        <span>
+          <div style={{ backgroundColor: "rgb(255, 87, 87)" }} /> {`Build & Improve
+          Portfolio - 4 hours daily`}
+        </span>
+        <span>
+          <div style={{ backgroundColor: "rgb(111, 253, 142)" }} />
+          Other
+        </span>
+        </KeyTypes>
+      </KeyCard>
+    </WizardBox>
+  );
+};
 
-                    </WizardBox>
-            )
-        }
-    
-
-
-export default Wizard
+export default Wizard;
