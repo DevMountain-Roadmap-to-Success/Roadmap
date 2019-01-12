@@ -14,7 +14,8 @@ export const RadioButton = styled.input`
 export const Subject = styled.div `
    display: flex;
   flex-direction: column;
-   width: 25%;
+   width: 30%;
+   justify-content: center;
 
    .type {
      display: flex;
@@ -22,6 +23,7 @@ export const Subject = styled.div `
      align-items: center;
      padding: 5px;
      background-color:white;
+     border-right: rgb(210, 210, 210) thin solid;
    }
    #radio {
      fill: 'blue';
@@ -30,7 +32,7 @@ export const Subject = styled.div `
 
 export const EditButton = styled(Button)`
   /* position: absolute; */
-  
+  font-size: 14px;
   width: 130px;
   height: 40px;
   color: white;
@@ -136,24 +138,22 @@ display: flex;
 
 
 export const EditBox = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 400px;
+  height: 470px;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
-  justify-content: center;
    background-color: white;
   
- 
+ border-radius: 4px;
   
 `
 export const Main = styled.main`
-  height: 70%;
-  display: flex;
-  /* justify-content: center; */
-
-  width: 100%;
+      height: 80%;
+    display: flex;
+    width: 100%;
+    justify-content: center;
 
   textarea {
     height: 80px;
@@ -171,14 +171,15 @@ export const EditInput = styled(Input)`
   border-right: none;
   border-top: none;
   border-left: none;
-  border-color: black;
-  margin-top: 30px;
-`
+  border-color:rgb(210, 210, 210);
 
-export const Back = styled.span`
-  position: absolute;
-  left: 8px;
-  top: 10px;
-  cursor: pointer;
+`
+export const ColorBlock = styled.div`
+    width: 100%;
+    height: 30px;
+    position: absolute;
+    top: 0;
+    background-color: rgb(198, 231, 250);
+    border-radius: 4px;
 `
 

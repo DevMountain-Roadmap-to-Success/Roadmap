@@ -4,32 +4,37 @@ import TimeSlot from "./TimeSlot";
 import styled from "styled-components";
 import {connect} from 'react-redux'
 import {getTasks, addTask} from '../../ducks/reducer'
+
 const Div = styled.div`
   display: flex;
   flex-direction: column;
+  width: 10vw;
   align-items: center;
+  border: rgb(230, 230, 230) .8px solid;
+
 
 
   h1.day_name {
     font-weight: bold;
     font-size: 32px;
   }
-`;
+`
 const DayHeader = styled.div`
-  border: rgb(165, 165, 165) thin solid;
+  border-bottom: rgb(200, 200, 200) thin solid;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 5%;
+  padding-bottom: 5px;
 `;
 
 class DayView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      startTime: 6,
-      endTime: 20,
+      startTime: 5,
+      endTime: 21,
       times: []
     };
   }
@@ -55,7 +60,7 @@ class DayView extends Component {
       <Div>
         <DayHeader>
           <h1 className="day_name">
-            {moment(this.props.date, "MM/DD/YY").format("dddd")}
+            {moment(this.props.date, "MM/DD/YY").format("dd")}
           </h1>
           <h2 className="the_dates">{this.props.date}</h2>
         </DayHeader>

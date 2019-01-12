@@ -24,9 +24,7 @@ set description = $7
 where task_id = $1;
 
 select * from tasks
-where time = $6
-and date = $4
-and user_id = $8;
+where user_id = $8;
 
 
 

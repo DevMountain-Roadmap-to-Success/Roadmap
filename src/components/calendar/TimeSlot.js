@@ -8,22 +8,16 @@ import EditTask from './EditTask'
 import {connect} from 'react-redux'
 import {getTasks} from '../../ducks/reducer'
 
-const EditBox = styled(EditTask)`
-  width: 300px;
-  height: 300px;
-z-index:10;
-  background-color: white;
-`
-const Input = styled.input`
-  border: none;
-  font-size: 16px;
-`;
+
+
 const TimeBox = styled.div`
-  border: rgb(165, 165, 165) 0.5px solid;
+  border: rgb(180, 180, 180) 0.5px solid;
   padding: 5px;
-  width: 200px;
+  width: 10vw;
   position: relative;
-  height: 90px;
+  height: 70px;
+  border-radius: 3px;
+  box-shadow: 0 .5px .5px 0 rgb(210, 210, 210);
 
   i {
     cursor: pointer;
@@ -46,23 +40,9 @@ const Time = styled.div`
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 10px;
-`;
-const CheckBoxWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  div {
-    display: flex;
-    font-size: 12px;
-    width: 80%;
-    justify-content: space-evenly;
-  }
+  text-align: center;
 `;
 
-const EditModal = styled(Modal)`
-    width: 300px;
-
-`
 
 class TimeSlot extends Component {
   constructor(props) {
@@ -200,14 +180,15 @@ console.log(this.props)
               className="material-icons"
               title="delete"
               onClick={this.handleDelete}
+              style={{fontSize: '13px', fontWeight: 500}}
             >
               clear
             </i>
           </>
         ) : (
           <>
-             <i className='material-icons' new='new' onClick={() => this.props.toggleEdit(1, this.props.time, this.props.date)}>add</i>
-    {/* {this.renderIcon()} */}
+             {/* <i className='material-icons' new='new' onClick={() => this.props.toggleEdit(1, this.props.time, this.props.date)}>add</i> */}
+               {/* {this.renderIcon()} */}
 
           </>
         )}

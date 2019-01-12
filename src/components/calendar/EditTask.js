@@ -4,8 +4,7 @@ import "react-day-picker/lib/style.css";
 import axios from 'axios'
 import {addTask, getTasks} from '../../ducks/reducer'
 import {
-  Back,
-  EditBox,
+  ColorBlock,
   Main,
   EditInput,
   EditButton,
@@ -39,12 +38,12 @@ class EditTask extends React.Component {
       time = this.props.time
     }
     let newTime = moment(time, 'h:mm A').format('HH:mm')
-    todo.length > 0 ?
-    // let day = moment(this.props.selectedDay).format('YYYY-MM-DD')  
+    if(todo.task && todo.length > 0){
       this.setState({selectedDay: this.props.selectedDay, input: todo.task, time: newTime, priority: todo.priority})
-    :
+    } else {
     this.setState({selectedDay: this.props.selectedDay, time: newTime })
   }
+}
 
   toggleEditState = () => {
     this.setState(prevState => {
@@ -84,32 +83,7 @@ class EditTask extends React.Component {
   };
   
 
-  updateTask = (id) => {
-    const { input, description, priority } = this.state;
-    console.log( priority)
-    var day = this.state.selectedDay;
-    var time = this.state.time;
-    let newDay = moment(day).format("YYYY-MM-DD");
-    let newTime = moment(time, "h").format("h:mm A");
-    if(input.length > 0){
-     var task = input
-    } else {
-      task = this.props.todo.task
-    }
-    axios
-      .put(`/api/tasks/update/${id}`, {
-        task,
-        time: newTime,
-        date: newDay,
-        priority,
-        description,
-      })
-
-      .then(res => {
-        this.props.getTasks(res.data)
-      });
-  };
-
+ 
   handleChange = e => {
     console.log(e.target.name, e.target.value);
     this.setState({ [e.target.name]: e.target.value });
@@ -121,24 +95,16 @@ class EditTask extends React.Component {
 
 console.log(this.props)
     return (
-      <EditBox >
 
-        <Back onClick={this.props.toggle}>{`<< Back`}</Back>
-        <EditInput
-              className="card-header"
-              onChange={e => this.handleChange(e)}
-              name="input"
-              placeholder="Task name.."
-              value={this.state.input}
-            />
-            <hr />
-        {this.state.edit ? (
+        // this.state.edit ? 
+          <>
           <Main>
            
             <Subject
               
               aria-label="Type:"
             >
+              
               <span className="type">
                 Job Prep
                 <Radio
@@ -179,6 +145,13 @@ console.log(this.props)
               </span>
             </Subject>
             <EditWrap>
+            <EditInput
+              className="card-header"
+              onChange={e => this.handleChange(e)}
+              name="input"
+              placeholder="Task name.."
+              value={this.state.input}
+            />
             <textarea onChange={(e) => this.handleChange(e)} name='description' value={todo.description ? todo.description : this.state.description} placeholder='Additional Notes... '/>
 
             <Date>
@@ -192,10 +165,10 @@ console.log(this.props)
               />
             </Date>
             <TimePicker value={this.state.time} onChange={this.handleTime} />
-            <EditButton name="Add to Calendar" onClick={this.props.id === 1 ? () => this.props.makeActivity(input, time, selectedDay, description, priority) : () => this.updateTask(todo.task_id)} />
+          
             </EditWrap>
           </Main>
-             ) : (
+           {/* : 
           <Main>
             <i className="material-icons" onClick={this.setState({edit: !this.state.edit})}>
               edit
@@ -207,10 +180,13 @@ console.log(this.props)
             </span>
             <p>{`Notes: ${todo.description}`}</p>
            
-          </Main>
-        )}
-
-      </EditBox>
+          </Main> */}
+        
+        <div style={{display: 'flex', justifyContent: 'space-evenly', width: '100%'}}>
+ 
+  <EditButton name='Cancel' onClick={this.props.toggle}/>
+  <EditButton name="Add to Calendar" onClick={() => this.props.makeActivity(input, time, selectedDay, description, priority)} /></div>
+</>
     );
   }
 }
