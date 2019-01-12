@@ -2,27 +2,36 @@ import React, { Component } from "react";
 import moment from "moment";
 import DayView from "./DayView";
 import styled from "styled-components";
-// import TimeSlot from "./TimeSlot";
+import axios from 'axios'
 import Header from "../Header";
-import SideBar from "../functional/SideBar";
-import { Link } from "react-router-dom";
-import { toggleMenu } from "../../ducks/reducer";
+import { toggleMenu, addTask, getTasks } from "../../ducks/reducer";
 import { connect } from "react-redux";
+import {withRouter} from 'react-router'
 import Modal from '../functional/Modal'
-import EditTask from '../todos/EditTask'
-import TodoList from '../todos/TodoList'
-import Form from '../functional/Form'
+import EditTask from './EditTask'
+import Wizard from '../functional/Wizard'
+import TimeSlot from '../calendar/TimeSlot'
 
-// const EditBox = styled(EditTask)`
-//   width: 300px;
-//   height: 300px;
-// z-index:10;
-//   background-color: white;
-// `
+
+const EditModal = styled(Modal)`
+  width: 450px;
+  height: 500px;
+  z-index:10;
+  border-radius: 3px;
+  background-color: white;
+`
 const WeekContainer = styled.div`
   display: flex;
   justify-content: center;
+
 `;
+
+const CalendarWrapper = styled.div` 
+  display: flex;
+  justify-content: space-evenly;
+  width: 85%;
+
+`
 const SwitchWeek = styled.div`
   display: flex;
   justify-content: space-evenly;
@@ -44,6 +53,9 @@ const SwitchWeek = styled.div`
   }
 `;
 
+
+
+
 class Calendar extends Component {
   constructor(props) {
     super(props);
@@ -54,7 +66,8 @@ class Calendar extends Component {
       endOfWeek: "",
       edit: false,
       activity: '',
-      id: null
+      id: null,
+      time: ''
     };
   }
 
@@ -63,6 +76,20 @@ class Calendar extends Component {
     let { weekDays, date, startOfWeek, endOfWeek } = stateUpdates;
     this.setState({ weekDays, date, startOfWeek, endOfWeek });
   }
+
+  makeActivity = (input, time, date, description, priority) => {
+    let newDate = moment(date).format('YYYY-MM-DD')
+    let newTime = moment(time, 'h').format('h:mm A')
+    axios
+      .post("/api/makeActivity", { newDate, newTime, input, description, priority })
+      .then(res => {
+        this.props.getTasks(res.data)
+        this.setState({force: true, activity: ''})
+      });
+      this.toggle()
+
+  };
+ 
 
   createDates = (date = moment()) => {
     var startOfWeek = moment(date).startOf("Week");
@@ -95,55 +122,77 @@ class Calendar extends Component {
   showEditBox = () => {
     if(this.state.edit){
       return (
-<Modal>
-  <Form>
-<EditTask id={this.state.id} >
-
+<EditModal>
+<EditTask 
+ selectedDay={this.state.selectedDay}
+id={this.state.id} edit={this.state.edit} toggle={this.toggle} time={this.state.time} 
+  makeActivity={this.makeActivity}>
 </EditTask>
-</Form>
-</Modal>
+</EditModal>
 
 
       )
     }
   }
-  toggleEdit = (val, id) => {
-    this.setState(prevState => {
-      return { edit: !prevState.edit}
-     });
-     this.setState({activity: val, id: id })
-  };
-  
+  toggleEdit = (id, time, day) => {
+      this.setState({
+      edit: !this.state.edit,
+      id: id,
+      time: time,
+      selectedDay: day
+    });
+    return this.props.allTasks.map(task => {
+      if(task.task_id === id){
+        this.props.addTask(task)
+      }
+    })
+  }
+  toggle = () => {
+    this.setState(prevState =>{
+      return {edit: !prevState.edit}
+    })
+  }
+
+
 
   render() {
-    console.log(this.state)
+
     let month = moment(this.state.date).format("MMMM");
     let weekView = this.state.weekDays.map((day, i) => {
-      return <DayView edit={this.state.edit} toggle={this.toggleEdit}key={day} date={moment(day).format("MM/DD/YY")} />;
+      return <DayView force edit={this.state.edit} toggle={this.toggleEdit}key={day} date={moment(day).format("MM/DD/YY")} />;
     });
     return (
-      <div>
+      <>
         <Header>
           <h1 style={{ textAlign: "center", width: "80%" }}>{month}</h1>
         </Header>
+
+      <CalendarWrapper>
+
+        <Wizard />
+
+        <div>
         <SwitchWeek>
           <button onClick={() => this.switchWeek(-7)}>{"<"}</button>
           <h2>{` ${this.state.startOfWeek} - ${this.state.endOfWeek} `}</h2>
           <button onClick={() => this.switchWeek(7)}>{">"}</button>
         </SwitchWeek>
         <WeekContainer>{weekView}{this.showEditBox()}</WeekContainer>
-     
-      </div>
+        </div>
+      </CalendarWrapper>
+      </>
     );
   }
 }
 const mapStateToProps = state => {
   return {
-    open: state.open
+    open: state.open,
+    todo: state.todo,
+    allTasks: state.allTasks
   };
 };
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
-  { toggleMenu }
-)(Calendar);
+  { toggleMenu, getTasks, addTask }
+)(Calendar));

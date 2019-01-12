@@ -75,7 +75,7 @@ componentDidMount = (props) => {
   render(){
   const {toggleMenu} = this.props
   const { first_name, last_name, image } = this.props.user
-  console.log(this.props)
+
   return (
     <>
     <StyledHeader {...this.props} >

@@ -38,8 +38,6 @@ const MenuWell = styled(Menu)`
 
 const SideBar = (props) => {
 
-
-    console.log (props);
     const { open } = props;
     return (
       <MenuWell

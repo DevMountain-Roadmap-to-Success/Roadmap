@@ -5,9 +5,7 @@ import {addTask} from '../../ducks/reducer'
 
 const Todo = (props) => {
   let {task} = props
-  props.allTasks.map(task => (
-    props.addTask(task)
-  ))
+
   console.log(props);
   return (
     <List>
@@ -17,7 +15,7 @@ const Todo = (props) => {
         />
       <div
         style={{width: '55%', wordWrap: 'break-word'}}
-        onDoubleClick={() => props.editTask(task.task_id, task.task)}
+        // onDoubleClick={() => props.editTask(task.task_id, task.task)}
         key={task.task_id}
         className={task.complete ? "todo completed" : "todo"}
       >

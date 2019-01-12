@@ -13,8 +13,8 @@ export const RadioButton = styled.input`
 
 export const Subject = styled.div `
    display: flex;
-   flex-wrap: wrap;
-   width: 100%;
+  flex-direction: column;
+   width: 25%;
 
    .type {
      display: flex;
@@ -31,7 +31,7 @@ export const Subject = styled.div `
 export const EditButton = styled(Button)`
   /* position: absolute; */
   
-  width: 100px;
+  width: 130px;
   height: 40px;
   color: white;
 
@@ -125,32 +125,38 @@ export const Date = styled.div`
   margin-bottom: 20px;
 `
 
-
+export const EditWrap = styled.div`
+display: flex;
+  flex-direction: column;
+  width: 65%;
+  padding: 20px;
+  height: 100%;
+  justify-content: space-evenly;
+`
 
 
 export const EditBox = styled.div`
-  width: 350px;
-  height: 400px;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
   justify-content: center;
    background-color: white;
-
+  
  
   
 `
 export const Main = styled.main`
   height: 70%;
   display: flex;
-  flex-direction: column;
   /* justify-content: center; */
-  align-items: center;
-  width: 90%;
+
+  width: 100%;
 
   textarea {
-    height: 50px;
+    height: 80px;
   }
   p {
     font-size: 14px;
@@ -161,6 +167,12 @@ export const Main = styled.main`
 `
 export const EditInput = styled(Input)`
   height: 30px;
+  background-color: transparent;
+  border-right: none;
+  border-top: none;
+  border-left: none;
+  border-color: black;
+  margin-top: 30px;
 `
 
 export const Back = styled.span`
