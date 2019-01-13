@@ -94,7 +94,11 @@ class Nav extends React.Component  {
             <NavLink to="/jobprep">
               <i className="material-icons">next_week</i>Job Prep
             </NavLink>
-            <NavLink to='/'>
+            <NavLink to='/sandbox'>
+            <i className="fab fa-codepen"></i>
+            CodePen
+            </NavLink>
+            <NavLink to='/settings'>
             <i className="material-icons">settings</i>
               Settings
             </NavLink>

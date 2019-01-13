@@ -6,7 +6,7 @@ import JobPrep from "./components/JobPrep";
 import Dashboard from "./components/Dashboard";
 import Calendar from "./components/calendar/Calendar";
 import LandingPage from "./components/LandingPage";
-import PlayGround from "./components/widgets/Playground";
+import Sandbox from "./components/functional/Sandbox";
 import Home from './components/Home'
 import {connect} from 'react-redux'
 import {getUser} from './ducks/reducer'
@@ -36,7 +36,7 @@ class App extends Component {
    axios.get('/api/logout')
    .then(() => this.props.history.push('/login'))
  }
-  // onKeyDown
+
 
   render() {
     return (
@@ -50,7 +50,7 @@ class App extends Component {
             <Route path="/calendar" render={() => (<Calendar toggleMenu={this.toggleMenu} open={this.state.open}/> )} />
             <Route path="/jobprep" render={() => (<JobPrep toggleMenu={this.toggleMenu} open={this.state.open}/> )} /> />
             <Route path="/resources" render={() => (<Resources toggleMenu={this.toggleMenu} open={this.state.open}/> )}  />
-            <Route path='/playground' component={PlayGround}/>
+            <Route path='/Sandbox' component={Sandbox}/>
             <Route path="/trivia" component={Trivia}/>
           </Switch>
         </Router>

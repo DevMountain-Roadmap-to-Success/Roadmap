@@ -8,7 +8,7 @@ import {getTasks, addTask} from '../../ducks/reducer'
 const Div = styled.div`
   display: flex;
   flex-direction: column;
-  width: 10vw;
+  width: 10.5vw;
   align-items: center;
   border: rgb(230, 230, 230) .8px solid;
 
@@ -52,7 +52,6 @@ class DayView extends Component {
   
 
   render() {
-    // console.log(this.state.times);
     let hours = this.state.times.map((time, i) => {
       return <TimeSlot edit={this.props.edit} toggleEdit={this.props.toggle} key={i} time={time} date={this.props.date} />;
     });

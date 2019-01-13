@@ -13,14 +13,14 @@ import defaultPic from '../assets/profile.png'
 
 const StyledHeader = styled.header`
   background-color: ${props => props.background || '#2F3642'};
-  height: 90px;
+  height: 80px;
   color: white;
   display: flex;
   align-items: center;
   position: relative;
   z-index: 1;
   justify-content: ${props => props.justifyContent || 'unset'};
-  border-bottom: rgba(255, 255, 255, 0.808) solid thin;
+  border-bottom: ${props => props.border || 'rgba(255, 255, 255, 0.808) solid thin'};
   .logo {
     width: 240px;
     height: 45px;
@@ -78,7 +78,8 @@ componentDidMount = (props) => {
 
   return (
     <>
-    <StyledHeader {...this.props} >
+    <StyledHeader {...this.props}
+    border='none' >
        {this.props.devLogo ?
        <>
          <img src={logo} alt="" className="logo" style={{border: 'none'}}/>

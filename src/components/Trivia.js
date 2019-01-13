@@ -1,21 +1,40 @@
 import React, { Component } from "react";
 import axios from "axios";
 import styled from "styled-components";
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import MdArrowRoundUp from 'react-ionicons/lib/MdArrowRoundUp'
+import MdArrowRoundDown from 'react-ionicons/lib/MdArrowRoundDown'
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+    marginLeft: '150px',
+    background: 'blue'
+
+  },
+  input: {
+    display: 'none',
+  },
+});
+
 
 const Main = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
-  border: 1px solid black;
-  width: 300px;
-  height: 400px;
+  width: 100%;
+  justify-content: 'center';
+  height: 140px;
   border-radius: 4px;
   padding: 20px;
-
+  position: relative;
+ h1 {
+   line-height: 20px;
+  margin-top: 20px;
+ }
   .button_1 {
-    position: fixed;
-    top: 10px;
+    position: absolute;
+    top: 20px;
     outline: none;
   }
   .button_1:hover{
@@ -24,19 +43,27 @@ const Main = styled.div`
     border-radius: 3px;
   }
   .answer_btn {
-    position: fixed;
-    top: 250px;
+    position: absolute;
+    bottom: 30px;
     outline: none;
+    margin-top: 10px;
   }
   .answer_btn:hover{
-    background: rgb(122, 202, 248);
+    background:rgb(120, 218, 243);
     cursor: pointer;
     border-radius: 3px;
   }
 `;
 const MainWrapper = styled.div`
-  display: flex;
-  justify-content: center;
+
+  justify-content: 'space-between';
+  align-items: 'center';
+  width: 'auto';
+  position: relative;
+  width: 350px;
+  height: 220px;
+  background-color: white;
+border-radius: 4px;
 `;
 
 class Trivia extends Component {
@@ -64,19 +91,21 @@ class Trivia extends Component {
   render() {
     return (
       <MainWrapper>
-        <Main>
-          <button className="button_1" onClick={this.getQuestion}>
+          <Button theme={styles} style={{marginLeft: '90px'}}className="button_1" onClick={this.getQuestion}>
             Get Trivia Question
-          </button>
-          <h1>{this.state.question}</h1>
-          <button className="answer_btn" onClick={this.getAnswer}>
-            Get Answer
-          </button>
-          {this.state.toggle === true ? <h3>{this.state.answer}</h3> : null}
+          </Button>
+        <Main>
+          {!this.state.question  ? 
+          <MdArrowRoundUp beat={true} color='red' fontSize='34px'/>
+          : <h1>{this.state.question}</h1> }
+          {!this.state.toggle && this.state.question ? <MdArrowRoundDown beat={true} color='red' fontSize='34px'/> : <h3>{this.state.answer}</h3> }
         </Main>
+          <Button style={{marginLeft: '120px'}} className="answer_btn" onClick={this.getAnswer}>
+            Get Answer
+          </Button>
       </MainWrapper>
     );
   }
 }
 
-export default Trivia;
+export default withStyles(styles)(Trivia);

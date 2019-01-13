@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import Input from '../functional/Input'
 import Button from '../functional/Button'
-import Radio from '@material-ui/core/Radio'
+
 
 export const RadioButton = styled.input`
   color: blue;
@@ -39,10 +39,6 @@ export const EditButton = styled(Button)`
 
 `
 
-export const UpdateButton = styled(Button)`
-  width: 90px;
-  height: 30px;
-`
 
 
 export const List = styled.div`
@@ -85,14 +81,13 @@ export const Remove = styled.div`
 
 
 export const Wrapper = styled.div`
-background-color: rgba(255, 255, 255, 0.959);
+background-color:white;
   width: 350px;
-  height: 400px;
+  height: 370px;
   display: flex;
-  background-position-x: -50px;
-  background-position-y: -50px;
-  box-shadow: 0px 1px 1px 0px rgb(200, 200, 200);
-  border-radius: 2px;
+  
+  box-shadow: 0px 1px 1px 0px rgb(220, 220, 220);
+  border-radius: 5px;
 
 
   button {

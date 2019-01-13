@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import moment from "moment";
 import axios from "axios";
 import styled from "styled-components";
-import Radio from '@material-ui/core/Radio';
-import Modal from '../functional/Modal'
-import EditTask from './EditTask'
 import {connect} from 'react-redux'
 import {getTasks} from '../../ducks/reducer'
 
@@ -13,12 +10,12 @@ import {getTasks} from '../../ducks/reducer'
 const TimeBox = styled.div`
   border: rgb(180, 180, 180) 0.5px solid;
   padding: 5px;
-  width: 10vw;
+  width: 10.5vw;
   position: relative;
   height: 70px;
   border-radius: 3px;
   box-shadow: 0 .5px .5px 0 rgb(210, 210, 210);
-
+  font-size: 12px;
   i {
     cursor: pointer;
   }
@@ -26,15 +23,15 @@ const TimeBox = styled.div`
     position: absolute;
     right: 3px;
     top: 3px;
-    font-size: 15px;
+    font-size: 16px;
   }
   #clear {
     font-size: 12px;
   }
 `;
 const Activity = styled.span`
-  margin-left: 15px;
-  font-size: 18px;
+  margin-left: 14px;
+  font-size: 14px;
 `;
 const Time = styled.div`
   font-size: 16px;
@@ -91,7 +88,6 @@ class TimeSlot extends Component {
   makeActivity = () => {
     let date = moment(this.props.date).format("YYYY/MM/DD");
     let time = this.props.time;
-    console.log(time)
     const { input, priority } = this.state;
     axios
       .post("/api/makeActivity", { date, time, input, priority })
@@ -106,7 +102,7 @@ class TimeSlot extends Component {
 
   handleEdit = val => {
     this.setState({ input: val, activity: "" });
-    console.log(this.state.id);
+
   };
 
   handleSave = () => {
@@ -114,7 +110,6 @@ class TimeSlot extends Component {
     axios
       .put(`/api/editActivity/${id}`, { activity, priority })
       .then(res => {
-        // console.log(res.data);
         this.setState({
           activity: res.data[0].task,
           edit: !this.state.edit,
@@ -148,7 +143,6 @@ class TimeSlot extends Component {
 
  
   render() {
-console.log(this.props)
     if (this.state.priority === 3) {
       var color = { backgroundColor: "rgb(122, 202, 248)" };
     } else if (this.state.priority === 2) {
@@ -186,11 +180,7 @@ console.log(this.props)
             </i>
           </>
         ) : (
-          <>
-             {/* <i className='material-icons' new='new' onClick={() => this.props.toggleEdit(1, this.props.time, this.props.date)}>add</i> */}
-               {/* {this.renderIcon()} */}
-
-          </>
+        null
         )}
       </TimeBox>
         </>

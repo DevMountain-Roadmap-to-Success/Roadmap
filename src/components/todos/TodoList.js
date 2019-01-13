@@ -8,7 +8,6 @@ import Input from "../functional/Input";
 import Todo from "./Todo";
 import { Wrapper, TodoForm } from "./TodoStyles";
 import "react-day-picker/lib/style.css";
-import EditTask from "../calendar/EditTask";
 import ReactLoading from 'react-loading'
 
 
@@ -32,7 +31,6 @@ class TodoList extends Component {
 
   componentDidMount = () => {
     axios.get("/api/tasks").then(res => {
-      console.log(res);
       this.setState({ tasks: res.data, isLoading: false });
       this.props.getTasks(res.data);
     });
@@ -42,7 +40,6 @@ class TodoList extends Component {
     e.preventDefault();
     let dateCreated = moment().format("YYYY-MM-DD");
     let time = moment('h').format('h:mm A')
-    console.log(dateCreated);
     axios
       .post("/api/addtask", {
         date_created: dateCreated,
@@ -58,25 +55,23 @@ class TodoList extends Component {
   };
 
   handleChange = e => {
-    console.log(e.target.name, e.target.value);
     this.setState({ [e.target.name]: e.target.value });
   };
 
   deleteTodo = task_id => {
-    console.log(task_id);
     axios.delete(`/api/tasks/delete/${task_id}`).then(res => {
       this.setState({ tasks: res.data });
     });
   };
   
   toggle = id => {
-    console.log(this.state);
-    this.state.tasks.map(task => {
+    return this.state.tasks.map(task => {
       if (task.task_id === id) {
         axios
           .put(`/api/tasks/complete/${id}`, { complete: !task.complete })
           .then(res => this.setState({ tasks: res.data }));
       }
+      return task
     });
   };
 
@@ -89,6 +84,7 @@ class TodoList extends Component {
       editTask: !this.state.editTask
     });
   }
+  return task
 })
   }
   onClose = () => {
@@ -103,8 +99,6 @@ class TodoList extends Component {
   render() {
     let tasks = this.state.tasks;
     return (
-      // <Draggable defaultPosition={{ x: 50, y: 50 }}>
-
         <Wrapper>
         
           <TodoForm onSubmit={this.addTodo}>
@@ -124,18 +118,12 @@ class TodoList extends Component {
         toggle={this.toggle}
         deleteTodo={this.deleteTodo}
         task={task}
-        // edit={this.state.editTask}
-        // editTask={this.toggleEditTask}
       />
     ))}
             {this.renderLoading()}
       
           </TodoForm>
         </Wrapper>
-
-       
-      
-      // </Draggable>
     );
   }
 }
