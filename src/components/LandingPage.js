@@ -3,7 +3,6 @@ import Header from "./Header";
 import play from "../assets/play.png";
 import chat from "../assets/chat.png";
 import phone from "../assets/smartphone.png";
-import DropDown from './functional/SideBar'
 import {Container} from './Styles'
 import logo from '../assets/logo.png'
 
@@ -14,7 +13,9 @@ class LandingPage extends React.Component {
   render() {
     return (
       <Container>
-        <Header devLogo={logo} 
+        <Header
+        border='none'
+         devLogo={logo} 
         background='#252525'
         justifyContent='space-between'
         nav='landing page'/>

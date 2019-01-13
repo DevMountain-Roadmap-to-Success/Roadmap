@@ -33,6 +33,7 @@ const KeyTypes = styled.div `
     margin-bottom: 5px;
     font-size: 16px;
     height: 70px;
+    
   }
   h1 {
       font-size: 18px;
@@ -49,17 +50,18 @@ const Wizard = props => {
      <KeyTypes>
          <h1>Recommended Schedule</h1><hr/>
         <span>
-          <div style={{ backgroundColor: "rgb(122, 202, 248)" }} />Write
-          Code - 2 hours daily
+          <div style={{ backgroundColor: "rgb(122, 202, 248)" }} />
+          {`Build & Improve
+          Portfolio - 4 hours daily`}
         </span>
 
         <span>
-          <div style={{ backgroundColor: "rgb(244, 247, 113)" }}> </div>Jop
-          Prep - 1 hour daily
+          <div style={{ backgroundColor: "rgb(244, 247, 113)" }}> </div>Write
+          Code - 2 hours daily 
         </span>
         <span>
-          <div style={{ backgroundColor: "rgb(255, 87, 87)" }} /> {`Build & Improve
-          Portfolio - 4 hours daily`}
+          <div style={{ backgroundColor: "rgb(255, 87, 87)" }} />Jop
+          Prep - 1 hour daily
         </span>
         <span>
           <div style={{ backgroundColor: "rgb(111, 253, 142)" }} />

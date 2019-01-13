@@ -1,10 +1,8 @@
 import React from "react";
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import "react-day-picker/lib/style.css";
-import axios from 'axios'
 import {addTask, getTasks} from '../../ducks/reducer'
 import {
-  ColorBlock,
   Main,
   EditInput,
   EditButton,
@@ -98,6 +96,7 @@ console.log(this.props)
 
         // this.state.edit ? 
           <>
+          
           <Main>
            
             <Subject
@@ -168,20 +167,7 @@ console.log(this.props)
           
             </EditWrap>
           </Main>
-           {/* : 
-          <Main>
-            <i className="material-icons" onClick={this.setState({edit: !this.state.edit})}>
-              edit
-            </i>
-            <span key={todo.task_id}>{todo.task}</span>
-            <span>
-              Complete by:
-              {this.renderDatePicker()}
-            </span>
-            <p>{`Notes: ${todo.description}`}</p>
-           
-          </Main> */}
-        
+          
         <div style={{display: 'flex', justifyContent: 'space-evenly', width: '100%'}}>
  
   <EditButton name='Cancel' onClick={this.props.toggle}/>

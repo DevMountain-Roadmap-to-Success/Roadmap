@@ -3,20 +3,13 @@ import Header from "./Header";
 import codewars from "../assets/codewars.png";
 import udemy from "../assets/udemy.png";
 import pluralsight from "../assets/pluralsight.png";
-import bookshelf from "../assets/bookshelf.jpg";
+import { TwitterTweet } from "./widgets/Twitter";
 import styled from "styled-components";
-import Dashboard, { addWidget } from "react-dazzle";
 import "react-dazzle/lib/style/style.css";
 
-
-const link = {
-  textDecoration: "none",
-  color: "white",
-  marginRight: "5%"
-};
-const Box = styled.div`
+const Card = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: ${props => props.direction || "row"};
   block-size: inherit;
   font-size: 20px;
   align-items: center;
@@ -24,9 +17,12 @@ const Box = styled.div`
   font-family: arial;
   font-weight: lighter;
   line-height: 20px;
-  /* background-color: ${props => props.backgroundColor || "white"}; */
-  /* color: ${props => props.color || "white"}; */
-  /* box-shadow: 1px .5px .5px 1px rgb(102, 102, 102); */
+  width: 400px;
+  margin: 10px;
+  height: ${props => props.height || "250px"};
+  box-shadow: ${props => props.shadow || '1px 1px 1px 1px rgb(220, 220, 220)'};
+  border-radius: 5px;
+  color: black;
 
   h1 {
     text-align: center;
@@ -35,185 +31,77 @@ const Box = styled.div`
     float: right;
   }
   a {
-      display: flex;
-      text-decoration: none;
-      color: black;
-      width: 100%;
-      justify-content: space-evenly;
-  }
-  h6 {
-      font-size: 14px;
-      text-align: center;
-  }
-  li { 
-      font-size: 14px;
-      text-align: left;
-  }
-`;
-const BookWrapper = styled.div`
-  width: 30%;
-  height: 500px;
-  background-image: url(${bookshelf});
-  background-size: cover;
-  padding: 20px 20px;
-  color: white;
-  line-height: 20px;
-  font-size: 18px;
-  h1 {
-    color: white;
-    font-size: 22px;
-    text-align: center;
-    font-weight: bold;
-  }
-  li {
+    display: flex;
+    text-decoration: none;
+    color: black;
+    width: 100%;
     justify-content: space-evenly;
-    width: 80%;
-    list-style: none;
   }
   h6 {
     font-size: 14px;
+    text-align: center;
+    color: black;
+  }
+  li {
+    font-size: 14px;
+    text-align: left;
   }
 `;
-const BoxWrapper = styled.div`
-  width: 350px;
-  height: 200px;
-  background-color: black;
-  color: white;
+const Card2 = styled.div`
   display: flex;
-  border: white thin solid;
-  font-size: 14px;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
+  height: ${props => props.height};
+  width: 500px;
+  padding: 30px;
+
+  justify-content: center;
+  box-shadow: .5px .5px .5px 2px #00BDBF;
+  border-radius: 5px;
+  li {
+    font-size: 17px;
+  }
+  .title {
+    text-align: center;
+    line-height: 30px;
+    font-size: 24px;
+    font-weight: bolder;
+    color: black;
+    margin-bottom: 10px;
+  }
 `;
+const Link = styled.a`
+  font-size: 16px;
+  color: black;
+  line-height: 25px;
+`;
+
 const Logo = styled.img`
-  width: auto;
-  height: ${props => props.height || "90px"};
-`;
-const MainContent = styled.div`
-  text-align: left;
-  display: block;
-  box-sizing: inherit;
-`;
-const Div = styled.div`
-  display: grid;
-  grid-template-columns: 32% 32% 32%;
-  grid-template-rows: 260px 260px 260px auto;
-  grid-gap: 1rem;
+  width: ${props => props.width || "200px"};
+  height: ${props => props.height || "200px"};
 `;
 
-export const box1 = () => {
-  return (
-    <Box>
-      <a href="http://www.codewars.com">
-        <Logo src={codewars} alt="logo" />
-        <h1>
-          Improve <br /> Your Code
-          <br /> With CodeWars
-        </h1>
-      </a>
-      <h6>Code 2 hours everyday</h6>
-    </Box>
-  );
-};
-export const box2 = () => {
-  return (
-    <Box>
-      <a href="http://www.pluralsight.com">
-        <Logo src={pluralsight} alt="logo" />
+const ResourceContainer = styled.div`
+  display: flex;
+  height: 1000px;
+  justify-content: center;
 
-        <h1>
-          See Your Skill IQ
-          <br />
-          At PluralSight
-        </h1>
-      </a>
-      <h6>Test your knowledge</h6>
-    </Box>
+  .containers {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: 'space-evenly';
+    margin: 20px;
+  }
+`;
+export const Box = props => {
+  console.log(props);
+  return !props.box ? (
+    <Card shadow={props.shadow} >{props.children}</Card>
+  ) : (
+    <Card2 height={props.height}>{props.children}</Card2>
   );
 };
 
-export const box3 = () => {
-  return (
-    <Box>
-      <a href="http://www.udemy.com">
-        <Logo src={udemy} alt="logo" />
-        <h1 fontSize="18px">
-          Learn a New Language
-          <br /> Improve What You Know
-        </h1>
-      </a>
-      <h6>Online Courses with Udemy</h6>
-    </Box>
-  );
-};
-
-export const box4 = () => {
-  return (
-    <Box>
-      <h1 fontSize="18px">Build Your Portfolio</h1>
-    </Box>
-  );
-};
-const Box4 = () => {
-  return (
-    <Box>
-      <a
-        style={{ textDecoration: "none", color: "white" }}
-        href="https://medium.freecodecamp.org/15-web-developer-portfolios-to-inspire-you-137fb1743cae"
-      >
-        <li style={{ textAlign: "left" }}>
-          15 Web Developer Portfolios to Inspire You
-        </li>
-      </a>
-      <a
-        href="https://www.canva.com/learn/portfolio/"
-        style={{ textDecoration: "none", color: "white" }}
-      >
-        <li style={{ textAlign: "left" }}>
-          Awesome Portfolio with 20 Pro Tips
-        </li>
-      </a>
-      <a
-        href="https://collegeinfogeek.com/personal-website-examples/"
-        style={{ textDecoration: "none", color: "white" }}
-      >
-        <li style={{ textAlign: "left" }}>50 Of the Best Personal Websites</li>
-      </a>
-      <a
-        style={{ textDecoration: "none", color: "white" }}
-        href="https://www.mockplus.com/blog/post/web-developer-portfolio"
-      >
-        <h6>
-          <li style={{ textAlign: "left" }}>
-            Top 12 Portfolios for Inspiration
-          </li>
-        </h6>
-      </a>
-    </Box>
-  );
-};
-
-export const box5 = () => {
-  return (
-    <Box>
-      <h1>Articles to Read</h1>
-
-      <a
-        style={{ color: "white", fontSize: "14px" }}
-        href="https://blog.teamtreehouse.com/improve-coding-confidence"
-      >
-        <li>5 Excellent Ways to Improve Your Coding Confidence</li>
-      </a>
-      <a
-        style={{ color: "white", fontSize: "14px" }}
-        href="https://medium.freecodecamp.org/how-to-read-your-way-to-becoming-a-better-developer-b6432fa5bc0c"
-      >
-        <li>Read Your Way to Becoming a Better Developer</li>
-      </a>
-    </Box>
-  );
-};
 export const box6 = () => {
   return (
     <Box backgroundColor="white" color="black">
@@ -262,101 +150,128 @@ export const box7 = () => {
 
 class Resources extends React.Component {
   state = {
-    open: false,
-    widgets: {
-      Box1: {
-        type: box1
-      },
-      Box2: {
-        type: box2
-      },
-      Box3: {
-        type: box3
-      },
-      Box4: {
-        type: box4
-      },
-      Box5: {
-        type: box5
-      },
-      Box6: {
-        type: box6
-      },
-      Box7: {
-        type: box7
-      }
-    },
-    layout: {
-      rows: [
-        {
-          columns: [
-            {
-              className: "col-md-4",
-              widgets: [{ key: "Box1" }]
-            },
-            {
-              className: "col-ms-5 col-md-3",
-              widgets: [{ key: "Box2" }]
-            },
-            {
-              className: "col-md-5 col-ms-8",
-              widgets: [{ key: "Box3" }]
-            },
-            {
-              className: "col-md-3",
-              widgets: [{ key: "Box4" }]
-            },
-            {
-              className: "col-md-3",
-              widgets: [{ key: "Box5" }]
-            },
-            {
-              className: "col-ms-6",
-              widgets: [{ key: "Box6" }]
-            },
-            {
-              className: "col-ms-5",
-              widgets: [{ key: "Box7" }]
-            }
-          ]
-        }
-      ]
-    }
+    open: false
   };
-  onAdd = (layout, rowIndex, columnIndex, type) => {
-    // Add another Greetings Widget
-    this.setState({
-      layout: addWidget(layout, rowIndex, columnIndex, type)
-    });
-  };
-  onMove = layout => {
-    this.setState({
-      layout: layout
-    });
-  };
-  onRemove = layout => {
-    this.setState({
-      layout: layout
-    });
-  };
-  
+
   render() {
-    console.log(this.state.layout);
     return (
-      <div style={{ backgroundColor: "#2F3642", height: '100vh'}}>
+      <>
         <Header>
           <h1>Resources</h1>
         </Header>
-        
-        <Dashboard
-          onMove={this.onMove}
-          onRemove={this.onRemove}
-          onAdd={this.onAdd}
-          editable={true}
-          widgets={this.state.widgets}
-          layout={this.state.layout}
-        />
-      </div>
+        <ResourceContainer>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <Box>
+              <a style={{ width: "50%" }} href="http://www.codewars.com">
+                <Logo
+                  src={codewars}
+                  alt="logo"
+                  height="200px"
+                  width="200px"
+                  style={{ marginLeft: "10px" }}
+                />
+              </a>
+              <div
+                style={{
+                  width: "50%",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center"
+                }}
+              >
+                <h1>
+                  Improve <br /> Your Code
+                  <br /> With CodeWars
+                </h1>
+                <h6>Code 2 hours everyday</h6>
+              </div>
+            </Box>
+            <Box shadow='.5px .5px .5px 2px #00BDBF'>
+              <a style={{ width: "50%" }} href="http://www.pluralsight.com">
+                <Logo src={pluralsight} alt="logo" />
+              </a>
+              <div
+                style={{
+                  width: "50%",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center"
+                }}
+              >
+                <h1>
+                  See Your Skill IQ
+                  <br />
+                  At PluralSight
+                </h1>
+                <h6>Test your knowledge</h6>
+              </div>
+            </Box>
+            <Box>
+              <a href="http://www.udemy.com">
+                <Logo
+                  src={udemy}
+                  alt="logo"
+                  style={{ width: "120px", height: "120px" }}
+                />
+              </a>
+              <div
+                style={{
+                  width: "60%",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  marginRight: "20px"
+                }}
+              >
+                <h1 fontSize="18px">
+                  Learn a New Language
+                  <br /> Improve What You Know
+                </h1>
+                <h6>Online Courses with Udemy</h6>
+              </div>
+            </Box>
+          </div>
+          <div className='containers'>
+            <TwitterTweet id={"1067500779567636480"} />
+
+            <Box box="box2" height='200px'>
+              <a href="#" className="title">
+                Articles to Read
+              </a>
+              <p>
+                <Link href="https://blog.teamtreehouse.com/improve-coding-confidence">
+                  <li>5 Excellent Ways to Improve Your Coding Confidence</li>
+                </Link>
+
+                <Link href="https://medium.freecodecamp.org/how-to-read-your-way-to-becoming-a-better-developer-b6432fa5bc0c">
+                  <li>Read Your Way to Becoming a Better Developer</li>
+                </Link>
+              </p>
+            </Box>
+          </div>
+          <div className='containers'>
+            <Box box="box2" height='300px'>
+              <a href="#" className="title">
+                Improve Your Portfolio
+              </a>
+              <Link href="https://medium.freecodecamp.org/15-web-developer-portfolios-to-inspire-you-137fb1743cae">
+                <li>15 Web Developer Portfolios to Inspire You</li>
+              </Link>
+              <Link href="https://www.canva.com/learn/portfolio/">
+                <li>Awesome Portfolio with 20 Pro Tips</li>
+              </Link>
+              <Link href="https://collegeinfogeek.com/personal-website-examples/">
+                <li>50 Of the Best Personal Websites</li>
+              </Link>
+              <Link href="https://www.mockplus.com/blog/post/web-developer-portfolio">
+                <li> Top 12 Portfolios for Inspiration</li>
+              </Link>
+            </Box>
+            <TwitterTweet id={"984149102240894976"} style={{ height: 300 }} />
+          </div>
+        </ResourceContainer>
+
+      </>
     );
   }
 }

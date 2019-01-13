@@ -3,7 +3,7 @@ import {StyledInput} from './ElementStyles'
 
 
 const Input = (props ) => {
-  console.log(props);
+
   return (
     <StyledInput
       {...props}

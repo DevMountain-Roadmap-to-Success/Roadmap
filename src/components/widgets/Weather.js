@@ -19,15 +19,15 @@ const WeatherWidget = styled.div`
   background-repeat: no-repeat;
   color: white;
   font-size: 28px;
-  width: 370px;
-  height: 300px;
+  width: 350px;
+  height: 260px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-  border-radius: 3px;
-  /* box-shadow: 0px 2px 3px .5px rgb(186, 186, 231); */
+  border-radius: 5px;
 
+  
   i {
     font-size: 60px;
   }
@@ -74,14 +74,7 @@ class Weather extends React.Component {
     day: days[new Date().getDay()],
     time: new Date().getTime(),
     place: "",
-    activeDrags: 0,
     
-    deltaPosition: {
-      x: 0, y: 0
-    },
-    controlledPosition: {
-      x: -400, y: 200
-    }
   };
   componentDidMount = () => {
 
@@ -99,43 +92,11 @@ class Weather extends React.Component {
   };
 
 
-  handleDrag = (e, ui) => {
-    const { x, y } = this.state.deltaPosition;
-    this.setState({
-      deltaPosition: {
-        x: x + ui.deltaX,
-        y: y + ui.deltaY,
-      }
-    });
 
-  }
-
-  onStart = () => {
-    this.setState({activeDrags: ++this.state.activeDrags});
-  }
-
-  onStop = () => {
-    this.setState({activeDrags: --this.state.activeDrags});
-  }
-  eventLogger = (e = MouseEvent, data = Object) => {
-    // console.log('Event: ', e);
-    console.log('Data: ', data);
-
-    this.props.getPosition(data)
-  };
-  ondrop = (e) => {
-    console.log(e.target.className)
-    e.preventDefault();
-    if ( e.target.className === "droptarget" ) {
-      var data = e.dataTransfer.getData("Text");
-      e.target.appendChild(document.getElementById(data));
-      document.getElementById("demo").innerHTML = "The p element was dropped";
-    }
-  };
+  
 
   render() {
  const {deltaX, deltaY} = this.props.position
-    const dragHandlers = {onStart: this.onStart, onStop: this.onStop};
     let time = moment(this.state.time).format("HH");
     if(time < 17 && time >= 6){
       var image = day
@@ -144,12 +105,11 @@ class Weather extends React.Component {
     } else if(time >= 19 || time < 6){
       image = night
     }
-    console.log(this.props);
     let timeDisplay = moment(this.state.time).format("hh:mm");
     let temp = Math.round(this.state.temp.temp);
     let id = this.state.weather.id;
     return (
-      <Draggable onDrag={this.eventLogger} onDrop={this.ondrop} 
+      <Draggable 
       defaultPosition={{x: deltaX , y: deltaY}}
       // grid={[25, 25]}
 

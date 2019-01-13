@@ -6,7 +6,6 @@ import {addTask} from '../../ducks/reducer'
 const Todo = (props) => {
   let {task} = props
 
-  console.log(props);
   return (
     <List>
       <div
