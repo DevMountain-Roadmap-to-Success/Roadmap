@@ -4,7 +4,7 @@ import {StyledButton} from './ElementStyles'
 
 
 const Button = (props) => {
-    console.log(props)
+
     return (
        
           <StyledButton {...props} >{props.name}</StyledButton>

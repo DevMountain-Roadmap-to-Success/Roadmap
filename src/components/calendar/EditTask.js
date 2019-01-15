@@ -22,8 +22,8 @@ class EditTask extends React.Component {
     calendarAdd: false,
     checked: { color: "blue" },
     priority: 4,
-    selectedDay: '',
-    time: '9:00',
+    selectedDay: moment().format('YYYY-MM-DD'),
+    time: '09:00',
     input: '',
     description: ''
   };
@@ -33,14 +33,26 @@ class EditTask extends React.Component {
     if(todo.time){
       var time = todo.time
     } else {
-      time = this.props.time
+      time = this.state.time
     }
     let newTime = moment(time, 'h:mm A').format('HH:mm')
-    if(todo.task && todo.length > 0){
-      this.setState({selectedDay: this.props.selectedDay, input: todo.task, time: newTime, priority: todo.priority})
+    if(todo.task ){
+      var task = todo.task
     } else {
-    this.setState({selectedDay: this.props.selectedDay, time: newTime })
-  }
+      task = ''
+    }
+    if(todo.date){
+      var day = todo.date
+    } else {
+      day = this.state.day
+    }
+    if(todo.priority){
+     var priority = todo.priority
+    } else {
+      priority = this.state.priority
+    }
+      this.setState({selectedDay: day, input: task, time: newTime, priority: priority})
+  
 }
 
   toggleEditState = () => {
@@ -83,7 +95,6 @@ class EditTask extends React.Component {
 
  
   handleChange = e => {
-    console.log(e.target.name, e.target.value);
     this.setState({ [e.target.name]: e.target.value });
   };
   render() {
@@ -91,10 +102,8 @@ class EditTask extends React.Component {
     const FORMAT = "M/D/YYYY";
     const { todo } = this.props;
 
-console.log(this.props)
-    return (
 
-        // this.state.edit ? 
+    return (
           <>
           
           <Main>
@@ -171,7 +180,7 @@ console.log(this.props)
         <div style={{display: 'flex', justifyContent: 'space-evenly', width: '100%'}}>
  
   <EditButton name='Cancel' onClick={this.props.toggle}/>
-  <EditButton name="Add to Calendar" onClick={() => this.props.makeActivity(input, time, selectedDay, description, priority)} /></div>
+  <EditButton name="Add to Calendar" onClick={todo.task_id ? () => this.props.save(input, time, selectedDay, description, priority, todo.task_id ) : () => this.props.makeActivity(input, time, selectedDay, description, priority)} /></div>
 </>
     );
   }

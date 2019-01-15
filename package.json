@@ -23,6 +23,7 @@
     "react": "^16.6.3",
     "react-bootstrap": "^0.32.4",
     "react-bootstrap-dropdown-menu": "^1.1.15",
+    "react-bootstrap-sweetalert": "^4.4.1",
     "react-burger-menu": "^2.5.4",
     "react-chartjs-2": "^2.7.4",
     "react-day-picker": "^7.2.4",

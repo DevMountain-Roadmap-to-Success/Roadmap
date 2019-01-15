@@ -5,7 +5,7 @@ import {Menu} from './ElementStyles.js'
 
 
 const DropDown = (props) => {
- 
+ console.log(props)
     return (
    
       <Menu open={props.open} {...props}>

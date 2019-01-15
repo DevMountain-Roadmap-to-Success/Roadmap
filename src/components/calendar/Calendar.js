@@ -15,7 +15,7 @@ import AddIcon from "@material-ui/icons/Add";
 import { withStyles } from "@material-ui/core/styles";
 import { ColorBlock } from "../todos/TodoStyles";
 import Draggable from "react-draggable";
-
+import TimeSlot from './TimeSlot'
 const styles = theme => ({
   fab: {
     margin: theme.spacing.unit,
@@ -94,35 +94,35 @@ class Calendar extends Component {
       edit: false,
       activity: "",
       id: null,
-      time: "09:00"
+      time: "09:00",
+      tasks: [],
+      day: moment().format('YYYY-MM-DD')
     };
   }
+  
 
-  componentDidMount() {
+  componentDidMount = () => {
+    console.log(this.state)
     let stateUpdates = this.createDates();
     let { weekDays, date, startOfWeek, endOfWeek } = stateUpdates;
     this.setState({ weekDays, date, startOfWeek, endOfWeek });
+   return this.fetchData()
+  }
+ 
+
+  
+  fetchData = () => {   
+    axios.get('/api/activity')
+    .then((res) => {
+      this.props.getTasks(res.data)
+      this.setState({tasks: res.data})
+    })
   }
 
   makeActivity = (input, time, date, description, priority) => {
     let newDate = moment(date).format("YYYY-MM-DD");
     let newTime = moment(time, "h").format("h:mm A");
-    console.log(this.state.id, input, time, date, description, priority);
-    if (this.state.id > 2) {
-      axios
-        .put(`/api/tasks/update/${this.state.id}`, {
-          newDate,
-          newTime,
-          input,
-          description,
-          priority
-        })
-        .then(res => {
-          this.props.getTasks(res.data);
-          this.setState({ force: true, activity: "" });
-        });
-      this.toggle();
-    } else {
+    var data = []
       axios
         .post("/api/makeActivity", {
           newDate,
@@ -132,13 +132,36 @@ class Calendar extends Component {
           priority
         })
         .then(res => {
-          this.props.getTasks(res.data);
-          this.setState({ force: true, activity: "" });
-        });
-      this.toggle();
+          this.setState({ input: '', activity: "", edit: !this.state.edit });
+          this.props.getTasks(res.data)
+          return data = res.data[0]
+        })     
+        return (
+        this.fetchData() )
+        }
+        
+      
+    handleSave = (input, time, date, description, priority, id) => {
+      let newDate = moment(date).format("YYYY-MM-DD");
+      let newTime = moment(time, "h").format("h:mm A");
+      var data = []
+        axios
+          .put(`/api/tasks/update/${id}`, {
+            newDate,
+            newTime,
+            input,
+            description,
+            priority
+          })
+          .then(res => {
+            this.setState({ input: '', activity: "", edit: !this.state.edit });
+            return data = res.data[0]
+          })     
+          return (
+          this.fetchData() )    
     }
-  };
-
+  
+  
   createDates = (date = moment()) => {
     var startOfWeek = moment(date).startOf("Week");
     var endOfWeek = moment(date).endOf("Week");
@@ -168,23 +191,25 @@ class Calendar extends Component {
     this.setState({ weekDays, date, startOfWeek, endOfWeek });
   };
   showEditBox = () => {
-    if (this.state.edit) {
-      return (
+      return this.state.edit ? (
         <EditModal>
           <ColorBlock />
           <EditTask
+            save={this.handleSave}
             selectedDay={this.state.selectedDay}
             id={this.state.id}
             edit={this.state.edit}
-            toggle={this.toggle}
+            toggle={this.toggleEdit}
             time={this.state.time}
             updateTask={this.updateTask}
             makeActivity={this.makeActivity}
           />
         </EditModal>
-      );
+      ) : (
+          null
+      )
     }
-  };
+  
   toggleEdit = (id, time, day) => {
     this.setState({
       edit: !this.state.edit,
@@ -201,19 +226,18 @@ class Calendar extends Component {
   };
   toggle = () => {
     this.setState(prevState => {
-      return { edit: !prevState.edit };
+      return { edit: !prevState.edit,
+      activity: '' };
     });
   };
-
-  render() {
+  renderDayView = () => {
     var day = moment(this.state.date)._d;
     day = moment(day).format("YYYY-MM-DD");
-    const { classes } = this.props;
-    let month = moment(this.state.date).format("MMMM");
-    let weekView = this.state.weekDays.map((day, i) => {
+    return this.state.weekDays.map((day, i) => {
       return (
         <DayView
-          force
+          refresh={this.refreshActivity}
+          tasks={this.state.tasks}
           edit={this.state.edit}
           toggle={this.toggleEdit}
           key={day}
@@ -221,6 +245,12 @@ class Calendar extends Component {
         />
       );
     });
+  }
+ 
+  render() {
+    console.log(this.state)
+    const { classes } = this.props;
+    let month = moment(this.state.date).format("MMMM");
     return (
       <>
         <Header>
@@ -236,20 +266,24 @@ class Calendar extends Component {
           <Draggable>
             <Fab color="primary" aria-label="Add" className={classes.fab}>
               <AddIcon
-                onClick={() => this.toggleEdit(1, this.state.time, day)}
+                onClick={() => this.toggleEdit(1, this.state.time, this.state.day)}
               />
             </Fab>
           </Draggable>
           <Wizard />
 
           <div className="calendar">
-            <WeekContainer>{weekView}</WeekContainer>
+            <WeekContainer>{this.renderDayView()}</WeekContainer>
           </div>
         </CalendarWrapper>
         {this.showEditBox()}
       </>
     );
   }
+}
+Calendar.defaultProps = {
+    day: 'YYYY-MM-DD',
+    time: '09:00'
 }
 const mapStateToProps = state => {
   return {

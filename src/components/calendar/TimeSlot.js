@@ -6,6 +6,9 @@ import {connect} from 'react-redux'
 import {getTasks} from '../../ducks/reducer'
 
 
+  
+var color = {}
+
 
 const TimeBox = styled.div`
   border: rgb(180, 180, 180) 0.5px solid;
@@ -40,84 +43,56 @@ const Time = styled.div`
   text-align: center;
 `;
 
-
 class TimeSlot extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+ 
+   state = {
       activity: "",
       id: null,
       input: "",
       edit: false,
       priority: null,
-      time: ''
+      time: '',
+      tasks: [],
+      color: {}
     };
-  }
+  
+    componentDidUpdate(prevProps) {
+      // Typical usage (don't forget to compare props):
+      if (this.props.allTasks !== prevProps.allTasks) {
+        this.fetchData();
+      }
+    }
+
 
   componentDidMount = () => {
     let date = moment(this.props.date).format("YYYY/MM/DD");
     let time = this.props.time;
-    axios.post(`/api/activity`, { date, time }).then(res => {
-      if (res.data[0]) {
-        this.setState({
-          activity: res.data[0].task,
-          id: res.data[0].task_id,
-          priority: res.data[0].priority,
-        });
-        axios.get('/api/activity')
-        .then((res) => {
-        this.props.getTasks(res.data)
-      })
-    }
-    });
+    this.setState({date: date, time: time })
+    return this.fetchData()
   };
-  componentDidUpdate = (prevProps, prevState) => {
 
-      // only update chart if the data has changed
-      if (this.state !== prevState) {
-          this.render()
+  
+  fetchData = () => {
+    const {date, time} = this.state
+    axios.post('/api/activity', {date, time})
+    .then((res) =>  {
+      if(res.data[0]){
+    this.setState({ activity: res.data[0].task, priority: res.data[0].priority, id: res.data[0].task_id })
+      } else {
+         return null
       }
-    
+    })
   }
+ 
 
 
   handleActivity = e => {
     this.setState({ input: e });
   };
 
-  makeActivity = () => {
-    let date = moment(this.props.date).format("YYYY/MM/DD");
-    let time = this.props.time;
-    const { input, priority } = this.state;
-    axios
-      .post("/api/makeActivity", { date, time, input, priority })
-      .then(res => {
-        this.setState({
-          activity: res.data[0].task,
-          id: res.data[0].task_id,
-          priority: res.data[0].priority
-        });
-      });
-  };
-
   handleEdit = val => {
     this.setState({ input: val, activity: "" });
 
-  };
-
-  handleSave = () => {
-   const { id, priority, activity } = this.state
-    axios
-      .put(`/api/editActivity/${id}`, { activity, priority })
-      .then(res => {
-        this.setState({
-          activity: res.data[0].task,
-          edit: !this.state.edit,
-          priority: res.data[0].priority,
-          id: res.data[0].task_id
-        });
-        
-      });
   };
 
   handleDelete = () => {
@@ -129,22 +104,9 @@ class TimeSlot extends Component {
   handleCheckBox = e => {
     this.setState({ priority: e.target.name });
   };
-
-  renderIcon = () => {
-    const {activity} = this.state
-    if (this.state.input.length > 0) {
-      return (
-        <>
-          <i className='material-icons' onClick={activity ? this.handleSave : this.makeActivity}>add</i>
-        </>
-      );
-    }
-  };
-
- 
-  render() {
+  setColor = (color) => {
     if (this.state.priority === 3) {
-      var color = { backgroundColor: "rgb(122, 202, 248)" };
+      color = { backgroundColor: "rgb(122, 202, 248)" };
     } else if (this.state.priority === 2) {
       color = { backgroundColor: "rgb(244, 247, 113)" };
     } else if (this.state.priority === 1) {
@@ -152,21 +114,21 @@ class TimeSlot extends Component {
     } else if (this.state.priority === 4) {
       color = {backgroundColor: 'rgb(111, 253, 142)'}
     }
+    return color
+  }
+  render() {
+  let newColor = this.setColor(color)
 
-
-    return (
-      <>
-      <TimeBox style={color}>
+    return this.state.activity ? (
+      <TimeBox style={newColor}>
         <Time>{this.props.time}</Time>
-
-        {this.state.activity ? (
           <>
-            <Activity>{this.state.activity}</Activity>
+            <Activity key={this.props.key}>{this.state.activity}</Activity>
             <i
               className="material-icons"
               id="edit"
               title="edit"
-              onClick={() => this.props.toggleEdit(this.state.id, this.props.time, this.props.date)}
+              onClick={() => this.props.toggle(this.state.id, this.props.time, this.props.date)}
             >
               edit
             </i>
@@ -179,16 +141,17 @@ class TimeSlot extends Component {
               clear
             </i>
           </>
-        ) : (
-        null
-        )}
+       
       </TimeBox>
-        </>
-    );
+      ) : (
+        <TimeBox><Time>{this.props.time}</Time></TimeBox>
+      )
   }
 }
-const mapStateToProps = state => {
-  return { allTasks: state.allTasks, todo: state.todos}
+   
+
+  const mapStateToProps = state => {
+  return { todo: state.todos, allTasks: state.allTasks }
 }
 
 export default connect(mapStateToProps, {getTasks})(TimeSlot);

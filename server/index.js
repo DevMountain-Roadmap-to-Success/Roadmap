@@ -51,24 +51,33 @@ massive(CONNECTION_STRING).then(dbInstance => {
       res.status(200).send(req.session.user)
      }
 }) 
-  app.post('/auth/login', async (req, res) => {
-    const dbInstance = req.app.get('db')
-    const { email, password } = req.body
-    console.log(email, password)
-  
-    let user = await dbInstance.check_user(email)
-    if(user){
-    let result = await bcrypt.compareSync(password, user[0].password);
-    console.log(result)
-    if (result) {
-      req.session.user = user[0]
-        console.log(req.session.user)
-        res.status(200).send(req.session.user)
-      }
+
+
+app.post('/auth/login', async (req, res, next) => {
+  const dbInstance = req.app.get('db')
+  const { email, password } = req.body
+  console.log(email, password)
+  try {
+    let user = await dbInstance.check_user(email)        
+    if(!user){
+      res.status(404).send('no user found')
     } else {
-      res.status(401).send('user not found')
-    } 
- }) 
+      let match = await bcrypt.compareSync(password, user[0].password);
+    if (!match) {
+      res.status(404).send('wrong password')
+    } else if(match) {
+      req.session.user = user[0]
+      console.log(req.session.user)
+      res.status(200).send(req.session.user)
+     }
+  }
+}
+  catch(err) {
+    res.status(401).send(err, 'login error')
+ 
+   }
+})
+  
   app.get('/api/logout', ctrl.logout) 
   app.delete('/api/account', ctrl.delete_account)
 

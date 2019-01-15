@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-// import menu from '../../assets/menu.png'
+import SweetAlert from 'react-bootstrap-sweetalert'
 import DropDown from './DropDown'
 
 const CircleDiv = styled.div`
@@ -24,6 +24,7 @@ const CircleDiv = styled.div`
 
 
 const MenuIcon = (props) => {
+
     return (
 <>
         <CircleDiv {...props}
@@ -34,7 +35,7 @@ const MenuIcon = (props) => {
          <DropDown
          open={props.dropdown}
           logout={props.logout}  
-          deleteAccount={props.deleteAccount}
+          delete={props.delete}
         > 
        
         </DropDown>  : null }

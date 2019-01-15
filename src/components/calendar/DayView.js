@@ -4,6 +4,7 @@ import TimeSlot from "./TimeSlot";
 import styled from "styled-components";
 import {connect} from 'react-redux'
 import {getTasks, addTask} from '../../ducks/reducer'
+import axios from "axios";
 
 const Div = styled.div`
   display: flex;
@@ -33,12 +34,14 @@ class DayView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      startTime: 5,
-      endTime: 21,
+      startTime: 7,
+      endTime: 19,
       times: []
     };
   }
-
+  
+  
+ 
   componentDidMount() {
     const { startTime, endTime } = this.state;
     let times = [];
@@ -48,13 +51,19 @@ class DayView extends Component {
       currentTime++;
     }
     this.setState({ times });
-  }
+
+
+  } 
   
+  renderTime = () => {
+    return this.state.times.map((time, i) => {
+     return <TimeSlot toggle={this.props.toggle} edit={this.props.edit} time={time} date={this.props.date} key={i} />
+    })
+      
+  
+}
 
   render() {
-    let hours = this.state.times.map((time, i) => {
-      return <TimeSlot edit={this.props.edit} toggleEdit={this.props.toggle} key={i} time={time} date={this.props.date} />;
-    });
     return (
       <Div>
         <DayHeader>
@@ -63,7 +72,7 @@ class DayView extends Component {
           </h1>
           <h2 className="the_dates">{this.props.date}</h2>
         </DayHeader>
-        <span className="hours">{hours}</span>
+        <span className="hours">{this.renderTime()}</span>
       </Div>
     );
   }
