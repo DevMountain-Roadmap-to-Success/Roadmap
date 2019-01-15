@@ -27,16 +27,18 @@ const Links = styled.div`
    
   }
   @media (max-width: 1500px) {
+    font-size: 14px;
     a {
+      font-size: 14px;
+    }
+  }
+  @media (max-width: 1500px) {
+    font-size: 12px;
+    a  {
       font-size: 12px;
     }
   }
-  @media (max-width: 1100px) {
-    width: 150px;
-    a {
-      display: none;
-    }
-  }
+
   span {
     color: white;
   }

@@ -1,21 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import MdArrowRoundUp from 'react-ionicons/lib/MdArrowRoundUp'
 import MdArrowRoundDown from 'react-ionicons/lib/MdArrowRoundDown'
-const styles = theme => ({
-  button: {
-    margin: theme.spacing.unit,
-    marginLeft: '150px',
-    background: 'blue'
-
-  },
-  input: {
-    display: 'none',
-  },
-});
 
 
 const Main = styled.div`
@@ -91,7 +79,7 @@ class Trivia extends Component {
   render() {
     return (
       <MainWrapper>
-          <Button theme={styles} style={{marginLeft: '90px'}}className="button_1" onClick={this.getQuestion}>
+          <Button style={{marginLeft: '90px'}}className="button_1" onClick={this.getQuestion}>
             Get Trivia Question
           </Button>
         <Main>
@@ -108,4 +96,4 @@ class Trivia extends Component {
   }
 }
 
-export default withStyles(styles)(Trivia);
+export default Trivia

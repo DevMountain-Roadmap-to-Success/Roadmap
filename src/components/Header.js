@@ -10,6 +10,7 @@ import axios from 'axios'
 import {withRouter} from 'react-router'
 import ProfilePic from './functional/ProfilePic'
 import defaultPic from '../assets/profile.png'
+import SweetAlert from 'react-bootstrap-sweetalert'
 
 const StyledHeader = styled.header`
   background-color: ${props => props.background || '#2F3642'};
@@ -59,7 +60,8 @@ class Header extends React.Component {
   state = {
     dropdown: false,
     first: '',
-    last: ''
+    last: '',
+    alert: false,
   }
 componentDidMount = (props) => {
   let {first_name, last_name} = this.props.user
@@ -70,6 +72,32 @@ componentDidMount = (props) => {
   logout = () => {
     axios.get('/api/logout')
     .then(() => this.props.history.push('/login'))
+  }
+  toggleAlert = () => {
+    this.setState(prevState => {
+      return { alert: !prevState.alert}
+    })
+  }
+
+  deleteWarning = () => {
+    return this.state.alert ? (
+    <SweetAlert 
+    warning
+    showCancel
+    confirmBtnText="Yes, delete it!"
+    confirmBtnBsStyle="danger"
+    cancelBtnBsStyle="default"
+    title="Are you sure?"
+    onConfirm={this.delete}
+    onCancel={this.toggleAlert}
+>
+    You will not be able to recover your account
+</SweetAlert>
+    ) : ( null )
+  }
+  delete = () => {
+    axios.delete('/api/account')
+    .then(() => this.props.history.push('/'))
   }
 
   render(){
@@ -89,7 +117,8 @@ componentDidMount = (props) => {
         <>
         <img src={menu} onClick={() => toggleMenu(this.props.open)} className='menu-icon' alt=''/>      
         {this.props.children} 
-       <ProfilePic {...this.props} 
+       <ProfilePic {...this.props}
+       delete={this.toggleAlert} 
        logout={this.logout}
        dropdown={this.state.dropdown}>
             <Image
@@ -111,6 +140,7 @@ componentDidMount = (props) => {
           
           </ProfilePic >
           </> }
+          {this.deleteWarning()}
     </StyledHeader>
     <SideBar isOpen={this.props.open} >
     <Nav logout={this.logout}/>

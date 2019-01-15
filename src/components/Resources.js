@@ -235,7 +235,7 @@ class Resources extends React.Component {
             <TwitterTweet id={"1067500779567636480"} />
 
             <Box box="box2" height='200px'>
-              <a href="#" className="title">
+              <a href="/resources" className="title">
                 Articles to Read
               </a>
               <p>
@@ -251,7 +251,7 @@ class Resources extends React.Component {
           </div>
           <div className='containers'>
             <Box box="box2" height='300px'>
-              <a href="#" className="title">
+              <a href="/resources" className="title">
                 Improve Your Portfolio
               </a>
               <Link href="https://medium.freecodecamp.org/15-web-developer-portfolios-to-inspire-you-137fb1743cae">

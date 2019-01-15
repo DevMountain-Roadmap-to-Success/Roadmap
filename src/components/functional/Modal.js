@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
+import ReactDOM from 'react-dom'
 
 
 
-const Container = styled.section`
+const Container = styled.div`
   width: auto;
   height: 100%;
   position: fixed;
@@ -11,7 +12,7 @@ const Container = styled.section`
   top: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(22, 22, 22, 0.63);
+  background-color: rgba(51, 51, 51, 0.692);
   z-index: 100;
   display: flex;
   justify-content: center;
@@ -33,14 +34,29 @@ const ModalWrapper = styled.div`
 
 
 `
-const Modal = props => {
-    return (
-        <Container >
-            <ModalWrapper {...props}>   
-            {props.children}
+
+const modalRoot = document.getElementById('modal-root')
+
+class Modal extends React.Component{
+  el = document.createElement('div')
+  componentDidMount = () => {
+    modalRoot.appendChild(this.el)
+  }
+
+  componentWillUnmount = () => {
+    modalRoot.removeChild(this.el)
+  }
+  render(){
+    return ReactDOM.createPortal(
+        <Container open={this.props.open}>
+            <ModalWrapper {...this.props}>   
+            {this.props.children}
             </ModalWrapper>
-         </Container>
-    )
+         </Container>,
+         this.el
+         
+    ) 
+  }
 }
 
 export default Modal
