@@ -57,7 +57,7 @@ class DayView extends Component {
   
   renderTime = () => {
     return this.state.times.map((time, i) => {
-     return <TimeSlot toggle={this.props.toggle} edit={this.props.edit} time={time} date={this.props.date} key={i} />
+     return <TimeSlot task={this.props.task}toggle={this.props.toggle} edit={this.props.edit} time={time} date={this.props.date} key={i} tasks={this.props.tasks}/>
     })
       
   

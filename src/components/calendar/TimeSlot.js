@@ -53,31 +53,32 @@ class TimeSlot extends Component {
       priority: null,
       time: '',
       tasks: [],
-      color: {}
+      color: {},
+      task: {}
     };
   
-    componentDidUpdate(prevProps) {
-      // Typical usage (don't forget to compare props):
-      if (this.props.allTasks !== prevProps.allTasks) {
-        this.fetchData();
+    componentWillReceiveProps = (nextProps) => {
+      if(nextProps.task !== this.state.task){
+        return this.componentDidMount()
       }
     }
+    
 
 
   componentDidMount = () => {
-    let date = moment(this.props.date).format("YYYY/MM/DD");
+    let date = moment(this.props.date).format("MM/DD/YY");
     let time = this.props.time;
     this.setState({date: date, time: time })
-    return this.fetchData()
-  };
+  //   return this.fetchData(date, time)
+  // };
 
   
-  fetchData = () => {
-    const {date, time} = this.state
+  // fetchData = (date, time) => {
+  //   // const {date, time} = this.state
     axios.post('/api/activity', {date, time})
     .then((res) =>  {
       if(res.data[0]){
-    this.setState({ activity: res.data[0].task, priority: res.data[0].priority, id: res.data[0].task_id })
+    this.setState({ activity: res.data[0].task, priority: res.data[0].priority, id: res.data[0].task_id, task: res.data[0] })
       } else {
          return null
       }
@@ -128,7 +129,7 @@ class TimeSlot extends Component {
               className="material-icons"
               id="edit"
               title="edit"
-              onClick={() => this.props.toggle(this.state.id, this.props.time, this.props.date)}
+              onClick={() => this.props.toggle(this.state.id, this.state.time, this.state.date)}
             >
               edit
             </i>

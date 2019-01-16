@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import SweetAlert from 'react-bootstrap-sweetalert'
 import DropDown from './DropDown'
+import { MenuItem } from 'react-bootstrap'
 
 const CircleDiv = styled.div`
   height: 60px;
@@ -33,10 +33,11 @@ const MenuIcon = (props) => {
         </CircleDiv>
         { props.dropdown? 
          <DropDown
-         open={props.dropdown}
-          logout={props.logout}  
-          delete={props.delete}
-        > 
+         open={props.dropdown}>
+         <MenuItem >Edit Profile</MenuItem>
+         <MenuItem onClick={props.logout}>Logout</MenuItem>  
+         <MenuItem onClick={props.delete}>Delete Account</MenuItem>
+        
        
         </DropDown>  : null }
 </>

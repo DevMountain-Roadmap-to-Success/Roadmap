@@ -80,8 +80,7 @@ module.exports = {
         newDate, 
         priority,
         newTime,
-        description,
-        req.session.user.user_id
+        description
       )
       .then(data => res.status(200).send(data));
   },
