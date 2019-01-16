@@ -48,18 +48,18 @@ const DragCard = styled.div`
 const Gaunt = styled.div`
 background-color:black;
 `
-const SearchInput = styled.input `
-  width: 450px;
-  text-indent: 30px;
-  height: 40px;
-  border-radius: 20px;
-  background-image: url(${search});
-  background-repeat: no-repeat;
-  background-size: 25px;
-  background-position-y: 5px;
-  background-position-x: 3px;
-  outline: none;
-`
+// const SearchInput = styled.input `
+//   width: 450px;
+//   text-indent: 30px;
+//   height: 40px;
+//   border-radius: 20px;
+//   background-image: url(${search});
+//   background-repeat: no-repeat;
+//   background-size: 25px;
+//   background-position-y: 5px;
+//   background-position-x: 3px;
+//   outline: none;
+// `
 //declaring the needed depency for the drag and drop 
 var ReactGridLayout = require('react-grid-layout');
 
@@ -82,8 +82,6 @@ const margin = {
   marginBottom: '3%'
 }
 class UserDashboard extends Component {
-
-
 
 
   render() {
@@ -132,8 +130,8 @@ class UserDashboard extends Component {
              
             <Grid item xs={3} style={styles}>
             <TwitterTweet id={'1076129376679411714'} />
-            <SearchInput  
-            placeholder='Search...'/>
+            {/* <SearchInput  
+            placeholder='Search...'/> */}
           </Grid>
            
 <Grid item xs={2} style={styles} >
