@@ -99,7 +99,9 @@ componentDidMount = (props) => {
     axios.delete('/api/account')
     .then(() => this.props.history.push('/'))
   }
-
+toggleOpen = () => {
+  this.setState(prevState => { return { dropdown: !prevState.dropdown }})
+}
   render(){
   const {toggleMenu} = this.props
   const { first_name, last_name, image } = this.props.user
@@ -129,10 +131,9 @@ componentDidMount = (props) => {
               style={{ width: "60px", height: "60px", marginLeft: 0 }}
             />
 
-            <p style={{textTransform: 'uppercase'}} >{`${first_name} ${last_name}`}</p>
-            <i
+            <p  style={{textTransform: 'uppercase'}} >{`${first_name} ${last_name}`}</p>
+            <i onClick={this.toggleOpen}
               className="material-icons"
-              onClick={() => this.setState({ dropdown: !this.state.dropdown })}
               style={{ marginTop: "18px" }}
             >
               keyboard_arrow_down

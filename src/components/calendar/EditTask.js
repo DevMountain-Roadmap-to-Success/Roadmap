@@ -28,7 +28,13 @@ class EditTask extends React.Component {
     description: ''
   };
 
+  componentWillReceiveProps = (nextProps) => {
+    if(nextProps !== this.props){
+      this.setState(this.props)
+    }
+  }
   componentDidMount = () => {
+    console.log(this.state)
     const {todo} = this.props
     if(todo.time){
       var time = todo.time
@@ -41,17 +47,13 @@ class EditTask extends React.Component {
     } else {
       task = ''
     }
-    if(todo.date){
-      var day = todo.date
-    } else {
-      day = this.state.day
-    }
+    
     if(todo.priority){
      var priority = todo.priority
     } else {
       priority = this.state.priority
     }
-      this.setState({selectedDay: day, input: task, time: newTime, priority: priority})
+      this.setState({selectedDay: this.props.selectedDay, input: task, time: newTime, priority: priority})
   
 }
 
@@ -75,7 +77,7 @@ class EditTask extends React.Component {
   };
 
   handleDayChange = e => {
-    this.setState({ selectedDay: e });
+    this.setState({ selectedDay: moment(e).format('YYYY-MM-DD') });
   };
   selectSubject = e => {
     console.log(e.target.name);
@@ -98,6 +100,7 @@ class EditTask extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   };
   render() {
+    console.log(this.state, this.props)
     const {input, selectedDay, time, description, priority} = this.state
     const FORMAT = "M/D/YYYY";
     const { todo } = this.props;
@@ -166,7 +169,7 @@ class EditTask extends React.Component {
               {" "}
               Pick a due date:
               <DayPickerInput
-               value={this.state.selectedDay}
+               value={selectedDay}
                 name="selectedDay"
                 onDayChange={this.handleDayChange}
                 format={FORMAT}

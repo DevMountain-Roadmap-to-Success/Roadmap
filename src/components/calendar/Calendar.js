@@ -10,28 +10,8 @@ import { withRouter } from "react-router";
 import Modal from "../functional/Modal";
 import EditTask from "./EditTask";
 import Wizard from "../functional/Wizard";
-import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
-import { withStyles } from "@material-ui/core/styles";
-import { ColorBlock } from "../todos/TodoStyles";
-import Draggable from "react-draggable";
-import TimeSlot from './TimeSlot'
-const styles = theme => ({
-  fab: {
-    margin: theme.spacing.unit,
-    position: "absolute",
-    backgroundColor: "rgb(122, 202, 248)",
-    zIndex: 1,
-    left: "12.5%",
-    top: "-20px"
-  },
-  extendedIcon: {
-    marginRight: theme.spacing.unit
-  },
-  onHover: () => ({
-    fab: { backgroundColor: "red" }
-  })
-});
+
+
 
 const EditModal = styled(Modal)`
   width: 450px;
@@ -88,13 +68,11 @@ class Calendar extends Component {
     super(props);
     this.state = {
       weekDays: [],
-      date: moment(),
       startOfWeek: "",
       endOfWeek: "",
       edit: false,
       activity: "",
       id: null,
-      time: "09:00",
       tasks: [],
       day: moment().format('YYYY-MM-DD')
     };
@@ -102,7 +80,6 @@ class Calendar extends Component {
   
 
   componentDidMount = () => {
-    console.log(this.state)
     let stateUpdates = this.createDates();
     let { weekDays, date, startOfWeek, endOfWeek } = stateUpdates;
     this.setState({ weekDays, date, startOfWeek, endOfWeek });
@@ -122,46 +99,39 @@ class Calendar extends Component {
   makeActivity = (input, time, date, description, priority) => {
     let newDate = moment(date).format("YYYY-MM-DD");
     let newTime = moment(time, "h").format("h:mm A");
-    var data = []
-      axios
-        .post("/api/makeActivity", {
-          newDate,
-          newTime,
-          input,
-          description,
-          priority
-        })
-        .then(res => {
-          this.setState({ input: '', activity: "", edit: !this.state.edit });
-          this.props.getTasks(res.data)
-          return data = res.data[0]
-        })     
-        return (
-        this.fetchData() )
+    axios
+      .post("/api/makeActivity", {
+        newDate,
+        newTime,
+        input,
+        description,
+        priority
+      })
+      .then(res => {
+        this.setState({ tasks: res.data, edit: !this.state.edit });
+      });
+  };
+
+  handleSave = (input, time, date, description, priority, id) => {
+    console.log(date)
+    let newDate = moment(date).format("YYYY-MM-DD");
+    let newTime = moment(time, "h").format("h:mm A");
+    axios
+      .put(`/api/tasks/update/${id}`, {
+        newDate,
+        newTime,
+        input,
+        description,
+        priority
+      })
+      .then(res => {
+        if(res.data[0].task.date !== this.state.selectedDay){
+        this.setState({ edit: !this.state.edit, id: '', activity: '', selectedDay: '', time: '', task: res.data[0] })
+        return window.location.reload(true)
         }
-        
-      
-    handleSave = (input, time, date, description, priority, id) => {
-      let newDate = moment(date).format("YYYY-MM-DD");
-      let newTime = moment(time, "h").format("h:mm A");
-      var data = []
-        axios
-          .put(`/api/tasks/update/${id}`, {
-            newDate,
-            newTime,
-            input,
-            description,
-            priority
-          })
-          .then(res => {
-            this.setState({ input: '', activity: "", edit: !this.state.edit });
-            return data = res.data[0]
-          })     
-          return (
-          this.fetchData() )    
-    }
-  
-  
+       
+      });
+  };
   createDates = (date = moment()) => {
     var startOfWeek = moment(date).startOf("Week");
     var endOfWeek = moment(date).endOf("Week");
@@ -193,7 +163,7 @@ class Calendar extends Component {
   showEditBox = () => {
       return this.state.edit ? (
         <EditModal>
-          <ColorBlock />
+
           <EditTask
             save={this.handleSave}
             selectedDay={this.state.selectedDay}
@@ -236,6 +206,7 @@ class Calendar extends Component {
     return this.state.weekDays.map((day, i) => {
       return (
         <DayView
+        task={this.state.task}
           refresh={this.refreshActivity}
           tasks={this.state.tasks}
           edit={this.state.edit}
@@ -248,8 +219,6 @@ class Calendar extends Component {
   }
  
   render() {
-    console.log(this.state)
-    const { classes } = this.props;
     let month = moment(this.state.date).format("MMMM");
     return (
       <>
@@ -263,15 +232,9 @@ class Calendar extends Component {
           <button onClick={() => this.switchWeek(7)}>{">"}</button>
         </SwitchWeek>
         <CalendarWrapper>
-          <Draggable>
-            <Fab color="primary" aria-label="Add" className={classes.fab}>
-              <AddIcon
-                onClick={() => this.toggleEdit(1, this.state.time, this.state.day)}
-              />
-            </Fab>
-          </Draggable>
-          <Wizard />
-
+          <Wizard  onClick={() => this.toggleEdit(1, this.state.time, this.state.day)}/>
+        
+          
           <div className="calendar">
             <WeekContainer>{this.renderDayView()}</WeekContainer>
           </div>
@@ -293,11 +256,11 @@ const mapStateToProps = state => {
   };
 };
 
-export default withStyles(styles)(
+export default 
   withRouter(
     connect(
       mapStateToProps,
       { toggleMenu, getTasks, addTask }
     )(Calendar)
   )
-);
+

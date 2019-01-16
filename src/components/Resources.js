@@ -6,6 +6,7 @@ import pluralsight from "../assets/pluralsight.png";
 import { TwitterTweet } from "./widgets/Twitter";
 import styled from "styled-components";
 import "react-dazzle/lib/style/style.css";
+import scotch from '../assets/scotch.png'
 
 const Card = styled.div`
   display: flex;
@@ -267,6 +268,33 @@ class Resources extends React.Component {
                 <li> Top 12 Portfolios for Inspiration</li>
               </Link>
             </Box>
+            <Box>
+              <a style={{ width: "50%" }} href="https://scotch.io/">
+                <Logo
+                  src={scotch}
+                  alt="logo"
+                  height="200px"
+                  width="200px"
+                  style={{ marginLeft: "10px" }}
+                />
+              </a>
+              <div
+                style={{
+                  width: "50%",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center"
+                }}
+              >
+                <h1>
+                fun and practical web development.<br/>
+                 not just the code,<br/>
+                  but the reasons behind it
+                </h1>
+
+              </div>
+            </Box>
+          
             <TwitterTweet id={"984149102240894976"} style={{ height: 300 }} />
           </div>
         </ResourceContainer>

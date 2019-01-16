@@ -1,23 +1,31 @@
 import React from 'react';
-import { MenuItem } from 'react-bootstrap';
+import ReactDOM from 'react-dom'
 import {Menu} from './ElementStyles.js'
 
+const dropdownRoot = document.getElementById('drop-root')
 
+class DropDown extends React.Component {
+  el = document.createElement('div')
+  componentDidMount = () => {
+   dropdownRoot.appendChild(this.el)
+  }
 
-const DropDown = (props) => {
- console.log(props)
-    return (
+  componentWillUnmount = () => {
+    dropdownRoot.removeChild(this.el)
+  }
+  render(){
+    return ReactDOM.createPortal(
    
-      <Menu open={props.open} {...props}>
-        <MenuItem >Edit Profile</MenuItem>
-        <MenuItem onClick={props.logout}>Logout</MenuItem>  
-        <MenuItem onClick={props.delete}>Delete Account</MenuItem>
-      </Menu>
+      <Menu open={this.props.open} {...this.props}  >
+       {this.props.children}
+      </Menu>,
+      this.el
 
 
     );
    
   }
+}
 
 
 export default DropDown;
