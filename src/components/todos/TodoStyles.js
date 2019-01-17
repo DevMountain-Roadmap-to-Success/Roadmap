@@ -85,10 +85,10 @@ background-color:white;
   width: 350px;
   height: 370px;
   display: flex;
-  
+  overflow: scroll;
   box-shadow: 0px 1px 1px 0px rgb(220, 220, 220);
   border-radius: 5px;
-
+  margin-bottom: 30px;
 
   button {
     background-color: transparent;

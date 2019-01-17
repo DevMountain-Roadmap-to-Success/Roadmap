@@ -1,41 +1,40 @@
 //dependencies
 import React, { Component } from 'react';
-import Iframe from 'react-iframe';
+// import Iframe from 'react-iframe';
 //styling imports
 import styled from 'styled-components';
-import { StyledButton } from './functional/ElementStyles';
+import Button from './functional/Button';
 //components
 import FlashcardMenu from './functional/FlashcardMenu';
 ;
 
 //styling
 const Div = styled.div`
-Div{
-  display: flex;
-width: 100vw;
 position: relative;
-margin-left: 10px;
-}
-
+/* 
 .box{
   display:flex;
-  height: 500px;
-  width: 670px;
-  background-color: black;
+  height: 700px;
+  width: 600px;
+  background-color: #F0F0F0;
   border-radius: 5px;
-}
+} */
 
 .frame{
   margin-left: 35px;
   margin-top: 65px;
 }
 
-h1{
+span{
   position: absolute;
-  margin-left: 23%;
-  margin-top: 10px;
   color: white;
-  font-size: 28px;
+  font-size: 24px;
+  display: flex;
+}
+span > h1 {
+    line-height: 50px;
+    text-align: center;
+    
 }
 
 h2{
@@ -43,17 +42,27 @@ h2{
   justify-content: space-between;
   margin-left: -190px;
   margin-top: 445px;
-  color: white;
+  color: #455358;
 }
 `
-const StyledButton1 = styled(StyledButton)`
-margin-top: 8px;
-margin-left: 8px;
-width: 120px;
-height: 40px;
-margin-bottom:0px;
-`
+const MenuButton = styled(Button)`
+margin-top: 5px; 
+margin-left: 5px; 
+width: 90px;
+height: 37px;
+z-index: 100;
+margin-right: 10px;
+background-color:  #455358;
+border-radius: 3px;
+font-weight: lighter;
+outline: none;
 
+`
+const Iframe = styled.iframe`
+    height: 650px;
+    width: 600px;
+
+`
 
 class Flashcard extends Component {
     constructor() {
@@ -77,7 +86,6 @@ class Flashcard extends Component {
                 return { menuOpen: !prevState.menuOpen }
             })
         };
-
         //this renders the menu
         let handleShowMenu = () => {
             if (this.state.menuOpen === true) {
@@ -102,24 +110,14 @@ class Flashcard extends Component {
 
         return (
             <Div className="page" >
-
-               
-
-                <div className="box" id={0}>
-                    <StyledButton1 onClick={() => handleOpenClose()}>Choose Topic</StyledButton1>
-
                     {handleShowMenu()}
+                   
+                    <span id={0} > <MenuButton onClick={() => handleOpenClose()}name='Choose Topic'/><h1>{this.state.title}</h1></span>
 
-                    <h1 id={0} >{this.state.title}</h1>
-
-                    <Iframe className="frame"
-                        url={this.state.currentLink}
-                        width="600px"
-                        height="400px"
-                    />
-
-                </div>
-
+                    <Iframe title="quizlet"
+                        src={this.state.currentLink}
+                        width={this.props.width}
+                        height={this.props.height}/>
 
             </Div>
         )

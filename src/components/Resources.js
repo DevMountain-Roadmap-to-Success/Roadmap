@@ -97,7 +97,7 @@ const ResourceContainer = styled.div`
 export const Box = props => {
   console.log(props);
   return !props.box ? (
-    <Card shadow={props.shadow} >{props.children}</Card>
+    <Card shadow={props.shadow} height={props.height}>{props.children}</Card>
   ) : (
     <Card2 height={props.height}>{props.children}</Card2>
   );
@@ -235,19 +235,32 @@ class Resources extends React.Component {
           <div className='containers'>
             <TwitterTweet id={"1067500779567636480"} />
 
-            <Box box="box2" height='200px'>
-              <a href="/resources" className="title">
-                Articles to Read
+            <Box shadow='.5px .5px .5px 2px #00BDBF' height='200px'>
+              <a style={{ width: "50%" }} href="https://scotch.io/">
+                <Logo
+                  src={scotch}
+                  alt="logo"
+                  height="200px"
+                  width="200px"
+                  style={{ marginLeft: "10px" }}
+                />
               </a>
-              <p>
-                <Link href="https://blog.teamtreehouse.com/improve-coding-confidence">
-                  <li>5 Excellent Ways to Improve Your Coding Confidence</li>
-                </Link>
+              <div
+                style={{
+                  width: "50%",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center"
+                }}
+              >
+              <h1>Scotch io</h1>
+                <h6>
+                fun and practical web development.<br/>
+                 not just the code,<br/>
+                  but the reasons behind it
+                </h6>
 
-                <Link href="https://medium.freecodecamp.org/how-to-read-your-way-to-becoming-a-better-developer-b6432fa5bc0c">
-                  <li>Read Your Way to Becoming a Better Developer</li>
-                </Link>
-              </p>
+              </div>
             </Box>
           </div>
           <div className='containers'>
@@ -268,32 +281,7 @@ class Resources extends React.Component {
                 <li> Top 12 Portfolios for Inspiration</li>
               </Link>
             </Box>
-            <Box>
-              <a style={{ width: "50%" }} href="https://scotch.io/">
-                <Logo
-                  src={scotch}
-                  alt="logo"
-                  height="200px"
-                  width="200px"
-                  style={{ marginLeft: "10px" }}
-                />
-              </a>
-              <div
-                style={{
-                  width: "50%",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center"
-                }}
-              >
-                <h1>
-                fun and practical web development.<br/>
-                 not just the code,<br/>
-                  but the reasons behind it
-                </h1>
-
-              </div>
-            </Box>
+          
           
             <TwitterTweet id={"984149102240894976"} style={{ height: 300 }} />
           </div>
