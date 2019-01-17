@@ -10,7 +10,8 @@ const Menu1 = styled(Menu) `
     left: 8px;
     width: 300px;
     z-index: 100px;
-    margin-top: -11px;
+    top: 55px;
+    cursor: pointer;
 `
 
 

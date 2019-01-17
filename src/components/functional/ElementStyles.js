@@ -31,6 +31,7 @@ font-weight: 600;
 font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 border: ${props => props.border || 'none' };
 border-radius: 3px;
+outline: none;
 
 @media(max-width: 1300px){
     width: 140px;

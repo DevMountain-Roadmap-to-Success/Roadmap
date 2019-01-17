@@ -4,7 +4,6 @@ import Header from './Header';
 import { connect } from 'react-redux';
 import { getPosition } from './../ducks/reducer';
 import Flashcard from './Flashcard';
-import Weather from './widgets/Weather';
 import Gauntlet from './functional/Gauntlet';
 
 var ReactGridLayout = require('react-grid-layout');
@@ -24,9 +23,8 @@ class JobPrep extends Component {
     const { collision, compact } = this.props
 
     var layout = [
-      { i: "flashcard", x: 0, y: 0, w: 12.5, h: 3.44, isResizable: false },
-      { i: "weather", x: 13, y: 0, w: 7, h: 2.1, isResizable: false, },
-      { i: "gauntlet", x: 0, y: 3.5, w: 19.3, h: 5.4, isResizable: false, }
+      { i: "flashcard", x: 20, y: 0, w: 12.5, h: 3.44, isResizable: false },
+      { i: "gauntlet", x: 0, y: 0, w: 19.3, h: 5.4, isResizable: false, }
     ]
 
     return (
@@ -47,11 +45,6 @@ class JobPrep extends Component {
 
           <Drag key='flashcard' className='testBox'>
             <Flashcard />
-          </Drag>
-
-          <Drag key='weather'>
-
-            <Weather />
           </Drag>
 
 

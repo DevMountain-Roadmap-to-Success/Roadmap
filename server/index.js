@@ -7,7 +7,7 @@ const bodyParser = require('body-parser')
 const ctrl = require('./controller')
 const bcrypt = require('bcryptjs')
 const {CONNECTION_STRING, SERVER_PORT} = process.env
-
+const nodemailer = require('./nodemailer')
 
 massive(CONNECTION_STRING).then(dbInstance => {
     app.set('db', dbInstance)
@@ -24,62 +24,40 @@ massive(CONNECTION_STRING).then(dbInstance => {
     saveUninitialized: false
   }))
 
+ 
 
-
-  app.get('/auth/session', (req, res) => {
+  app.get('/auth/session', (req, res, next) => {
     if(req.session.user){
       res.status(200).send(req.session.user)
     } else {
       res.status(401).send('no user')
     }
   })
-  app.post('/auth/signup', async (req, res) => {
-    const dbInstance = req.app.get('db')
-    const { first_name, last_name, email, password } = req.body
-    console.log(first_name, last_name, email, password)
-
-    let user = await dbInstance.check_user(email)
-    if (user[0]) {
-      return res.status(401).send('Email already in use')
-    } else {
-      let salt = bcrypt.genSaltSync(10)
-      let hash = bcrypt.hashSync(password, salt)
-      let newUser = await dbInstance.create_user(first_name, last_name, email, hash )
   
-      req.session.user = newUser[0]
-      console.log(req.session)
-      res.status(200).send(req.session.user)
-     }
-}) 
-
 
 app.post('/auth/login', async (req, res, next) => {
   const dbInstance = req.app.get('db')
   const { email, password } = req.body
   console.log(email, password)
-  try {
+
     let user = await dbInstance.check_user(email)        
     if(!user){
-      res.status(404).send('no user found')
+      res.status(403).send('no user found')
     } else {
       let match = await bcrypt.compareSync(password, user[0].password);
     if (!match) {
-      res.status(404).send('wrong password')
+      res.status(403).send('wrong password')
     } else if(match) {
       req.session.user = user[0]
       console.log(req.session.user)
       res.status(200).send(req.session.user)
      }
-  }
-}
-  catch(err) {
-    res.status(401).send(err, 'login error')
- 
-   }
+    }
 })
-  
+  app.post('/auth/signup', nodemailer.signup)
+  app.post('/sendEmail', nodemailer.weekly_mail)
   app.get('/api/logout', ctrl.logout) 
-  app.delete('/api/account', ctrl.delete_account)
+  app.delete('/api/account', nodemailer.delete_account)
 
   //todolist
   app.get('/api/tasks', ctrl.get_tasks)
