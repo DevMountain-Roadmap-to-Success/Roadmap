@@ -6,7 +6,8 @@ import styled from 'styled-components';
 import Button from './functional/Button';
 //components
 import FlashcardMenu from './functional/FlashcardMenu';
-;
+
+import {toggle, idCheck} from './../Tests/Logic/logic_Jared';
 
 //styling
 const Div = styled.div`
@@ -82,6 +83,7 @@ class Flashcard extends Component {
     render() {
         //opens and closes the menu
         let handleOpenClose = () => {
+            toggle(this.state.menuOpen)
             this.setState(prevState => {
                 return { menuOpen: !prevState.menuOpen }
             })
@@ -100,6 +102,7 @@ class Flashcard extends Component {
         //This handles what displays in the component by what is clicked on the menu
         let handleClick = (id) => {
             let newData = this.state.links[id]
+            idCheck(id)
             this.setState({
                 title: newData.name,
                 currentLink: newData.link,
