@@ -8,9 +8,11 @@ const ctrl = require('./controller')
 const bcrypt = require('bcryptjs')
 const {CONNECTION_STRING, SERVER_PORT} = process.env
 const nodemailer = require('./nodemailer')
+const friends_ctrl = require('./friends_controller')
 
-massive(CONNECTION_STRING).then(dbInstance => {
-    app.set('db', dbInstance)
+
+massive(CONNECTION_STRING).then(db => {
+    app.set('db', db)
     console.log('database connected')
   }).catch(err => console.log(err, 'connection error'))
   
@@ -33,15 +35,15 @@ massive(CONNECTION_STRING).then(dbInstance => {
       res.status(401).send('no user')
     }
   })
-  
+
+
 
 app.post('/auth/login', async (req, res, next) => {
   const dbInstance = req.app.get('db')
   const { email, password } = req.body
-  console.log(email, password)
-
-    let user = await dbInstance.check_user(email)        
-    if(!user){
+  console.log(req.body)
+  let user = await dbInstance.check_user(email)        
+  if(!user){
       res.status(403).send('no user found')
     } else {
       let match = await bcrypt.compareSync(password, user[0].password);
@@ -54,11 +56,16 @@ app.post('/auth/login', async (req, res, next) => {
      }
     }
 })
+
+
+app.get('/api/logout', ctrl.logout) 
   app.post('/auth/signup', nodemailer.signup)
   app.post('/sendEmail', nodemailer.weekly_mail)
-  app.get('/api/logout', ctrl.logout) 
-  app.delete('/api/account', nodemailer.delete_account)
-
+  app.post('/api/message', nodemailer.message)
+  app.delete('/api/delete', nodemailer.delete_account)
+  app.post('/api/profile/update', ctrl.update_profile)
+  app.put('/api/update/:id', ctrl.update_info )
+  app.put('/auth/password', ctrl.update_password)
   //todolist
   app.get('/api/tasks', ctrl.get_tasks)
   app.post('/api/addtask', ctrl.create_task)
@@ -75,8 +82,12 @@ app.post('/auth/login', async (req, res, next) => {
 
   app.get('/api/trivia', ctrl.get_trivia)
 
-
-
+  //friends
+  app.get('/api/findfriends', friends_ctrl.find_friends)
+  app.post('/api/addfriend/:id', friends_ctrl.add_friend)
+  app.get('/api/myfriends', friends_ctrl.my_friends)
+  app.delete('/api/friends/:id', friends_ctrl.delete_friend)
+app.get('/api/everyone', friends_ctrl.all_students)
 
 
 

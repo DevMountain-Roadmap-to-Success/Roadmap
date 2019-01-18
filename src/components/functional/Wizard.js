@@ -61,6 +61,7 @@ const KeyTypes = styled.div`
     position: absolute;
     right: 5px;
     content: none;
+    font-size: 20px;
   }
 `;
 const DropInfo = styled(DropDown)`
@@ -107,7 +108,7 @@ class Wizard extends React.Component {
                 this.setState({ portfolioInfo: !this.state.portfolioInfo })
               }
 
-              className="material-icons">info</i>
+              className="fa fa-question-circle" ></i>
               {this.state.portfolioInfo ?
               <DropInfo open={this.state.portfolioInfo}>
               <>
@@ -135,9 +136,9 @@ There is no better way to learn than to build things. Employers also love when y
                 onMouseLeave={() =>
                   this.setState({ skillsInfo: !this.state.skillsInfo })
                 }
-                className="material-icons"
+                className="fa fa-question-circle" 
               >
-                info
+               
               </i>
               {this.state.skillsInfo ? (
                 <DropInfo top='170px'>
@@ -170,9 +171,9 @@ There is no better way to learn than to build things. Employers also love when y
                 onMouseLeave={() =>
                   this.setState({ jobInfo: !this.state.jobInfo })
                 }
-                className="material-icons"
+                className="fa fa-question-circle" 
               >
-                info
+
               </i>
               {this.state.jobInfo ? 
               <DropInfo top='250px'>

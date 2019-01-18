@@ -11,14 +11,6 @@ import FlashcardMenu from './functional/FlashcardMenu';
 //styling
 const Div = styled.div`
 position: relative;
-/* 
-.box{
-  display:flex;
-  height: 700px;
-  width: 600px;
-  background-color: #F0F0F0;
-  border-radius: 5px;
-} */
 
 .frame{
   margin-left: 35px;
@@ -45,7 +37,7 @@ h2{
   color: #455358;
 }
 `
-const MenuButton = styled(Button)`
+export const MenuButton = styled(Button)`
 margin-top: 5px; 
 margin-left: 5px; 
 width: 90px;

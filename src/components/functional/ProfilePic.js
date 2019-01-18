@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import DropDown from './DropDown'
 import { MenuItem } from 'react-bootstrap'
-
+import {NavLink} from 'react-router-dom'
 const CircleDiv = styled.div`
   height: 60px;
   color: white;
@@ -24,7 +24,7 @@ const CircleDiv = styled.div`
 
 
 const MenuIcon = (props) => {
-
+    
     return (
 <>
         <CircleDiv {...props}
@@ -34,7 +34,7 @@ const MenuIcon = (props) => {
         { props.dropdown? 
          <DropDown
          open={props.dropdown}>
-         <MenuItem >Edit Profile</MenuItem>
+         <NavLink activeClassName='current' to='/profile/edit'>Edit Profile</NavLink>
          <MenuItem onClick={props.logout}>Logout</MenuItem>  
          <MenuItem onClick={props.delete}>Delete Account</MenuItem>
         

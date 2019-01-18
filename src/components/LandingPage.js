@@ -14,6 +14,7 @@ class LandingPage extends React.Component {
     return (
       <Container>
         <Header
+        login='login'
         border='none'
          devLogo={logo} 
         background='#252525'
