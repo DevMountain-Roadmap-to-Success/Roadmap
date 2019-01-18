@@ -157,4 +157,4 @@ module.exports = {
     let t = await axios.get("http://jservice.io/api/random");
     res.status(200).send(t.data);
   }
-};
+}; 

@@ -4,6 +4,7 @@ import axios from "axios";
 import styled from "styled-components";
 import {connect} from 'react-redux'
 import {getTasks} from '../../ducks/reducer'
+import { checkInput, checkDateFormat } from "../../Tests/Logic/logic_randall";
 
 
   
@@ -67,6 +68,9 @@ class TimeSlot extends Component {
 
   componentDidMount = () => {
     let date = moment(this.props.date).format("MM/DD/YY");
+//UNIT TEST
+    checkDateFormat(date)
+
     let time = this.props.time;
     this.setState({date: date, time: time })
   //   return this.fetchData(date, time)
@@ -89,11 +93,12 @@ class TimeSlot extends Component {
 
   handleActivity = e => {
     this.setState({ input: e });
-  };
 
+  };
+ 
   handleEdit = val => {
     this.setState({ input: val, activity: "" });
-
+    checkInput(val)
   };
 
   handleDelete = () => {

@@ -11,6 +11,8 @@ import Modal from "../functional/Modal";
 import EditTask from "./EditTask";
 import Wizard from "../functional/Wizard";
 
+import {toggle} from '../../Tests/Logic/logic_randall'
+
 
 
 const EditModal = styled(Modal)`
@@ -196,7 +198,7 @@ class Calendar extends Component {
   };
   toggle = () => {
     this.setState(prevState => {
-      return { edit: !prevState.edit,
+      return { edit: toggle(prevState.edit),
       activity: '' };
     });
   };

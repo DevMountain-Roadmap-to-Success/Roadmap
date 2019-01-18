@@ -202,7 +202,7 @@ class Login extends React.Component {
       this.setState({ [e.target.name ]: e.target.value });
       // inputCheck(e.target.name);
     };
-  
+    
 
     render(){
     return (
