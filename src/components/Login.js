@@ -7,6 +7,9 @@ import LoginForm from './LoginForm'
 import {Link } from 'react-router-dom'
 import {connect} from 'react-redux'
 import {getUser} from '../ducks/reducer'
+
+import {withRouter} from 'react-router'
+
 import {inputCheck, accountCheck} from './../Tests/Logic/logic_Jared';
 
 
@@ -154,6 +157,8 @@ class Login extends React.Component {
     else if (length > 0) return 'error';
     return null;
   }
+
+
   signup = () => {
     const { email, password } = this.state;
     axios
@@ -162,35 +167,34 @@ class Login extends React.Component {
         password: password
       })
       .then(res => {
-        if (res.status === 200) {
+       if (res.status === 200) {
           localStorage.setItem('email', email)
           this.props.getUser(res.data)
+
           this.props.history.push(`/%2Froadmap%2Fprofile`);
 
-        } else if(!res){
-          alert({error: 'account not found'})
         }
+    })
+  }
 
-        }) 
-      };
-    
-  
-   
     login = () => {
       const { email, password } = this.state;
       // console.log(email, password)
-      axios.post("/auth/login", { email, password }).then(res => {
-        if (res.status === 200) {
+      axios.post("/auth/login", { email, password })
+        .then(res => {
+       if (res.status === 200) {
           localStorage.setItem('email', email)
           this.props.getUser(res.data)
-          this.props.history.push("/dashboard");
+           this.props.history.push("/dashboard");
         } else if(res.status === 403){
           alert({error: 'account not found'})
           console.log(res);
           accountCheck(res.status)
         }
+
       });
   };
+
 
     handleInput = e => {
       
