@@ -186,11 +186,11 @@ const LoginForm = styled(Form)`
       axios.post("/auth/login", { email, password }).then(res => {
         if (res.status === 200) {
           this.props.getUser(res.data)
+          // console.log(res.data)
           this.props.history.push("/dashboard");
-        } else if(res.status === 403){
+        } else if(!res){
           alert({error: 'account not found'})
-          console.log(res);
-          accountCheck(res.status)
+          accountCheck()
         }
       });
     };
@@ -198,7 +198,7 @@ const LoginForm = styled(Form)`
     handleInput = e => {
       
       this.setState({ [e.target.name ]: e.target.value });
-      inputCheck(e.target.name);
+      // inputCheck(e.target.name);
     };
   
 

@@ -71,10 +71,10 @@ class Flashcard extends Component {
         this.state = {
             menuOpen: false,
             title: 'React / Node Interview Questions',
-            currentLink: 'https://quizlet.com/350088308/flashcards/embed',
-            links: [{ name: 'React / Node Interview Questions', link: 'https://quizlet.com/350088308/flashcards/embed' },
-            { name: 'Javascript Interview Questions', link: 'https://quizlet.com/350088308/flashcards/embed' },
-            { name: 'HTML / CSS Interview Questions', link: 'https://www.youtube.com/embed/3GA4vP7PKWg' }],
+            currentLink: 'https://quizlet.com/360579833/flashcards/embed?i=1u7wu1&x=1jj1',
+            links: [{ name: 'React / Node Interview Questions', link: 'https://quizlet.com/360579833/flashcards/embed?i=1u7wu1&x=1jj1' },
+            { name: 'Javascript Interview Questions', link: 'https://quizlet.com/360578052/flashcards/embed?i=1u7wu1&x=1jj1' },
+            { name: 'HTML / CSS Interview Questions', link: 'https://quizlet.com/356801642/flashcards/embed?i=1u7wu1&x=1jj1' }],
         }
     };
 
