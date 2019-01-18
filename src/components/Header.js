@@ -68,6 +68,7 @@ class Header extends React.Component {
 
   }
 componentDidMount = (props) => {
+
   let {full_name} = this.props.user
   this.setState({full_name: full_name})
 }

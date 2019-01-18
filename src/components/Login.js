@@ -185,11 +185,12 @@ class Login extends React.Component {
        if (res.status === 200) {
           localStorage.setItem('email', email)
           this.props.getUser(res.data)
+
            this.props.history.push("/dashboard");
         } else if(res.status === 403){
+
           alert({error: 'account not found'})
-          console.log(res);
-          accountCheck(res.status)
+          accountCheck()
         }
 
       });
@@ -199,7 +200,7 @@ class Login extends React.Component {
     handleInput = e => {
       
       this.setState({ [e.target.name ]: e.target.value });
-      inputCheck(e.target.name);
+      // inputCheck(e.target.name);
     };
   
 
