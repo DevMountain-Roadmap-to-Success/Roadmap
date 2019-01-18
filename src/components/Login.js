@@ -7,7 +7,10 @@ import LoginForm from './LoginForm'
 import {Link } from 'react-router-dom'
 import {connect} from 'react-redux'
 import {getUser} from '../ducks/reducer'
-import {withRouter} from 'react-router'
+import {inputCheck, accountCheck} from './../Tests/Logic/logic_Jared';
+
+
+
 const LoginModal = styled(Modal)`
   background-image: url('http://www.siliconvalley.ninja/wp-content/uploads/2018/04/success-roadmap.png');
   background-size: 117%;
@@ -151,7 +154,6 @@ class Login extends React.Component {
     else if (length > 0) return 'error';
     return null;
   }
-
   signup = () => {
     const { email, password } = this.state;
     axios
@@ -165,27 +167,38 @@ class Login extends React.Component {
           this.props.getUser(res.data)
           this.props.history.push(`/%2Froadmap%2Fprofile`);
 
-        } 
+        } else if(!res){
+          alert({error: 'account not found'})
+        }
+
+        }) 
+      };
+    
+  
+   
+    login = () => {
+      const { email, password } = this.state;
+      // console.log(email, password)
+      axios.post("/auth/login", { email, password }).then(res => {
+        if (res.status === 200) {
+          localStorage.setItem('email', email)
+          this.props.getUser(res.data)
+          this.props.history.push("/dashboard");
+        } else if(res.status === 403){
+          alert({error: 'account not found'})
+          console.log(res);
+          accountCheck(res.status)
+        }
       });
   };
 
-  login = () => {
-    const { email, password } = this.state;
-   axios.post("/auth/login", { email, password }).then(res => {
-      if (res.status === 200) {
-        localStorage.setItem('email', email)
-        this.props.getUser(res.data)
-        this.props.history.push("/dashboard");
-      }
-    });
-  };
-
-  handleInput = e => {
-    
-    this.setState({ [e.target.name ]: e.target.value });
-  };
-
+    handleInput = e => {
+      
+      this.setState({ [e.target.name ]: e.target.value });
+      inputCheck(e.target.name);
+    };
   
+
     render(){
     return (
         <LoginModal>
