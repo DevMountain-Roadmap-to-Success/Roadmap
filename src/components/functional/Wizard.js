@@ -22,6 +22,9 @@ const styles = theme => ({
 const WizardBox = styled.div`
   width: 20%;
   height: 640px;
+  @media(max-width: 1100px){
+      display: none;
+    }
 `;
 
 const KeyCard = styled(Card)`
@@ -50,6 +53,13 @@ const KeyTypes = styled.div`
     font-size: 16px;
     height: 70px;
     position: relative;
+    @media(max-width: 1350px){
+      font-size: 13px;
+    }
+    @media(max-width: 1250px){
+      font-size: 10px;
+    }
+ 
   }
   h1 {
     font-size: 18px;

@@ -14,9 +14,9 @@ const CircleDiv = styled.div`
   position: absolute;
   right: 3%;
   cursor: pointer;   
-    @media (max-width: 950px){
+    /* @media (max-width: 950px){
        display: none;     
-    }
+    } */
     p {
         margin-left: 15px;
     }
