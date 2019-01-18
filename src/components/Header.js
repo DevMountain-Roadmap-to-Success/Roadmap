@@ -83,7 +83,8 @@ toggleAlert = () => {
     dropdown: !prevState.dropdown}})
 }
   deleteAccount = () => {
-    axios.delete('/api/delete')
+    const {full_name} = this.props
+    axios.delete('/api/delete', full_name)
     .then((res) => {
       if(res.status === 200){
         return this.props.history.push('/')

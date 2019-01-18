@@ -100,7 +100,8 @@ module.exports = {
          replyTo: `<roadmap.squad@gmail.com>`,
          html: 
          `<b>Welcome and congratulations on graduating Dev Mountain! We hope you make use of this Roadmap and follow the recomendations provided. You've got this! 
-         <br/> From The Roadmap Squad Team</b>`
+         <br/> From The Roadmap Squad Team<br/>
+         https://docs.google.com/document/d/1k_tdOgVly2CVO3RU3fQgO5Fy0EQol-yAhnJ1N0KRlok/edit?usp=sharing</b>`
       }
       console.log(mailOptions)
       transporter.sendMail(mailOptions, (err, info) => {
@@ -114,6 +115,7 @@ module.exports = {
       },
       delete_account: (req, res) => {
         const dbInstance = req.app.get("db");
+        const {full_name} = req.body
         dbInstance
         .delete_account(req.session.user.user_id)
         .then(() => res.sendStatus(200));
@@ -129,7 +131,7 @@ module.exports = {
           const mailOptions = {
             from: `"Roadmap Team" <roadmap.squad@gmail.com>`,
             to: `${req.session.user.email}`,
-            subject: `Goodbye ${req.session.user.first_name}`,
+            subject: `Goodbye`,
             text: `Body `,
     
              replyTo: `<roadmap.squad@gmail.com>`,
