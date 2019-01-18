@@ -25,6 +25,10 @@ const GridBox = styled.div`
   grid-template-columns: auto auto auto;
   grid-template-rows: auto;
   grid-gap: 20px;
+  /* @media(max-width: 1100px){
+    display: flex;
+    flex-wrap: wrap;
+  } */
 `
 const Grid = styled.div``
 
@@ -83,12 +87,12 @@ class UserDashboard extends Component {
     //   { i: "search", x: 14.5, y: 3.5, w: 4, h: 2, isResizable: false }
     // ];
     return (
-      <div className="dashboard_main">
+      <div >
         <Header {...this.props} justifyContent="unset">
           <h1>Roadmap Dashboard</h1>
         </Header>
 
-        {/* <Div> */}
+        <div className="dashboard_main">
         {/* <Dashboard /> */}
 
         {/* <ReactGridLayout className="layout" layout={layout}
@@ -125,6 +129,7 @@ class UserDashboard extends Component {
          </Grid>
               </Grid>
           </GridBox>
+      </div>
       </div>
     );
   }

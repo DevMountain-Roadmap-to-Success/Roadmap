@@ -47,12 +47,15 @@ const Card = styled.div`
     font-size: 14px;
     text-align: left;
   }
+  @media(max-width: 1200px){
+
+  }
 `;
 const Card2 = styled.div`
   display: flex;
   flex-direction: column;
   height: ${props => props.height};
-  width: 500px;
+  width: 400px;
   padding: 30px;
 
   justify-content: center;
@@ -85,6 +88,7 @@ const ResourceContainer = styled.div`
   display: flex;
   height: 1000px;
   justify-content: center;
+  flex-wrap: wrap;
 
   .containers {
     display: flex;
@@ -92,6 +96,13 @@ const ResourceContainer = styled.div`
     align-items: center;
     justify-content: 'space-evenly';
     margin: 20px;
+    flex-wrap: wrap;
+  }
+  #984149102240894976 {
+    width: 400px;
+  }
+  @media(max-width: 1200px){
+
   }
 `;
 export const Box = props => {
@@ -156,7 +167,7 @@ class Resources extends React.Component {
 
   render() {
     return (
-      <>
+      <div>
         <Header>
           <h1>Resources</h1>
         </Header>
@@ -233,7 +244,7 @@ class Resources extends React.Component {
             </Box>
           </div>
           <div className='containers'>
-            <TwitterTweet id={"1067500779567636480"} />
+            <TwitterTweet id={"1067500779567636480"} options={{width: 400}}/>
 
             <Box shadow='.5px .5px .5px 2px #00BDBF' height='200px'>
               <a style={{ width: "50%" }} href="https://scotch.io/">
@@ -283,11 +294,11 @@ class Resources extends React.Component {
             </Box>
           
           
-            <TwitterTweet id={"984149102240894976"} style={{ height: 300 }} />
+            <TwitterTweet id={"984149102240894976"} style={{ height: 300, width: '400px' }} />
           </div>
         </ResourceContainer>
 
-      </>
+      </div>
     );
   }
 }

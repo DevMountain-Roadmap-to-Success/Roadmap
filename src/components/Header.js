@@ -25,12 +25,13 @@ const StyledHeader = styled.header`
   border-bottom: ${props => props.border || 'rgba(255, 255, 255, 0.808) solid thin'};
   .logo {
     width: 240px;
-    height: 45px;
+    /* height: 45px; */
     margin-left: 150px;
     @media (max-width: 1100px) {
       margin-left: 80px;
     }
   }
+  
 
   .menu-icon {
       width: 60px;
@@ -38,9 +39,7 @@ const StyledHeader = styled.header`
       margin-left: 3%;
       cursor: pointer;
     }
-    @media(max-width: 600px) {
-      height: 30px;
-    }
+   
     h1 {
       text-indent: 5%;
       font-size: 40px;
@@ -48,6 +47,9 @@ const StyledHeader = styled.header`
       width: auto;
       @media (max-width: 1200px){
         font-size: 32px;
+      }
+      @media(max-width: 550px){
+        display: none;
       }
     }
   
