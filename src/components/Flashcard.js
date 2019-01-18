@@ -12,14 +12,6 @@ import {toggle, idCheck} from './../Tests/Logic/logic_Jared';
 //styling
 const Div = styled.div`
 position: relative;
-/* 
-.box{
-  display:flex;
-  height: 700px;
-  width: 600px;
-  background-color: #F0F0F0;
-  border-radius: 5px;
-} */
 
 .frame{
   margin-left: 35px;
@@ -46,7 +38,7 @@ h2{
   color: #455358;
 }
 `
-const MenuButton = styled(Button)`
+export const MenuButton = styled(Button)`
 margin-top: 5px; 
 margin-left: 5px; 
 width: 90px;
@@ -71,10 +63,10 @@ class Flashcard extends Component {
         this.state = {
             menuOpen: false,
             title: 'React / Node Interview Questions',
-            currentLink: 'https://quizlet.com/350088308/flashcards/embed',
-            links: [{ name: 'React / Node Interview Questions', link: 'https://quizlet.com/350088308/flashcards/embed' },
-            { name: 'Javascript Interview Questions', link: 'https://quizlet.com/350088308/flashcards/embed' },
-            { name: 'HTML / CSS Interview Questions', link: 'https://www.youtube.com/embed/3GA4vP7PKWg' }],
+            currentLink: 'https://quizlet.com/360579833/flashcards/embed?i=1u7wu1&x=1jj1',
+            links: [{ name: 'React / Node Interview Questions', link: 'https://quizlet.com/360579833/flashcards/embed?i=1u7wu1&x=1jj1' },
+            { name: 'Javascript Interview Questions', link: 'https://quizlet.com/360578052/flashcards/embed?i=1u7wu1&x=1jj1' },
+            { name: 'HTML / CSS Interview Questions', link: 'https://quizlet.com/356801642/flashcards/embed?i=1u7wu1&x=1jj1' }],
         }
     };
 

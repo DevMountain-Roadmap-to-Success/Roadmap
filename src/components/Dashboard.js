@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
-
+import pic from '../assets/profile.png'
 //redux
 import { connect } from "react-redux";
+import axios from 'axios'
 import { getUser } from "../ducks/reducer";
 // import { getPosition } from './../ducks/reducer';
 
@@ -16,7 +17,7 @@ import Flashcard from "./Flashcard";
 import Trivia from "./Trivia";
 // import Gauntlet from './functional/Gauntlet';
 import { TwitterTimelineEmbed } from "react-twitter-embed";
-// import Grid from "@material-ui/core/Grid";
+
 
 
 const GridBox = styled.div`
@@ -25,33 +26,20 @@ const GridBox = styled.div`
   grid-template-rows: auto;
   grid-gap: 20px;
 `
+const Grid = styled.div``
 
-const Grid = styled.div`
 
-
-`
-
-// const Flashcard1 = styled(Flashcard)`
-// position:absolute;
-// `
-
-//Draggable styling
-const Drag = styled.div`
-  display:flex;
-  justify-content: space-around;
-  /* width: ${props => props.width}; */
-`;
 
 const DragCard = styled.div`
   display: flex;
   /* background-color:red; */
 `;
 
-const Gaunt = styled.div`
-  background-color: black;
-`;
+// const Gaunt = styled.div`
+//   background-color: black;
+// `;
 
-var ReactGridLayout = require("react-grid-layout");
+// var ReactGridLayout = require("react-grid-layout");
 
 const styles = {
   display: "flex",
@@ -67,19 +55,33 @@ const StyledFlashcard = styled(Flashcard) `
 
 `
 class UserDashboard extends Component {
+  state = {
+    showModal: false,
+  image: pic,
+  full_name: '',
+  cohort: null }
+  // componentDidMount = () => {
+  //   axios.get('/auth/session')
+  //   .then((res) => {
+  //     console.log(res.data)
+  //     this.props.getUser(res.data)
+  //   })
+  //   return this.props.user
+  // }
+  
   render() {
     //draggable props
     const { compact } = this.props;
     //declaring where everything is positioned.
-    var layout = [
-      { i: "todo", x: 0.5, y: 0, w: 4, h: 2.8, isResizable: false },
-      { i: "flashcard", x: 14, y: 0, w: 4, h: 2, isResizable: false },
-      { i: "weather", x: 18, y: 0, w: 12.5, h: 2, isResizable: false },
-      // { i: "gauntlet", x: 0, y: 3.5, w: 19.3, h: 5.4, isResizable: false, },
-      { i: "twitter", x: 18, y: 0, w: 12.5, h: 3.44, isResizable: false },
-      { i: "trivia", x: 0.5, y: 2, w: 4, h: 1, isResizable: false },
-      { i: "search", x: 14.5, y: 3.5, w: 4, h: 2, isResizable: false }
-    ];
+    // var layout = [
+    //   { i: "todo", x: 0.5, y: 0, w: 4, h: 2.8, isResizable: false },
+    //   { i: "flashcard", x: 14, y: 0, w: 4, h: 2, isResizable: false },
+    //   { i: "weather", x: 18, y: 0, w: 12.5, h: 2, isResizable: false },
+    //   // { i: "gauntlet", x: 0, y: 3.5, w: 19.3, h: 5.4, isResizable: false, },
+    //   { i: "twitter", x: 18, y: 0, w: 12.5, h: 3.44, isResizable: false },
+    //   { i: "trivia", x: 0.5, y: 2, w: 4, h: 1, isResizable: false },
+    //   { i: "search", x: 14.5, y: 3.5, w: 4, h: 2, isResizable: false }
+    // ];
     return (
       <div className="dashboard_main">
         <Header {...this.props} justifyContent="unset">
@@ -114,7 +116,7 @@ class UserDashboard extends Component {
           <Grid item xs={3} style={styles}>
             <TwitterTimelineEmbed
               sourceType="profile"
-              screenName="reactjs"
+              screenName="javascript_fan"
               options={{ height: 400, width: '350px', marginBottom: '30px' }}
               />
 
