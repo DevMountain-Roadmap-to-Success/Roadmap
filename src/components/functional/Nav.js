@@ -4,7 +4,7 @@ import Button from "./Button";
 import { NavLink } from "react-router-dom";
 import {connect} from 'react-redux'
 import {toggleMenu} from '../../ducks/reducer'
-
+import find from '../../assets/find.png'
 
 
 
@@ -42,6 +42,10 @@ const Links = styled.div`
   span {
     color: white;
   }
+  .current {
+        text-decoration-line: solid;
+        text-decoration: underline;
+    }
 `;
 
 const MenuItems = styled.div`
@@ -60,6 +64,10 @@ const MenuItems = styled.div`
       margin-right: 15px;
       font-size: 22px;
   }
+  .current {
+        text-decoration-line: solid;
+        text-decoration: underline;
+    }
 `;
 
 class Nav extends React.Component  {
@@ -75,7 +83,7 @@ class Nav extends React.Component  {
             <nav>LOCATIONS</nav>
             <nav>CONTACT</nav>
             <Button name="FIND YOUR COURSE" />
-            <NavLink to="/login" style={{ color: "#00AAE8", cursor: "pointer" }}>
+            <NavLink activeClass='current' to="/roadmap/login" style={{ color: "#00AAE8", cursor: "pointer" }}>
               STUDENT ROADMAP
             </NavLink>
           </Links>
@@ -84,25 +92,25 @@ class Nav extends React.Component  {
           <MenuItems onClick={this.props.toggleMenu}>
           
             {this.props.children}
-            <NavLink to="/dashboard" onClick={this.props.toggleMenu}>
+            <NavLink  activeClass='current' to="/dashboard" onClick={this.props.toggleMenu}>
               <i className="material-icons">home</i>Dashboard
          </NavLink> 
-            <NavLink to="/calendar">
+            <NavLink  activeClassName='current' to="/dashboard/calendar">
               <i className="material-icons">calendar_today</i>Calendar
             </NavLink>
-            <NavLink to="/resources">
+            <NavLink  activeClassName='current' to="/dashboard/resources">
               <i className="material-icons">local_library</i>Resources
             </NavLink>
-            <NavLink to="/jobprep">
+            <NavLink  activeClassName='current' to="/dashboard/jobprep">
               <i className="material-icons">next_week</i>Job Prep
             </NavLink>
-            <NavLink to='/sandbox'>
+            <NavLink  activeClassName='current' to='/dashboard/sandbox'>
             <i className="fab fa-codepen"></i>
             CodePen
             </NavLink>
-            <NavLink to='/settings'>
-            <i className="material-icons">settings</i>
-              Settings
+            <NavLink  activeClassName='current' to='/dashboard/connect'>
+            <i className="fa fa-address-book"></i>
+             Connect
             </NavLink>
             <span onClick={this.props.logout}>
               {" "}

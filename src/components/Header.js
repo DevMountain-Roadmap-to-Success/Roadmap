@@ -12,6 +12,7 @@ import ProfilePic from './functional/ProfilePic'
 import defaultPic from '../assets/profile.png'
 import SweetAlert from 'react-bootstrap-sweetalert'
 
+
 const StyledHeader = styled.header`
   background-color: ${props => props.background || '#2F3642'};
   height: 80px;
@@ -59,53 +60,67 @@ const Image = styled.img`
 class Header extends React.Component {
   state = {
     dropdown: false,
-    first: '',
-    last: '',
+    full_name: '',
     alert: false,
+    edit: false,
+    successAlert: false,
+    warningAlert: false,
+
   }
 componentDidMount = (props) => {
-  console.log(this.props)
-  let {first_name, last_name} = this.props.user
-  this.setState({first: first_name, last: last_name})
+
+  let {full_name} = this.props.user
+  this.setState({full_name: full_name})
+}
+toggleOpen = () => {
+  this.setState(prevState => {
+    return { dropdown: !prevState.dropdown}
+  })
 }
 
+toggleAlert = () => {
+   this.setState(prevState => { return {alert: !prevState.alert,
+    dropdown: !prevState.dropdown}})
+}
+  deleteAccount = () => {
+    axios.delete('/api/delete')
+    .then((res) => {
+      if(res.status === 200){
+        return this.props.history.push('/')
+      }
+    } )
+  }
+  showAlert = () => {
+    if(this.state.alert){
+      return (
+        <SweetAlert 
+        warning
+        showCancel
+        confirmBtnText="Yes, delete it!"
+        confirmBtnBsStyle="danger"
+        cancelBtnBsStyle="default"
+        title="Are you sure?"
+        onConfirm={this.deleteAccount}
+        onCancel={this.toggleAlert}
+    >
+        You will not be able to recover your account
+    </SweetAlert>
+      )
+    }
+  }
   
   logout = () => {
     axios.get('/api/logout')
-    .then(() => this.props.history.push('/login'))
-  }
-  toggleAlert = () => {
-    this.setState(prevState => {
-      return { alert: !prevState.alert}
+    .then(() => {
+      this.toggleOpen()
     })
+    return this.props.history.push('/roadmap/login') 
   }
-
-  deleteWarning = () => {
-    return this.state.alert ? (
-    <SweetAlert 
-    warning
-    showCancel
-    confirmBtnText="Yes, delete it!"
-    confirmBtnBsStyle="danger"
-    cancelBtnBsStyle="default"
-    title="Are you sure?"
-    onConfirm={this.delete}
-    onCancel={this.toggleAlert}
->
-    You will not be able to recover your account
-</SweetAlert>
-    ) : ( null )
-  }
-  delete = () => {
-    axios.delete('/api/account')
-    .then(() => this.props.history.push('/'))
-  }
-toggleOpen = () => {
-  this.setState(prevState => { return { dropdown: !prevState.dropdown }})
-}
+  
   render(){
+    console.log(this.state)
   const {toggleMenu} = this.props
-  const { first_name, last_name, image } = this.props.user
+  const { full_name, image } = this.props.user
 
   return (
     <>
@@ -121,6 +136,8 @@ toggleOpen = () => {
         <img src={menu} onClick={() => toggleMenu(this.props.open)} className='menu-icon' alt=''/>      
         {this.props.children} 
        <ProfilePic {...this.props}
+
+       editProfile={this.toggleEdit}
        delete={this.toggleAlert} 
        logout={this.logout}
        dropdown={this.state.dropdown}>
@@ -132,7 +149,7 @@ toggleOpen = () => {
               style={{ width: "60px", height: "60px", marginLeft: 0 }}
             />
 
-            <p  style={{textTransform: 'uppercase'}} >{`${first_name} ${last_name}`}</p>
+            <p  style={{textTransform: 'uppercase'}} >{`${full_name}`}</p>
             <i onClick={this.toggleOpen}
               className="material-icons"
               style={{ marginTop: "18px" }}
@@ -142,7 +159,8 @@ toggleOpen = () => {
           
           </ProfilePic >
           </> }
-          {this.deleteWarning()}
+
+              {this.showAlert()}
     </StyledHeader>
     <SideBar isOpen={this.props.open} >
     <Nav logout={this.logout}/>

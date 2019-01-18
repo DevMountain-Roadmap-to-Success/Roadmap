@@ -1,4 +1,5 @@
 import React from "react";
+import {unmountComponentAtNode} from 'react-dom'
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import "react-day-picker/lib/style.css";
 import {addTask, getTasks} from '../../ducks/reducer'
@@ -94,7 +95,15 @@ class EditTask extends React.Component {
     this.setState({ priority: val });
   };
   
-
+  finalize = (input, time, selectedDay, description, priority ) => {
+    const {todo} = this.props
+    if(todo.task_id){
+     this.props.save(input, time, selectedDay, description, priority, todo.task_id ) 
+    } else {
+    this.props.makeActivity(input, time, selectedDay, description, priority)
+  }
+  return unmountComponentAtNode
+}
  
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -183,7 +192,7 @@ class EditTask extends React.Component {
         <div style={{display: 'flex', justifyContent: 'space-evenly', width: '100%'}}>
  
   <EditButton name='Cancel' onClick={this.props.toggle}/>
-  <EditButton name="Add to Calendar" onClick={todo.task_id ? () => this.props.save(input, time, selectedDay, description, priority, todo.task_id ) : () => this.props.makeActivity(input, time, selectedDay, description, priority)} /></div>
+  <EditButton name="Add to Calendar" onClick={this.finalize} /></div>
 </>
     );
   }

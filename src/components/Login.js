@@ -1,13 +1,15 @@
-import React from "react";
-import styled from "styled-components";
-import Button from "./functional/Button";
-import Modal from "./functional/Modal";
-import Form from "./functional/Form";
-import Input from "./functional/Input";
-import axios from "axios";
+import React from 'react'
+import styled from 'styled-components'
+import Modal from './functional/Modal'
+import axios from 'axios'
+import Button from './functional/Button'
+import LoginForm from './LoginForm'
 import {Link } from 'react-router-dom'
 import {connect} from 'react-redux'
 import {getUser} from '../ducks/reducer'
+
+import {withRouter} from 'react-router'
+
 import {inputCheck, accountCheck} from './../Tests/Logic/logic_Jared';
 
 
@@ -19,9 +21,7 @@ const LoginModal = styled(Modal)`
   height: 35vw;
   width: 55vw;
   background-repeat: no-repeat;
-  /* @media (max-width: 1500px){
-    background-size: 126%;
-  } */
+
   @media (max-width: 1100px){
     position: relative;
     background-image: none;
@@ -130,70 +130,72 @@ const LoginButton = styled(Button)`
   }
   
 `
-const LoginForm = styled(Form)`
-  width: 100%;
-  height: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  @media(max-width: 1100px){
-    height: 60%;
-  }
-`;
 
 
 
- class Login extends React.Component {
-    state = {
-      disabled: true,
-      email: "",
-      password: "",
-      first_name: "",
-      last_name: "",
-      error: ''
-    };
-  
 
-    getValidationState() {
-      const length = this.state.email.length && this.state.password.length
-      if (length > 5) return 'success';
-      else if (length > 0) return 'error';
-      return null;
+class Login extends React.Component {
+  state = {
+    disabled: true,
+    email: "",
+    password: "",
+    full_name: "",
+    cohort: null,
+    error: ''
+  };
+
+  componentDidMount = () => {
+    if(localStorage.getItem('email')){
+      this.setState({email: localStorage.getItem('email') })
+    } else {
+      return null
     }
-  
-    signup = () => {
-      const { email, password, first_name, last_name } = this.state;
-      console.log(first_name, last_name, email, password);
-      axios
-        .post("/auth/signup", {
-          first_name: first_name,
-          last_name: last_name,
-          email: email,
-          password: password
-        })
-        .then(res => {
-          if (res.status === 200) {
-            this.props.history.push("/dashboard");
-          } 
-        });
-    };
+  }
+  getValidationState() {
+    const length = this.state.email.length && this.state.password.length
+    if (length > 5) return 'success';
+    else if (length > 0) return 'error';
+    return null;
+  }
+
+
+  signup = () => {
+    const { email, password } = this.state;
+    axios
+      .post("/auth/signup", {
+        email: email,
+        password: password
+      })
+      .then(res => {
+       if (res.status === 200) {
+          localStorage.setItem('email', email)
+          this.props.getUser(res.data)
+
+          this.props.history.push(`/%2Froadmap%2Fprofile`);
+
+        }
+    })
+  }
 
     login = () => {
       const { email, password } = this.state;
       // console.log(email, password)
-      axios.post("/auth/login", { email, password }).then(res => {
-        if (res.status === 200) {
+      axios.post("/auth/login", { email, password })
+        .then(res => {
+       if (res.status === 200) {
+          localStorage.setItem('email', email)
           this.props.getUser(res.data)
-          // console.log(res.data)
-          this.props.history.push("/dashboard");
-        } else if(!res){
+
+           this.props.history.push("/dashboard");
+        } else if(res.status === 403){
+
           alert({error: 'account not found'})
           accountCheck()
         }
+
       });
-    };
+  };
+
 
     handleInput = e => {
       
@@ -202,10 +204,8 @@ const LoginForm = styled(Form)`
     };
   
 
-    render() {
-      console.log(this.state.error);
-      return (
-
+    render(){
+    return (
         <LoginModal>
         
         <Link to='/'> <i
@@ -214,6 +214,7 @@ const LoginForm = styled(Form)`
               alt=""
               width="15px"
               height="15px"
+              
 
             /></Link>
           <div className='login-wrapper'>
@@ -237,83 +238,33 @@ const LoginForm = styled(Form)`
             </h1>
           
           </header>
-          <LoginForm validationState={this.getValidationState()}>
-              {!this.state.disabled ? (
-                <div style={{marginBottom: '20px', justifyContent: 'center', display: 'flex', flexDirection: 'column', alignItems:  'center'}}>
-                <div className='input-icon'  style={{marginBottom: '5px', display: 'flex', alignItems: 'center'}} >
-                <i className='glyphicon glyphicon-user' style={{borderRight: 'thin solid grey', height:'15px', width:'20px', color: 'grey', paddingRight: '23px'}}></i>
-                  <Input
-                    value={this.state.first_name}
-                    placeholder="First Name"
-                    name="first_name"
-                    onChange={this.handleInput}
-                  />
-                  <Input
-                    value={this.state.last_name}
-                    placeholder="Last Name"
-                    name="last_name"
-                    onChange={this.handleInput}
-                  /></div>
-                   <div className='input-icon' style={{marginBottom: '5px'}} >
-                   <i className='glyphicon glyphicon-envelope' width='20px' height='15px' style={{borderRight: 'thin solid #279DFF', color: '#279DFF'}}></i>
-                  <Input
-                    value={this.state.email}
-                    placeholder="Email"
-                    type="email"
-                    name="email"
-                    onChange={this.handleInput}
-                  /></div>
-                   <div className='input-icon'  >  <i className='glyphicon glyphicon-lock' style={{borderRight: 'thin solid grey', color: 'grey'}}></i>
-                  <Input
-                   value={this.state.password}
-                    placeholder="Password"
-                    type="password"
-                    name="password"
-                    onChange={this.handleInput}
-                  /></div>
-                </div>
-              ) : (
-                <>
-                <div className='input-icon'  style={{marginBottom: '20px'}}>
-                <i className='glyphicon glyphicon-envelope' width='20px' height='15px' style={{borderRight: 'thin solid #279DFF', color: '#279DFF'}}></i>
-                  <Input
-                    placeholder="Email"
-                    type="email"
-                    name="email"
-                    onChange={this.handleInput}
-                  /></div>
-                  <div className='input-icon'>
-                  <i className='glyphicon glyphicon-lock' style={{borderRight: 'thin solid grey', color: 'grey'}}></i>
-                  <Input
-                    placeholder="Password"
-                    type="password"
-                    name='password'
-                    value={this.state.value}
-                    onChange={this.handleInput}
-                  /></div>
-         
-                </>
-
-              )
-            }
-        </LoginForm>
+          <LoginForm 
+          email={this.state.email}
+          password={this.state.password}
+          full_name={this.state.full_name}
+          cohort={this.state.cohort}
+          onChange={this.handleInput}
+          disabled={this.state.disabled}
+          validate={this.getValidationState}/>
      <LoginButton
-                name={this.state.disabled ? "LOGIN" : "SIGN UP"}
-                onClick={this.state.disabled ?  () => this.login() : () => this.signup()  }
-              />
+         name={this.state.disabled ? "LOGIN" : "SIGN UP"}
+         onClick={this.state.disabled ?  () => this.login() : () => this.signup()  }
+       />
 
-          </div>
-          <p style={{color: 'red'}}>{this.state.error}</p>
-  
-     
-       </LoginModal>
+   <p style={{color: 'red'}}>{this.props.error}</p>
+    
 
-      );
-          }
-  };
+
+     </div>
+          </LoginModal>
+    )
+}
+}
+
 const mapStateToProps = state => {
   return {
     user: state.user
   }
 }
-export default connect(mapStateToProps, {getUser})(Login);
+export default withRouter(connect(mapStateToProps, {getUser})(Login));
+

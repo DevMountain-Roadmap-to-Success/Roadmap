@@ -92,7 +92,7 @@ class TodoList extends Component {
   }
   renderLoading = () => {
    if(this.state.isLoading){
-   return <ReactLoading type='spokes' color='black'/> 
+   return <div style={{marginTop: '30%'}}><ReactLoading type='spokes' color='black' /></div> 
     }
   }
 

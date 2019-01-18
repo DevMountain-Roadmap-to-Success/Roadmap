@@ -1,8 +1,78 @@
 import styled from 'styled-components'
 import NavLink from './functional/Nav'
 import background from '../assets/background.jpg'
-// import paper from '../assets/note.png'
+import Modal from './functional/Modal'
+export const Box = styled.div `
+    width: 60%;
+    height: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border: thin solid lightgray;
+  
 
+`
+export const PictureBox = styled.div`
+        box-shadow: ${props => props.shadow || '0px 2px 2px 1px rgb(190, 190, 190)'};
+        width:${props => props.width ||   '210px'};
+        height:${props => props.height ||  '210px'};
+        content: contain;
+        position: relative;
+        border-radius: ${props => props.borderRadius};
+        img {
+        width: 100%;
+        height: 100%;
+        border-radius: ${props => props.borderRadius};
+        
+    }
+    i {
+      /* position: absolute; */
+
+      bottom: 5%;
+      z-index: 1000;
+    }
+    `
+export const Profile = styled.div`
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+    h1 {
+        font-size: 40px;
+        font-weight: bold;
+    }
+`
+
+
+export const ProfileModal = styled(Modal)`
+    width: 400px;
+    height: ${props => props.height || '200px'};
+
+    .button {
+        display: flex;
+        width: 100%;
+        justify-content: space-evenly;
+    }
+    i{
+        position: absolute;
+        right: 5px;
+        top: 5px;
+    }
+    input {
+        margin: 10px;
+    }
+    h1 {
+      font-size: 26px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    h3 {
+      text-align: left;
+      width: 80%;
+      margin-bottom: 10px;
+    }
+`
 //landing
 export const Container = styled.div`
   background-image: url(${background});
