@@ -16,7 +16,6 @@ massive(CONNECTION_STRING).then(db => {
     console.log('database connected')
   }).catch(err => console.log(err, 'connection error'))
   
-  app.use( express.static( `${__dirname}/../build`)) 
 
   app.use(bodyParser.json())
   
@@ -95,6 +94,8 @@ app.get('/api/everyone', friends_ctrl.all_students)
 
 
 const Port = SERVER_PORT || 4000
+
+  app.use( express.static( `${__dirname}/../build`)) 
 
 
 app.listen(Port, () => {console.log(`Server is listening on ${SERVER_PORT}`)})
