@@ -24,7 +24,7 @@ class JobPrep extends Component {
 
     var layout = [
       { i: "flashcard", x: 20, y: 0, w: 12.5, h: 3.44, isResizable: false },
-      { i: "gauntlet", x: 0, y: 0, w: 19.3, h: 5.4, isResizable: false, }
+      { i: "gauntlet", x: 4, y: 0, w: 19.3, h: 5.4, isResizable: false, }
     ]
 
     return (
@@ -43,9 +43,9 @@ class JobPrep extends Component {
         >
           {/* <Div className="page"> */}
 
-          <Drag key='flashcard' className='testBox'>
+          {/* <Drag key='flashcard' className='testBox'>
             <Flashcard />
-          </Drag>
+          </Drag> */}
 
 
           <Gaunt key='gauntlet'>

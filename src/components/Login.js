@@ -8,6 +8,7 @@ import axios from "axios";
 import {Link } from 'react-router-dom'
 import {connect} from 'react-redux'
 import {getUser} from '../ducks/reducer'
+import {inputCheck, accountCheck} from './../Tests/Logic/logic_Jared';
 
 
 
@@ -181,13 +182,15 @@ const LoginForm = styled(Form)`
 
     login = () => {
       const { email, password } = this.state;
-      console.log(email, password)
+      // console.log(email, password)
       axios.post("/auth/login", { email, password }).then(res => {
         if (res.status === 200) {
           this.props.getUser(res.data)
           this.props.history.push("/dashboard");
-        } else if(!res){
+        } else if(res.status === 403){
           alert({error: 'account not found'})
+          console.log(res);
+          accountCheck(res.status)
         }
       });
     };
@@ -195,6 +198,7 @@ const LoginForm = styled(Form)`
     handleInput = e => {
       
       this.setState({ [e.target.name ]: e.target.value });
+      inputCheck(e.target.name);
     };
   
 
