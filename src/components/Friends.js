@@ -4,17 +4,14 @@ import axios from 'axios'
 import Button from './functional/Button';
 import {PictureBox} from './Styles'
 import pic from '../assets/person.png'
-import { withStyles } from '@material-ui/core/styles';
 import Input from './functional/Input'
 import Header from './Header';
 import search from '../assets/search.png'
-import SearchInput, { createFilter } from 'react-search-input'
-import ProfileForm from './ProfileForm';
 import Message from './Message';
 
-const KEYS_TO_FILTER = ['full_name']
 
-const StyledInput = styled(SearchInput)`
+
+const SearchInput = styled(Input)`
     width: 30%;
     background-image: url(${search});
     background-repeat: no-repeat;
