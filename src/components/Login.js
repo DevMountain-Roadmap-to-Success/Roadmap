@@ -200,7 +200,7 @@ const LoginForm = styled(Form)`
       this.setState({ [e.target.name ]: e.target.value });
       inputCheck(e.target.name);
     };
-  
+    
 
     render() {
       console.log(this.state.error);
