@@ -1,15 +1,23 @@
 import React from 'react'
 import Login from './Login'
 import {Container} from './Styles'
+import ProfileForm from './ProfileForm'
+
 
 
 
 const Home = (props) => {
-          return (
+    console.log(props)
+          return props.login === 'login'? (
               <Container>
                   <Login {...props}/>
-
+                  
               </Container>
+
+          ) : (
+            <Container>
+          <ProfileForm {...props}/>
+          </Container>
           )
       }
 

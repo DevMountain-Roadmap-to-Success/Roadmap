@@ -10,6 +10,7 @@ export const Menu = styled.menu`
     top: ${props => props.top || "50px"};
     right: ${props => props.right || "3%"};
     color: black;
+    text-decoration-color:rgb(150, 150, 150); 
     border-radius: 3px;
     box-shadow: 0 1px 1px 0 rgb(135, 135, 165);
 
@@ -17,6 +18,11 @@ export const Menu = styled.menu`
      list-style: none;
      text-align: left;
      line-height: 30px;
+    }
+    .current {
+        color: rgb(150, 150, 150);
+        text-decoration-line: solid;
+        text-decoration: underline;
     }
 `
 
