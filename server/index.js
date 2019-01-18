@@ -41,7 +41,6 @@ massive(CONNECTION_STRING).then(db => {
 app.post('/auth/login', async (req, res, next) => {
   const dbInstance = req.app.get('db')
   const { email, password } = req.body
-
   // console.log(email, password)
 
     let user = await dbInstance.check_user(email)        

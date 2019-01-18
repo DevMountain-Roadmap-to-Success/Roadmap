@@ -14,7 +14,6 @@ import {inputCheck, accountCheck} from './../Tests/Logic/logic_Jared';
 
 
 
-
 const LoginModal = styled(Modal)`
   background-image: url('http://www.siliconvalley.ninja/wp-content/uploads/2018/04/success-roadmap.png');
   background-size: 117%;
@@ -204,7 +203,6 @@ class Login extends React.Component {
     };
   
 
-  
     render(){
     return (
         <LoginModal>
