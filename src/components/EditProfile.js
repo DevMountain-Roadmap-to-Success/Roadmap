@@ -90,7 +90,7 @@ toggleAlert = () => {
         axios.post('/api/profile/update', { image } )
         .then((res) => {
             if(res.status === 200){
-                this.props.getUser(res.data[0])
+                this.props.getUser(res.data)
                 this.setState({hasImage: true, image: res.data[0].image, full_name: res.data[0].full_name})
                 
 
@@ -207,7 +207,7 @@ toggleAlert = () => {
             <Box  {...this.props}>
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
         <PictureBox>
-         <img src={this.state.image} alt='picture' />
+         <img src={this.props.user.image} alt='picture' />
          </PictureBox>
          { !this.state.userImage ? (
              <>

@@ -60,14 +60,14 @@ class UserDashboard extends Component {
   image: pic,
   full_name: '',
   cohort: null }
-  componentDidMount = () => {
-    axios.get('/auth/session')
-    .then((res) => {
-      console.log(res.data)
-      this.props.getUser(res.data)
-    })
-    return this.props.user
-  }
+  // componentDidMount = () => {
+  //   axios.get('/auth/session')
+  //   .then((res) => {
+  //     console.log(res.data)
+  //     this.props.getUser(res.data)
+  //   })
+  //   return this.props.user
+  // }
   
   render() {
     //draggable props
