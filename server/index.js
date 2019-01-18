@@ -16,6 +16,7 @@ massive(CONNECTION_STRING).then(db => {
     console.log('database connected')
   }).catch(err => console.log(err, 'connection error'))
   
+  app.use( express.static( `${__dirname}/../build`)) 
 
   app.use(bodyParser.json())
   
