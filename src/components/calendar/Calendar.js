@@ -74,9 +74,10 @@ class Calendar extends Component {
       endOfWeek: "",
       edit: false,
       activity: "",
-      id: null,
+      id: 1,
       tasks: [],
-      day: moment().format('YYYY-MM-DD')
+      day: moment().format('YYYY-MM-DD'),
+      time: '09:00'
     };
   }
   
@@ -98,7 +99,8 @@ class Calendar extends Component {
     })
   }
 
-  makeActivity = (input, time, date, description, priority) => {
+  makeActivity = (input, time, date, description, priority, e) => {
+    e.preventDefault(e)
     let newDate = moment(date).format("YYYY-MM-DD");
     let newTime = moment(time, "h").format("h:mm A");
     axios
@@ -114,8 +116,8 @@ class Calendar extends Component {
       });
   };
 
-  handleSave = (input, time, date, description, priority, id) => {
-    console.log(date)
+  handleSave = (input, time, date, description, priority, id, e) => {
+    e.preventDefault()
     let newDate = moment(date).format("YYYY-MM-DD");
     let newTime = moment(time, "h").format("h:mm A");
     axios
@@ -174,7 +176,7 @@ class Calendar extends Component {
             toggle={this.toggleEdit}
             time={this.state.time}
             updateTask={this.updateTask}
-            makeActivity={this.makeActivity}
+            create={this.makeActivity}
           />
         </EditModal>
       ) : (
@@ -189,11 +191,10 @@ class Calendar extends Component {
       time: time,
       selectedDay: day
     });
-    return this.props.allTasks.map(task => {
+   return this.props.allTasks.map(task => {
       if (task.task_id === id) {
-       this.props.addTask(task);
+        return this.props.addTask(task)
       }
-      return task
     });
   };
   toggle = () => {
@@ -203,12 +204,12 @@ class Calendar extends Component {
     });
   };
   renderDayView = () => {
-    var day = moment(this.state.date)._d;
-    day = moment(day).format("YYYY-MM-DD");
+    // var day = moment(this.state.date)._d.format('YYYY-MM-DD');
+    // // day = moment(day).format("YYYY-MM-DD");
     return this.state.weekDays.map((day, i) => {
       return (
         <DayView
-        task={this.state.task}
+          task={this.state.task}
           refresh={this.refreshActivity}
           tasks={this.state.tasks}
           edit={this.state.edit}

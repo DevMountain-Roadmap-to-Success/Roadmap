@@ -23,41 +23,28 @@ class EditTask extends React.Component {
     calendarAdd: false,
     checked: { color: "blue" },
     priority: 4,
-    selectedDay: moment().format('YYYY-MM-DD'),
+    date: moment().format('YYYY-MM-DD'),
     time: '09:00',
     input: '',
     description: ''
   };
 
   componentWillReceiveProps = (nextProps) => {
-    if(nextProps !== this.props){
-      this.setState(this.props)
+    if(nextProps.task !== this.props.todo.task){
+      this.setState({date: this.props.selectedDay,  time: moment(this.props.time, 'h:mm A').format('HH:mm'), })
+      
     }
   }
   componentDidMount = () => {
-    console.log(this.state)
+    console.log( this.props.time)
     const {todo} = this.props
-    if(todo.time){
-      var time = todo.time
-    } else {
-      time = this.state.time
+    if(todo){
+    this.setState({ input: todo.task, priority: todo.priority,  decription: todo.description })
+  } else {
+    return;
     }
-    let newTime = moment(time, 'h:mm A').format('HH:mm')
-    if(todo.task ){
-      var task = todo.task
-    } else {
-      task = ''
-    }
-    
-    if(todo.priority){
-     var priority = todo.priority
-    } else {
-      priority = this.state.priority
-    }
-      this.setState({selectedDay: this.props.selectedDay, input: task, time: newTime, priority: priority})
-  
-}
-
+  }
+ 
   toggleEditState = () => {
     this.setState(prevState => {
       return { edit: !prevState.edit };
@@ -78,7 +65,7 @@ class EditTask extends React.Component {
   };
 
   handleDayChange = e => {
-    this.setState({ selectedDay: moment(e).format('YYYY-MM-DD') });
+    this.setState({ date: moment(e).format('YYYY-MM-DD') });
   };
   selectSubject = e => {
     console.log(e.target.name);
@@ -95,24 +82,15 @@ class EditTask extends React.Component {
     this.setState({ priority: val });
   };
   
-  finalize = (input, time, selectedDay, description, priority ) => {
-    const {todo} = this.props
-    if(todo.task_id){
-     this.props.save(input, time, selectedDay, description, priority, todo.task_id ) 
-    } else {
-    this.props.makeActivity(input, time, selectedDay, description, priority)
-  }
-  return unmountComponentAtNode
-}
  
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
   render() {
     console.log(this.state, this.props)
-    const {input, selectedDay, time, description, priority} = this.state
+    const {input, date, time, description, priority} = this.state
     const FORMAT = "M/D/YYYY";
-    const { todo } = this.props;
+    const { todo, save, create, id} = this.props;
 
 
     return (
@@ -120,16 +98,13 @@ class EditTask extends React.Component {
           
           <Main>
            
-            <Subject
-              
-              aria-label="Type:"
-            >
+            <Subject {...this.props} >
               
               <span className="type">
                 Job Prep
                 <Radio
                 onChange={e => this.selectSubject(e)}
-                  checked={this.state.priority === 1}
+                  checked={priority === 1}
                   type="radio"
                   name="job prep"
                   value={1}
@@ -139,7 +114,7 @@ class EditTask extends React.Component {
                 Practice Code
                 <Radio
                 onChange={e => this.selectSubject(e)}
-                  checked={this.state.priority === 2}
+                  checked={priority === 2}
                   type="radio"
                   name="practice"
                   value={2}
@@ -149,7 +124,7 @@ class EditTask extends React.Component {
                 Portfolio{" "}
                 <Radio
                 onChange={e => this.selectSubject(e)}
-                  checked={this.state.priority === 3}
+                  checked={priority === 3}
                   name="portfolio"
                   value={3}
                 />
@@ -158,7 +133,7 @@ class EditTask extends React.Component {
                 Other{" "}
                 <Radio
                 onChange={e => this.selectSubject(e)}
-                  checked={this.state.priority === 4}
+                  checked={priority === 4}
                   name="other"
                   value={4}
                 />
@@ -170,21 +145,21 @@ class EditTask extends React.Component {
               onChange={e => this.handleChange(e)}
               name="input"
               placeholder="Task name.."
-              value={this.state.input}
+              value={input}
             />
-            <textarea onChange={(e) => this.handleChange(e)} name='description' value={todo.description ? todo.description : this.state.description} placeholder='Additional Notes... '/>
+            <textarea onChange={(e) => this.handleChange(e)} name='description' value={todo.description ? todo.description : description} placeholder='Additional Notes... '/>
 
             <Date>
               {" "}
               Pick a due date:
               <DayPickerInput
-               value={selectedDay}
-                name="selectedDay"
+               value={date}
+                name="date"
                 onDayChange={this.handleDayChange}
                 format={FORMAT}
               />
             </Date>
-            <TimePicker value={this.state.time} onChange={this.handleTime} />
+            <TimePicker value={time} onChange={this.handleTime} />
           
             </EditWrap>
           </Main>
@@ -192,7 +167,7 @@ class EditTask extends React.Component {
         <div style={{display: 'flex', justifyContent: 'space-evenly', width: '100%'}}>
  
   <EditButton name='Cancel' onClick={this.props.toggle}/>
-  <EditButton name="Add to Calendar" onClick={this.finalize} /></div>
+  <EditButton name="Add to Calendar" onClick={id > 2 ? (e) => save(input, time, date, description, priority, id, e) : (e) => create(input, time, date, description, priority, e) } /></div>
 </>
     );
   }

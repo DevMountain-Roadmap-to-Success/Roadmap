@@ -108,7 +108,7 @@ class Nav extends React.Component  {
             <i className="fab fa-codepen"></i>
             CodePen
             </NavLink>
-            <NavLink  activeClassName='current' to='/dashboard/connect'>
+            <NavLink  activeclassName='current' to='/dashboard/connect'>
             <i className="fa fa-address-book"></i>
              Connect
             </NavLink>

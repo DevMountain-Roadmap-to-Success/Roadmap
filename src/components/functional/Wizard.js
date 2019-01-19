@@ -34,6 +34,12 @@ const KeyCard = styled(Card)`
   flex-direction: column;
   position: relative;
   padding: 15px;
+  .create {
+    font-size: 18px;
+    font-weight: bolder;
+    padding-left: 10px;
+
+  }
 `;
 const KeyTypes = styled.div`
   margin-top: 10%;
@@ -44,6 +50,7 @@ const KeyTypes = styled.div`
     width: 20px;
     border-radius: 50%;
     margin-right: 10px;
+    display: flex;
   }
 
   span {
@@ -53,6 +60,7 @@ const KeyTypes = styled.div`
     font-size: 16px;
     height: 70px;
     position: relative;
+
     @media(max-width: 1350px){
       font-size: 13px;
     }
@@ -61,6 +69,7 @@ const KeyTypes = styled.div`
     }
  
   }
+ 
   h1 {
     font-size: 18px;
     font-weight: bold;
@@ -210,7 +219,7 @@ There is no better way to learn than to build things. Employers also love when y
               />
            
             </Fab>
-            <span>Add a task to Calendar</span>
+            <span className='create'>Add Schedule</span>
          </div>
         </KeyCard>
       </WizardBox>

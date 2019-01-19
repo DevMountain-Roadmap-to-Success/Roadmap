@@ -65,7 +65,7 @@ app.get('/api/logout', ctrl.logout)
   app.post('/sendEmail', nodemailer.weekly_mail)
   app.post('/api/message', nodemailer.message)
   app.delete('/api/delete', nodemailer.delete_account)
-  app.post('/api/profile/update', ctrl.update_profile)
+  app.post('/api/update', ctrl.update_profile)
   app.put('/api/update/:id', ctrl.update_info )
   app.put('/auth/password', ctrl.update_password)
   //todolist
