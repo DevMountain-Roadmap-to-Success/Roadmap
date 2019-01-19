@@ -41,7 +41,6 @@ class EditProfile extends React.Component {
     showValidation: false,
     changePassword: false,
     successAlert: false,
-    warningAlert: false,
     showInputs: false,
     confirmPassword: '',
     image: this.props.user.image,
@@ -84,22 +83,23 @@ toggleAlert = () => {
 }
 
 
-    update = (e) => {
-        e.preventDefault();
-      const {image} = this.state
-        axios.post('/api/profile/update', { image } )
-        .then((res) => {
-            if(res.status === 200){
-                this.props.getUser(res.data)
-                this.setState({hasImage: true, image: res.data[0].image, full_name: res.data[0].full_name})
+    // updateImage = () => {
+    //   const image = this.state.input
+    //   console.log(this.state.input)
+    //     axios.post('/api/update', { image } )
+    //     .then((res) => {
+    //         if(res.status === 200){
+    //             console.log(res.data)
+    //             this.props.getUser(res.data[0])
+    //             this.setState({hasImage: true, image: res.data[0].image, full_name: res.data[0].full_name})
                 
 
 
-            } else {
-                return this.setState({error: 'Something Went Wrong'})
-            }
-        })
-    }
+    //         } else {
+    //             return this.setState({error: 'Something Went Wrong'})
+    //         }
+    //     })
+    // }
 
     checkPassword = () => {
         const {email} = this.state
@@ -116,9 +116,9 @@ toggleAlert = () => {
     }
    
 
-    handleChange = (e) => {
-        console.log( e.target.name, e.target.value)
-        this.setState({ [e.target.name ]: e.target.value })
+    handleChange = (value) => {
+
+        this.setState({ input: value, image: value })
     }
 
  
@@ -207,19 +207,24 @@ toggleAlert = () => {
             <Box  {...this.props}>
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
         <PictureBox>
+            {this.state.image ? 
+            <img src={this.state.image} />
+            :
          <img src={this.props.user.image} alt='picture' />
+            }
+         
+         
          </PictureBox>
          { !this.state.userImage ? (
              <>
-               <StyledInput
+               <input
                style={{width: '100%', height: '25px', marginTop: '5px'}}
                placeholder='Image Url' 
                value={this.state.input}
-               name='image' 
-               onChange={this.handleChange}
+               onChange={(e) => this.handleChange(e.target.value)}
                />
                <span>{this.state.error}</span>
-               <MenuButton onClick={this.update} name='Save'/>
+               <MenuButton onClick={this.updateImage} name='Save'/>
                </>
          ) : (
          <MenuButton onClick={() => this.setState({userImage:!this.state.userImage})} name='Edit Picture'/>

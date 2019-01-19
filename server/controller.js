@@ -19,7 +19,9 @@ module.exports = {
     var { image } = req.body
 
     dbInstance.update_profile(image, req.session.user.user_id)
-    .then((data) => res.status(200).send(data))
+    .then((data) => {
+      console.log(data)
+      res.status(200).send(data)})
   },
   update_info: (req, res) => {
     const db = req.app.get("db");

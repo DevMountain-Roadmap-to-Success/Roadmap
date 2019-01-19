@@ -121,7 +121,6 @@ toggleAlert = () => {
   }
   
   render(){
-    console.log(this.state)
   const {toggleMenu} = this.props
   const { full_name, image } = this.props.user
 

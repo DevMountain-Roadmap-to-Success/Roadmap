@@ -3,7 +3,6 @@ import { withRouter } from "react-router";
 import pic from '../assets/profile.png'
 //redux
 import { connect } from "react-redux";
-import axios from 'axios'
 import { getUser } from "../ducks/reducer";
 // import { getPosition } from './../ducks/reducer';
 
@@ -31,19 +30,6 @@ const GridBox = styled.div`
   } */
 `
 const Grid = styled.div``
-
-
-
-const DragCard = styled.div`
-  display: flex;
-  /* background-color:red; */
-`;
-
-// const Gaunt = styled.div`
-//   background-color: black;
-// `;
-
-// var ReactGridLayout = require("react-grid-layout");
 
 const styles = {
   display: "flex",
@@ -75,7 +61,6 @@ class UserDashboard extends Component {
   
   render() {
     //draggable props
-    const { compact } = this.props;
     //declaring where everything is positioned.
     // var layout = [
     //   { i: "todo", x: 0.5, y: 0, w: 4, h: 2.8, isResizable: false },

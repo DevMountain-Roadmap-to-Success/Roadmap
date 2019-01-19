@@ -9,21 +9,6 @@ import Header from './Header';
 import search from '../assets/search.png'
 import Message from './Message';
 
-
-
-const SearchInput = styled(Input)`
-    width: 30%;
-    background-image: url(${search});
-    background-repeat: no-repeat;
-    background-size: 25px;
-    text-indent: 30px;
-    background-position-y: 5px;
-    border-radius: 2px;
-    margin: 3%;
-    border: thin solid lightgrey;
-
-`
-
 const FriendContainer = styled.section`
     width: 80%;
     height: 100vh;
@@ -99,7 +84,6 @@ font-size: 14px;
     }
        showFriends() {
            let friends = this.state.friends
-           let user_id = this.state.user_id
            let friend = []
            if (this.state.friends && this.state.friends.length > 0) {
                for (let i in friends) {
