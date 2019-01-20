@@ -1,4 +1,5 @@
-import {GET_USER, GET_TASKS, TOGGLE_MENU, GET_POSITION, TOGGLE_ALERT} from './constants'
+import {GET_USER, GET_TASKS, TOGGLE_MENU, GET_POSITION, TOGGLE_ALERT, ADD_TASK} from './constants'
+import axios from 'axios';
 
 const initialState = {
     user: {},
@@ -9,7 +10,11 @@ const initialState = {
     alert: false,
 
 };
-const ADD_TASK = 'ADD_TASK'
+export const fetchUserData = () => {
+    axios.get('/api/session')
+    .then((res) =>  getUser(res.data[0]))
+}
+
 
 export default function reducer (state=initialState, action){
     switch(action.type) {
@@ -33,9 +38,10 @@ export default function reducer (state=initialState, action){
         default: return state;
     }
 };
+
+export const getUser = user => ({type: GET_USER, payload: user })
 export const addTask = todo => ({type: ADD_TASK, payload: todo})
 export const getPosition = (array) => ({type: GET_POSITION, payload: array})
-export const getUser = user => ({type: GET_USER, payload: user })
 export const getTasks = allTasks => ({type: GET_TASKS, payload: allTasks})
 export const toggleMenu = open => ({type: TOGGLE_MENU, payload: !open})             
 export const toggleAlert = edit => ({type: TOGGLE_ALERT, payload: !edit})

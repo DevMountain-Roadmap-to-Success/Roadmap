@@ -70,19 +70,15 @@ class TimeSlot extends Component {
     let date = moment(this.props.date).format("MM/DD/YY");
 //UNIT TEST
     checkDateFormat(date)
-
+    
     let time = this.props.time;
     this.setState({date: date, time: time })
-  //   return this.fetchData(date, time)
-  // };
-
-  
-  // fetchData = (date, time) => {
-  //   // const {date, time} = this.state
     axios.post('/api/activity', {date, time})
     .then((res) =>  {
       if(res.data[0]){
-    this.setState({ activity: res.data[0].task, priority: res.data[0].priority, id: res.data[0].task_id, task: res.data[0] })
+        setInterval(() => {
+          this.setState({ activity: res.data[0].task, priority: res.data[0].priority, id: res.data[0].task_id, task: res.data[0] })
+        }, 1000);
       } else {
          return null
       }

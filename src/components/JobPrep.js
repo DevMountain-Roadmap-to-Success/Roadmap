@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Header from './Header';
 import { connect } from 'react-redux';
 import { getPosition } from './../ducks/reducer';
-import Flashcard from './Flashcard';
+import Flashcard from './widgets/Flashcard';
 import Gauntlet from './functional/Gauntlet';
 
 var ReactGridLayout = require('react-grid-layout');

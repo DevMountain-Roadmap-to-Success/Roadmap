@@ -4,7 +4,7 @@ import pic from '../assets/profile.png'
 //redux
 import { connect } from "react-redux";
 import { getUser } from "../ducks/reducer";
-// import { getPosition } from './../ducks/reducer';
+import axios from 'axios'
 
 //components and styles
 import "./Dashboard.css";
@@ -12,8 +12,8 @@ import styled from "styled-components";
 import Header from "./Header";
 import TodoList from "./todos/TodoList";
 import Weather from "./widgets/Weather";
-import Flashcard from "./Flashcard";
-import Trivia from "./Trivia";
+import Flashcard from "./widgets/Flashcard";
+import Trivia from "./widgets/Trivia";
 // import Gauntlet from './functional/Gauntlet';
 import { TwitterTimelineEmbed } from "react-twitter-embed";
 
@@ -50,16 +50,18 @@ class UserDashboard extends Component {
   image: pic,
   full_name: '',
   cohort: null }
-  // componentDidMount = () => {
-  //   axios.get('/auth/session')
-  //   .then((res) => {
-  //     console.log(res.data)
-  //     this.props.getUser(res.data)
-  //   })
-  //   return this.props.user
-  // }
+  componentDidMount = () => {
+   return this.checkUser()
+  }
+
+  checkUser = () => {
+    axios.get("/auth/session").then(res => {
+      return this.props.getUser(res.data);
+     });
+  }
   
   render() {
+    console.log(this.props)
     //draggable props
     //declaring where everything is positioned.
     // var layout = [
@@ -73,7 +75,7 @@ class UserDashboard extends Component {
     // ];
     return (
       <div >
-        <Header {...this.props} justifyContent="unset">
+        <Header justifyContent="unset">
           <h1>Roadmap Dashboard</h1>
         </Header>
 

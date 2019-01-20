@@ -1,16 +1,21 @@
 import React from 'react'
-import {getUser} from '../ducks/reducer'
 import axios from 'axios';
 import {withRouter} from 'react-router'
-import {connect} from 'react-redux'
-import Input from './functional/Input'
-import Button from './functional/Button'
-import Header from './Header'
+import {Link} from 'react-router-dom'
+import Input from '../functional/Input'
+import Button from '../functional/Button'
+import Header from '../Header'
 import styled from 'styled-components'
 import SweetAlert from 'react-bootstrap-sweetalert'
-import {MenuButton} from './Flashcard'
-import {Box, ProfileModal, Profile, PictureBox} from './Styles'
-import icon from '../assets/edit.png'
+import {MenuButton} from '../widgets/Flashcard'
+import {Box, ProfileModal, Profile, PictureBox} from '../Styles'
+import icon from '../../assets/edit.png'
+import defaultPic from '../../assets/person.png'
+import {connect} from 'react-redux'
+import {getUser} from '../../ducks/reducer'
+import memoizeOne from 'memoize-one'
+
+
 
 const PasswordButton = styled.button`
     background-color: transparent;
@@ -19,6 +24,7 @@ const PasswordButton = styled.button`
     height: 30px;
     width: 170px;
     margin-top: 20px;
+    border: none;
 
     background-image: url(${icon});
     background-size: 20%;
@@ -31,7 +37,10 @@ const StyledInput = styled(Input)`
   font-size: ${props => props.fontSize || "18px"};
   margin: ${props => props.margin};
 `;
+
+
 class EditProfile extends React.Component {
+  
     state = {
     alert: false,
     warningAlert: false,
@@ -43,20 +52,17 @@ class EditProfile extends React.Component {
     successAlert: false,
     showInputs: false,
     confirmPassword: '',
-    image: this.props.user.image,
+    image: '',
     userImage: false,
-    input: ''
+    input: '',
+    _isMounted: false,
+    full_name: ''
 
-}
-
-componentDidMount= () => {
-    const {image} = this.props.user
-    if(image){
-        this.setState({ userImage: true })
-    } else {
-        return;
+}    
+    componentWillReceiveProps = (nextProps) => {
+        console.log(nextProps, this.props)
     }
-}
+
 validatePasswords = () => {
     if(this.state.newPassword === this.state.confirmPassword){
         return this.state.newPassword
@@ -64,6 +70,7 @@ validatePasswords = () => {
         axios.put('/auth/password', {password: this.state.newPassword})
         .then((res) => {
             if(res.status === 200){
+
                 this.props.getUser(res.data)
             }
             return this.toggleValidation()       
@@ -83,23 +90,19 @@ toggleAlert = () => {
 }
 
 
-    // updateImage = () => {
-    //   const image = this.state.input
-    //   console.log(this.state.input)
-    //     axios.post('/api/update', { image } )
-    //     .then((res) => {
-    //         if(res.status === 200){
-    //             console.log(res.data)
-    //             this.props.getUser(res.data[0])
-    //             this.setState({hasImage: true, image: res.data[0].image, full_name: res.data[0].full_name})
-                
-
-
-    //         } else {
-    //             return this.setState({error: 'Something Went Wrong'})
-    //         }
-    //     })
-    // }
+    updateImage = (image) => {
+        axios.post('/api/update', { image } )
+        .then((res) => {
+            if(res.status === 200){
+                console.log(res.data)
+                this.setState({userImage: true, image: res.data[0].image})
+                return this.props.getUser(res.data[0])
+        
+            } else {
+                return this.setState({error: 'Something Went Wrong'})
+            }
+        })
+    }
 
     checkPassword = () => {
         const {email} = this.state
@@ -108,7 +111,7 @@ toggleAlert = () => {
         .then((res) => {
             if(res.status === 200){
              this.setState({showInputs: true})
-             return 
+             return this.props.getUser(res.data)
 
             }
         })
@@ -117,8 +120,8 @@ toggleAlert = () => {
    
 
     handleChange = (value) => {
-
         this.setState({ input: value, image: value })
+        return this.updateImage(value)
     }
 
  
@@ -199,35 +202,32 @@ toggleAlert = () => {
   }
    
     render(){
-        console.log(this.state, this.props)
+console.log(this.props.image)
+
     return (
 <div>
          <Header/>
         <Profile>
+
             <Box  {...this.props}>
+       <Link to='/dashboard'> <button className='back'>{`<< Go Back`}</button></Link>
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
         <PictureBox>
-            {this.state.image ? 
-            <img src={this.state.image} />
-            :
-         <img src={this.props.user.image} alt='picture' />
-            }
+            <img src={this.props.user.image} />
          
          
          </PictureBox>
-         { !this.state.userImage ? (
-             <>
-               <input
-               style={{width: '100%', height: '25px', marginTop: '5px'}}
-               placeholder='Image Url' 
-               value={this.state.input}
-               onChange={(e) => this.handleChange(e.target.value)}
-               />
-               <span>{this.state.error}</span>
-               <MenuButton onClick={this.updateImage} name='Save'/>
-               </>
+         { this.state.userImage ? (
+            //  <>
+           
+               <MenuButton onClick={() => this.setState({userImage:!this.state.userImage})} name='Edit Picture'/>
          ) : (
-         <MenuButton onClick={() => this.setState({userImage:!this.state.userImage})} name='Edit Picture'/>
+         <input
+         style={{width: '100%', height: '25px', marginTop: '5px'}}
+         placeholder='Image Url' 
+         value={this.state.input}
+         onChange={(e) => this.handleChange(e.target.value)}
+         />
          )}
          </div>
        <span> <h1>{`${this.props.user.full_name}`}
@@ -245,7 +245,11 @@ toggleAlert = () => {
     }
 }
 const mapStateToProps = state => {
-    return { user: state.user }
+    return {
+        user: state.user,
+        // full_name: (state.user),
+        // image: getName(state.user)
+    }
 }
 
-export default withRouter(connect(mapStateToProps, { getUser })(EditProfile))
+export default withRouter(connect(mapStateToProps, {getUser})(EditProfile))

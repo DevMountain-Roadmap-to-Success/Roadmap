@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Card from "@material-ui/core/Card";
-import DropDown from "./DropDown";
+import DropDown from "../functional/DropDown";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import { withStyles } from "@material-ui/core/styles";

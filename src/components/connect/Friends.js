@@ -1,13 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
-import Button from './functional/Button';
-import {PictureBox} from './Styles'
-import pic from '../assets/person.png'
-import Input from './functional/Input'
-import Header from './Header';
-import search from '../assets/search.png'
-import Message from './Message';
+import Button from '../functional/Button';
+import {PictureBox} from '../Styles'
+import pic from '../../assets/person.png'
+import Input from '../functional/Input'
+import Header from '../Header';
+import search from '../../assets/search.png'
+import Message from './Message'
 
 const FriendContainer = styled.section`
     width: 80%;

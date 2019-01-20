@@ -3,11 +3,11 @@ import React, { Component } from 'react';
 // import Iframe from 'react-iframe';
 //styling imports
 import styled from 'styled-components';
-import Button from './functional/Button';
+import Button from '../functional/Button';
 //components
-import FlashcardMenu from './functional/FlashcardMenu';
+import FlashcardMenu from './FlashcardMenu'
 
-import {toggle, idCheck} from './../Tests/Logic/logic_Jared';
+import {toggle, idCheck} from '../../Tests/Logic/logic_Jared';
 
 //styling
 const Div = styled.div`

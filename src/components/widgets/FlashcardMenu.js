@@ -1,7 +1,7 @@
 import React from 'react';
 //style imports
 import styled from 'styled-components';
-import {Menu} from './ElementStyles';
+import {Menu} from '../functional/ElementStyles';
 
 //styling
 const Menu1 = styled(Menu) `
