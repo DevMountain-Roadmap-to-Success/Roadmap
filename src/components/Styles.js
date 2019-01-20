@@ -4,12 +4,20 @@ import background from '../assets/background.jpg'
 import Modal from './functional/Modal'
 export const Box = styled.div `
     width: 60%;
-    height: 80%;
+    height: 60%;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
     border: thin solid lightgray;
-  
+    position: relative;
+  .back {
+    position: absolute;
+    top: 3%;
+    left: 3%;
+    border: none;
+    color: black;
+    text-decoration: none;
+  }
 
 `
 export const PictureBox = styled.div`

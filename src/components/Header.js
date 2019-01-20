@@ -8,10 +8,9 @@ import SideBar from './functional/SideBar'
 import Nav from './functional/Nav'
 import axios from 'axios'
 import {withRouter} from 'react-router'
-import ProfilePic from './functional/ProfilePic'
+import ProfilePic from './profile/ProfilePic'
 import defaultPic from '../assets/profile.png'
 import SweetAlert from 'react-bootstrap-sweetalert'
-
 
 const StyledHeader = styled.header`
   background-color: ${props => props.background || '#2F3642'};
@@ -69,9 +68,8 @@ class Header extends React.Component {
     warningAlert: false,
 
   }
-componentDidMount = (props) => {
-
-  let {full_name} = this.props.user
+componentDidMount = () => {
+  let { full_name } = this.props
   this.setState({full_name: full_name})
 }
 toggleOpen = () => {
@@ -81,8 +79,9 @@ toggleOpen = () => {
 }
 
 toggleAlert = () => {
-   this.setState(prevState => { return {alert: !prevState.alert,
-    dropdown: !prevState.dropdown}})
+   this.setState(prevState => { return { alert: !prevState.alert }
+  })
+  return this.toggleOpen()
 }
   deleteAccount = () => {
     const {full_name} = this.props
@@ -119,6 +118,11 @@ toggleAlert = () => {
     })
     return this.props.history.push('/roadmap/login') 
   }
+
+  updateUser = (value) => {
+   return this.props.getUser({value})
+
+  }
   
   render(){
   const {toggleMenu} = this.props
@@ -138,7 +142,8 @@ toggleAlert = () => {
         <img src={menu} onClick={() => toggleMenu(this.props.open)} className='menu-icon' alt=''/>      
         {this.props.children} 
        <ProfilePic {...this.props}
-
+        user={this.props.user}
+        updateUser={this.updateUser}
        editProfile={this.toggleEdit}
        delete={this.toggleAlert} 
        logout={this.logout}
@@ -175,7 +180,8 @@ toggleAlert = () => {
 const mapStateToProps = state => {
   return {
     open: state.open,
-    user: state.user
+    user: state.user,
+    
   }
 }
 

@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import Modal from "../functional/Modal";
 import EditTask from "./EditTask";
-import Wizard from "../functional/Wizard";
+import Wizard from "./Wizard";
 
 import {toggle} from '../../Tests/Logic/logic_randall'
 

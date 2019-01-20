@@ -92,7 +92,7 @@ class Nav extends React.Component  {
           <MenuItems onClick={this.props.toggleMenu}>
           
             {this.props.children}
-            <NavLink  activeClass='current' to="/dashboard" onClick={this.props.toggleMenu}>
+            <NavLink  activeClassName='current' to="/dashboard" onClick={this.props.toggleMenu}>
               <i className="material-icons">home</i>Dashboard
          </NavLink> 
             <NavLink  activeClassName='current' to="/dashboard/calendar">
@@ -108,7 +108,7 @@ class Nav extends React.Component  {
             <i className="fab fa-codepen"></i>
             CodePen
             </NavLink>
-            <NavLink  activeclassName='current' to='/dashboard/connect'>
+            <NavLink  activeClassName='current' to='/dashboard/connect'>
             <i className="fa fa-address-book"></i>
              Connect
             </NavLink>

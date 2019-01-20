@@ -8,25 +8,17 @@ import Calendar from "./components/calendar/Calendar";
 import LandingPage from "./components/LandingPage";
 import Sandbox from "./components/functional/Sandbox";
 import Home from "./components/Home";
-import { connect } from "react-redux";
-import { getUser } from "./ducks/reducer";
 import axios from "axios";
-import EditProfile from "./components/EditProfile";
+import EditProfile from "./components/profile/EditProfile";
 
-import Trivia from "./components/Trivia";
-import Friends from "./components/Friends";
+import Friends from "./components/connect/Friends";
 
 class App extends Component {
   state = {
     open: false
   };
 
-  componentDidMount = () => {
-    axios.get("/auth/session").then(res => {
-      this.props.getUser(res.data);
-    });
-  };
-
+ 
   toggleMenu = () => {
     this.setState(prevState => {
       return {
@@ -34,6 +26,7 @@ class App extends Component {
       };
     });
   };
+
   logout = () => {
     axios.get("/api/logout").then(() => this.props.history.push("/login"));
   };
@@ -44,7 +37,7 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={LandingPage} />
       
-                <Route path='/roadmap/login'render={() => (<Home  login='login'/>)} />
+                <Route path='/roadmap/login'  render={() => (<Home login='login'/>)} />
                 <Route path='/%2Froadmap%2Fprofile'  component={Home} />
 
 
@@ -60,7 +53,7 @@ class App extends Component {
             )}
           />
         
-          <Route path="/profile/edit" component={EditProfile} />
+          <Route path="/profile/edit" render={() => <EditProfile  />} />
           <Route
             path="/dashboard/calendar"
             render={() => (
@@ -87,18 +80,12 @@ class App extends Component {
             )}
           />
           <Route path="/dashboard/Sandbox" component={Sandbox} />
-          <Route path="/trivia" component={Trivia} />
+
         </Switch>
       </Router>
     );
   }
 }
-const mapStateToProps = state => {
-  return {
-    user: state.user
-  };
-};
-export default connect(
-  mapStateToProps,
-  { getUser }
-)(App);
+
+
+export default App

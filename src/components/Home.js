@@ -1,7 +1,7 @@
 import React from 'react'
 import Login from './Login'
 import {Container} from './Styles'
-import ProfileForm from './ProfileForm'
+import ProfileForm from './profile/ProfileForm'
 
 
 

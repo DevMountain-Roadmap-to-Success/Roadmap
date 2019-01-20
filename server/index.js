@@ -6,9 +6,10 @@ const session = require('express-session')
 const bodyParser = require('body-parser')
 const ctrl = require('./controller')
 const bcrypt = require('bcryptjs')
-const {CONNECTION_STRING, SERVER_PORT} = process.env
 const nodemailer = require('./nodemailer')
 const friends_ctrl = require('./friends_controller')
+
+const {CONNECTION_STRING, SERVER_PORT} = process.env
 
 
 massive(CONNECTION_STRING).then(db => {

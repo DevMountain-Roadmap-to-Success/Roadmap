@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import { ProfileModal } from './Styles'
-import Button from './functional/Button'
+import { ProfileModal } from '../Styles'
+import Button from '../functional/Button'
 import axios from 'axios'
 import {connect} from 'react-redux'
-import {getUser} from '../ducks/reducer'
+import {getUser} from '../../ducks/reducer'
 import SweetAlert from 'react-bootstrap-sweetalert'
 
 const Textarea = styled.textarea`

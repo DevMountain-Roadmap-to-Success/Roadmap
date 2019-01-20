@@ -1,14 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
-import { ProfileModal } from './Styles'
-import Button from './functional/Button'
-import Input from './functional/Input'
-import pic from '../assets/pic.jpg'
-import {StyledInput} from './functional/ElementStyles'
+import { ProfileModal } from '../Styles'
+import Button from '../functional/Button'
+import Input from '../functional/Input'
+import pic from '../../assets/pic.jpg'
+import {StyledInput} from '../functional/ElementStyles'
 import axios from 'axios'
 import {connect} from 'react-redux'
-import {getUser} from '../ducks/reducer'
+import {getUser} from '../../ducks/reducer'
 import {Link} from 'react-router-dom'
+
 const ImageInput = styled(StyledInput)`
     background-image: url(${pic});
     background-size: 9%;
