@@ -185,6 +185,7 @@ class Calendar extends Component {
     }
   
   toggleEdit = (id, time, day) => {
+    this.props.addTask({})
     this.setState({
       edit: !this.state.edit,
       id: id,
@@ -199,8 +200,7 @@ class Calendar extends Component {
   };
   toggle = () => {
     this.setState(prevState => {
-      return { edit: toggle(prevState.edit),
-      activity: '' };
+      return { edit: !prevState.edit }
     });
   };
   renderDayView = () => {

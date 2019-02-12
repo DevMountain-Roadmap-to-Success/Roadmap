@@ -28,7 +28,7 @@ const MenuIcon = (props) => {
     
     return (
 <>
-        <CircleDiv {...props}
+        <CircleDiv
         onClick={props.onClick}>
         {props.children}
         </CircleDiv>

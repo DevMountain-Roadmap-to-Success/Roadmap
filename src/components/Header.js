@@ -68,10 +68,13 @@ class Header extends React.Component {
     warningAlert: false,
 
   }
-componentDidMount = () => {
-  let { full_name } = this.props
-  this.setState({full_name: full_name})
+componentDidMount(){
+  axios.get('/auth/session')
+  .then((res)=> {
+    this.setState({full_name: res.data.full_name, image: res.data.image})
+  })
 }
+
 toggleOpen = () => {
   this.setState(prevState => {
     return { dropdown: !prevState.dropdown}
@@ -119,14 +122,9 @@ toggleAlert = () => {
     return this.props.history.push('/roadmap/login') 
   }
 
-  updateUser = (value) => {
-   return this.props.getUser({value})
-
-  }
-  
   render(){
   const {toggleMenu} = this.props
-  const { full_name, image } = this.props.user
+  const { full_name, image } = this.state
 
   return (
     <>
@@ -143,7 +141,6 @@ toggleAlert = () => {
         {this.props.children} 
        <ProfilePic {...this.props}
         user={this.props.user}
-        updateUser={this.updateUser}
        editProfile={this.toggleEdit}
        delete={this.toggleAlert} 
        logout={this.logout}

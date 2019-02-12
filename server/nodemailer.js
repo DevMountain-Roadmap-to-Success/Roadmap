@@ -40,8 +40,8 @@ module.exports = {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'roadmap.squad@gmail.com',
-        pass: 'Devteam43'
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD
       },
     })
     let content = 'BEGIN:VCALENDAR\r\nPRODID:-//ACME/DesktopCalendar//EN\r\nMETHOD:REQUEST\r\n...';
@@ -75,7 +75,7 @@ module.exports = {
       const { email, password } = req.body    
       let user = await dbInstance.check_user(email)
       if (user[0]) {
-        return res.status(401).send('Email already in use')
+        return res.status(403).send('*Email Already Registered')
       } else {
         let salt = bcrypt.genSaltSync(10)
         let hash = bcrypt.hashSync(password, salt)
@@ -115,7 +115,6 @@ module.exports = {
       },
       delete_account: (req, res) => {
         const dbInstance = req.app.get("db");
-        const {full_name} = req.body
         dbInstance
         .delete_account(req.session.user.user_id)
         .then(() => res.sendStatus(200));

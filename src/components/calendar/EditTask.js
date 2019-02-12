@@ -1,5 +1,4 @@
 import React from "react";
-import {unmountComponentAtNode} from 'react-dom'
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import "react-day-picker/lib/style.css";
 import {addTask, getTasks} from '../../ducks/reducer'
@@ -17,11 +16,11 @@ import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import moment from "moment";
 
+
 class EditTask extends React.Component {
   state = {
     edit: false,
     calendarAdd: false,
-    checked: { color: "blue" },
     priority: 4,
     date: moment().format('YYYY-MM-DD'),
     time: '09:00',
@@ -94,7 +93,7 @@ class EditTask extends React.Component {
 
 
     return (
-          <>
+<>
           
           <Main>
            
@@ -176,4 +175,4 @@ const mapStateToProps = state => {
   return { allTasks: state.allTasks, todo: state.todo };
 };
 
-export default withRouter(connect(mapStateToProps, {getTasks, addTask})(EditTask));
+export default connect(mapStateToProps, {getTasks, addTask})(EditTask);

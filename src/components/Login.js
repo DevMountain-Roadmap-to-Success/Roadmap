@@ -7,19 +7,17 @@ import LoginForm from './LoginForm'
 import {Link } from 'react-router-dom'
 import {connect} from 'react-redux'
 import {getUser} from '../ducks/reducer'
-
 import {withRouter} from 'react-router'
-
-import {inputCheck, accountCheck} from './../Tests/Logic/logic_Jared';
-
-
+import { setTimeout } from 'timers';
+import {errorCheck } from '../Tests/Logic/logic_kim'
+import mountain from '../assets/mountain.png'
 
 const LoginModal = styled(Modal)`
-  background-image: url('http://www.siliconvalley.ninja/wp-content/uploads/2018/04/success-roadmap.png');
-  background-size: 117%;
-  background-color: #4592B4;
+  background-image: url(${mountain});
+  background-size: cover;
+  background-color: rgb(189, 209, 223);
   height: 35vw;
-  width: 55vw;
+  width: 60vw;
   background-repeat: no-repeat;
 
   @media (max-width: 1100px){
@@ -157,7 +155,7 @@ class Login extends React.Component {
     else if (length > 0) return 'error';
     return null;
   }
-
+ 
 
   signup = () => {
     const { email, password } = this.state;
@@ -174,7 +172,10 @@ class Login extends React.Component {
           this.props.history.push(`/%2Froadmap%2Fprofile`);
 
         }
-    })
+    }).catch((error) => { 
+      if(error){
+        this.setState({error: error.response.data})
+      }})
   }
 
     login = () => {
@@ -187,15 +188,23 @@ class Login extends React.Component {
           this.props.getUser(res.data)
 
            this.props.history.push("/dashboard");
-        } else if(res.status === 403){
 
-          alert({error: 'account not found'})
-          accountCheck()
         }
 
-      });
+      }).catch((error) => { 
+        if(error){
+          this.setState({error: error.response.data})
+          return errorCheck(error.response.data)
+        }})
   };
 
+    timer = () => {
+      if(this.state.error){
+      setTimeout(() => {
+        this.setState({error: ''})
+      }, 4000);
+    }
+  }
 
     handleInput = e => {
       
@@ -205,6 +214,7 @@ class Login extends React.Component {
     
 
     render(){
+      console.log(this.state)
     return (
         <LoginModal>
         
@@ -251,11 +261,12 @@ class Login extends React.Component {
          onClick={this.state.disabled ?  () => this.login() : () => this.signup()  }
        />
 
-   <p style={{color: 'red'}}>{this.props.error}</p>
+   <p style={{color: 'red', marginTop: '20px', fontSize: '12px'}}>{this.timer()}{this.state.error}</p>
     
 
 
      </div>
+
           </LoginModal>
     )
 }

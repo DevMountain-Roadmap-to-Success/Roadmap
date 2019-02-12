@@ -10,7 +10,7 @@ import Sandbox from "./components/functional/Sandbox";
 import Home from "./components/Home";
 import axios from "axios";
 import EditProfile from "./components/profile/EditProfile";
-
+import {withRouter} from 'react-router'
 import Friends from "./components/connect/Friends";
 
 class App extends Component {

@@ -38,12 +38,14 @@ class TodoList extends Component {
 
   addTodo = e => {
     e.preventDefault();
+    const {task} = this.state
     let dateCreated = moment().format("YYYY-MM-DD");
     let time = moment('h').format('h:mm A')
+
     axios
       .post("/api/addtask", {
         date_created: dateCreated,
-        task: this.state.task,
+        task: task,
         time: time
       })
       .then(res => {
