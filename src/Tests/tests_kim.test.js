@@ -1,36 +1,50 @@
-const {weekday} = require('../src/components/calendar/DayView')
-const {est, render, click, expect} = require('jest')
-const SideBar = require('../components/functional/SideBar')
-const React = require('react')
-const {MemoryRouter} = require('react-router-dom')
+import {errorCheck, errorMessage, toggle, upper} from './Logic/logic_kim'
+import * as actions from '../ducks/reducer'
+import * as types from '../ducks/constants'
 
-const reducers = require('../ducks/reducers');
 
-test('reducers', () => {
-  let state;
-  state = reducers(undefined, {});
-  expect(state).toEqual({user:{},allTasks:[],todo:{},open:false,position:[],alert:false});
-});
 
-describe('#weekday', function() {
-    it('Make sure that the return is right for a few dates.', function() {
-     
-    });
+describe('actions', () => {
+  it('should create an action to add a todo', () => {
+    const payload = 'Finish tests'
+    const expectedAction = {
+      payload,
+      type: types.ADD_TODO
+      
+    }
+    expect(actions.addTodo(payload)).toEqual(expectedAction)
+  })
 })
 
-est("it expands when the button is clicked", () => {
-    render(<SideBar />);
-    click();
-    expect();
-  });
-  
-  // fixed!
-  test("it expands when the button is clicked", () => {
-    render(
-      <MemoryRouter>
-        <SideBar />
-      </MemoryRouter>
-    );
-    click();
-    expect();
-  });
+describe('actions', () => {
+  it('should return user object', () => {
+    const payload = 'user'
+    const user = {
+      payload,
+      type: types.GET_USER
+    }
+    expect(actions.getUser(payload)).toEqual(user)
+  })
+})
+
+describe('Should return error response', () => {
+  test('if given an incorrect email/password', () => {
+      expect(errorCheck()).toEqual(errorMessage);
+  })
+});
+
+describe('Clicking edit icon', () => {
+  test('should return true', () => {
+    expect(toggle()).toBe(true)
+  })
+})
+
+
+describe('uppercase', () => {
+  test('should return value in uppercase', () => {
+    expect(upper('kim')).toBe('KIM')
+  })
+})
+
+
+

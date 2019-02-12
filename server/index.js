@@ -42,16 +42,14 @@ massive(CONNECTION_STRING).then(db => {
 app.post('/auth/login', async (req, res, next) => {
   const dbInstance = req.app.get('db')
   const { email, password } = req.body
-  // console.log(email, password)
-
     let user = await dbInstance.check_user(email)        
     console.log(user);
     if(!user[0]){
-      res.status(403).send('no user found')
+      res.status(404).send('*No User Found')
     } else {
       let match = await bcrypt.compareSync(password, user[0].password);
     if (!match) {
-      res.status(403).send('wrong password')
+      res.status(403).send('*Wrong Password')
     } else if(match) {
       req.session.user = user[0]
       console.log(req.session.user)

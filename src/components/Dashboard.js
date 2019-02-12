@@ -50,15 +50,6 @@ class UserDashboard extends Component {
   image: pic,
   full_name: '',
   cohort: null }
-  componentDidMount = () => {
-   return this.checkUser()
-  }
-
-  checkUser = () => {
-    axios.get("/auth/session").then(res => {
-      return this.props.getUser(res.data);
-     });
-  }
   
   render() {
     console.log(this.props)

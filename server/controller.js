@@ -38,14 +38,19 @@ module.exports = {
   },
   update_password:  async(req, res) => {
     const dbInstance = req.app.get('db')
-    const {password} = req.body
-    console.log(password)
+    const {password, newPassword} = req.body
+    console.log(password, newPassword)
+    let user = await dbInstance.get_user(96)
+    let validate = await bcrypt.compareSync(password, user[0].password);
+    if (validate) {
+      console.log(validate)
     let salt = bcrypt.genSaltSync(10)
-    let hash = bcrypt.hashSync(password, salt)
-    dbInstance.update_password(hash, req.session.user.user_id )
+    let hash = bcrypt.hashSync(newPassword, salt)
+    dbInstance.update_password(96, hash)
     .then(data => {
     res.status(200).send(data)
     })
+  }
   },
 
 

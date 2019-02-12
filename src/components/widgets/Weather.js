@@ -13,7 +13,6 @@ import {connect} from 'react-redux'
 import {getPosition} from '../../ducks/reducer'
 
 
-
 const WeatherWidget = styled.div`
   background-image: url(${props => props.image || day});
   background-size: 180%;
@@ -81,7 +80,7 @@ class Weather extends React.Component {
 
     axios
       .get(
-        `http://api.openweathermap.org/data/2.5/weather?zip=84604&units=imperial&appid=d116831d7664ec954f3938831a231317`
+        `http://api.openweathermap.org/data/2.5/weather?zip=84604&units=imperial&appid=${process.env.WEATHER_API_KEY}`
       )
       .then(res => {
         this.setState({

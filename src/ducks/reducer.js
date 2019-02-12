@@ -1,5 +1,5 @@
-import {GET_USER, GET_TASKS, TOGGLE_MENU, GET_POSITION, TOGGLE_ALERT, ADD_TASK} from './constants'
-import axios from 'axios';
+import {GET_USER, GET_TASKS, TOGGLE_MENU, GET_POSITION, TOGGLE_ALERT, ADD_TASK, ADD_TODO} from './constants'
+
 
 const initialState = {
     user: {},
@@ -8,18 +8,14 @@ const initialState = {
     open: false,
     position: [],
     alert: false,
+    text: ''
 
 };
-export const fetchUserData = () => {
-    axios.get('/api/session')
-    .then((res) =>  getUser(res.data[0]))
-}
-
 
 export default function reducer (state=initialState, action){
     switch(action.type) {
     case GET_USER:
-      return (state, Object.assign({}, state, {user: action.payload}))
+      return ( Object.assign({}, state, {user: action.payload}))
 
     case GET_POSITION:
     return Object.assign({}, state, {position: action.payload})
@@ -30,6 +26,10 @@ export default function reducer (state=initialState, action){
     case ADD_TASK:
     return (state, Object.assign({}, state, {todo: action.payload}))
     
+    case ADD_TODO:
+    Object.assign({}, state, {text: action.payload})
+    return state
+
     case TOGGLE_MENU:
         return Object.assign({}, state, {open: action.payload})  
         
@@ -45,3 +45,4 @@ export const getPosition = (array) => ({type: GET_POSITION, payload: array})
 export const getTasks = allTasks => ({type: GET_TASKS, payload: allTasks})
 export const toggleMenu = open => ({type: TOGGLE_MENU, payload: !open})             
 export const toggleAlert = edit => ({type: TOGGLE_ALERT, payload: !edit})
+export const addTodo = text => ({type: ADD_TODO, payload: text})
